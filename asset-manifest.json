@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/friday-cards-project/static/css/main.fbd31a1e.css",
-    "main.js": "/friday-cards-project/static/js/main.0fdc8671.js",
+    "main.js": "/friday-cards-project/static/js/main.5e1882ef.js",
     "static/js/787.cda612ba.chunk.js": "/friday-cards-project/static/js/787.cda612ba.chunk.js",
     "static/media/packListIcon.svg": "/friday-cards-project/static/media/packListIcon.55f4657e3db43ac66d86ec60750c2c80.svg",
     "static/media/onLoadAvatar.svg": "/friday-cards-project/static/media/onLoadAvatar.d4a131d05d46ac9006e812e8725a8394.svg",
@@ -9,11 +9,11 @@
     "static/media/profileIcon.svg": "/friday-cards-project/static/media/profileIcon.6d0d1535ae56194b9fd5c8fc8fd50ce2.svg",
     "static/media/eye.svg": "/friday-cards-project/static/media/eye.42d7381558d2648d6db6b26182299cc4.svg",
     "main.fbd31a1e.css.map": "/friday-cards-project/static/css/main.fbd31a1e.css.map",
-    "main.0fdc8671.js.map": "/friday-cards-project/static/js/main.0fdc8671.js.map",
+    "main.5e1882ef.js.map": "/friday-cards-project/static/js/main.5e1882ef.js.map",
     "787.cda612ba.chunk.js.map": "/friday-cards-project/static/js/787.cda612ba.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.fbd31a1e.css",
-    "static/js/main.0fdc8671.js"
+    "static/js/main.5e1882ef.js"
   ]
 }
