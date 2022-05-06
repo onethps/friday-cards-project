@@ -62,9 +62,8 @@ export type ResponseType = {
     created: Date;
     updated: Date;
     isAdmin: boolean;
-    verified: boolean; // подтвердил ли почту
+    verified: boolean;
     rememberMe: boolean;
-
     error?: string;
 }
 
