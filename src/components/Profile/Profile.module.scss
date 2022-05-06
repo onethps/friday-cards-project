@@ -1,0 +1,119 @@
+@import "../../styles/mixims";
+.loginBox {
+    @include container();
+    min-height: 540px;
+    min-width: 413px;
+    padding-bottom: 60px ;
+}
+
+
+.loginBox .avatarBlock{
+    position: relative;
+
+    .loadAvatar{
+        position: absolute;
+        right: 125px;
+        height: 32px;
+        width: 32px;
+        bottom: 5px;
+        cursor: pointer;
+    }
+
+}
+
+.loginBox .avatar {
+    position: relative;
+    width: 100px;
+    height: 100px;
+}
+
+.loginBox h1 {
+    font-family: 'Poppins', sans-serif;
+    color: #2D2E46;
+    text-align: center;
+}
+
+
+.loginBox h2 {
+    font-family: 'Poppins', sans-serif;
+    font-style: normal;
+    margin: 36px 0;
+    font-weight: 600;
+    line-height: 33px;
+    font-size: 22px;
+    color: #2D2E46;
+    text-align: center;
+}
+
+
+.loginBox h3 {
+    margin-top: 31px;
+    color: grey;
+    font-size: 14px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.loginBox h4 {
+    margin-top: 25px;
+    color: #21268F;
+    font-size: 16px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.loginBox h4:hover {
+    opacity: 0.8;
+}
+
+.loginBox h3:hover {
+    opacity: 0.8;
+}
+
+
+.buttonBlock{
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    height: 100px;
+
+    & a {
+        display: inline-block;
+        cursor: pointer;
+        font-family: Poppins, sans-serif;
+        text-decoration: none;
+        text-align: center;
+        font-weight: 600;
+        font-size: 16px;
+        border: none;
+        width: 124px;
+        height: 36px;
+        padding: 5px;
+        color: #21268F;
+        background-color: #D7D8EF;
+        border-radius: 30px;
+    }
+
+    & button {
+        display: inline-block;
+        width: 127px;
+        height: 36px;
+        background-color: #21268F;
+        color: #ECECF9;
+        border: none;
+        outline: none;
+        border-radius: 40px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+}
+
+
+
+.loginBox .errorMessage{
+    color: red;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+}
+
+

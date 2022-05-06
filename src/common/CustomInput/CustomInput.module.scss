@@ -1,0 +1,51 @@
+.inputBox{
+  position: relative;
+  height: 70px;
+  margin: 24px auto 0;
+
+  & input{
+    width: 100%;
+    padding: 10px 0;
+    font-size: 16px;
+    color: #2D2E46;
+    margin-bottom: 10px;
+    border: none;
+    border-bottom: 2px solid rgba(36, 37, 74, 0.2);
+    outline: none;
+    background: transparent;
+  }
+
+  & label {
+    font-family: 'Poppins', sans-serif;
+    position: absolute;
+    top:0;
+    left: 0;
+    padding: 10px 0;
+    font-size: 16px;
+    color: #2D2E46;
+    pointer-events: none;
+    transition: .5s;
+  }
+
+  & img {
+    position: absolute;
+    right: 5%;
+    bottom: 50%;
+  }
+
+
+}
+
+.inputBox input:focus ~ label,
+.inputBox input:valid ~ label {
+  top: -20px;
+  left: 0;
+  color: grey;
+  font-size: 12px;
+}
+
+.errorMessage{
+  color: red;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+}
