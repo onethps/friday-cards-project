@@ -3,7 +3,7 @@ import {LoginParamsType} from "../store/login-reducer";
 import {forgotPasswordTC} from "../store/forgot-password-reducer";
 
 export const instance = axios.create({
-    baseURL: 'https://neko-back.herokuapp.com/2.0',
+    baseURL: process.env.REACT_APP_BACK_URL,
     withCredentials: true,
 })
 
