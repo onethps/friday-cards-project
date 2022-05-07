@@ -1,6 +1,6 @@
-import React, {memo} from 'react';
-import {useDispatch, useSelector} from "react-redux";
-import {AppRootStateType} from "../../../m2-bll/store";
+import React, {useEffect} from 'react';
+import {useSelector} from "react-redux";
+import {AppRootStateType, useAppDispatch} from "../../../m2-bll/store";
 import {Navigate} from "react-router-dom";
 import {useFormik} from "formik";
 import l from './Profile.module.scss';
@@ -9,10 +9,12 @@ import {changeProfileInfoTC, logoutTC} from "../../../m2-bll/b1-reducers/profile
 import Header from '../Header/Header';
 import {profileValidate} from "../../../m4-utils/validators/validators";
 import CustomInput from '../../u1-common/c1-CustomInput/CustomInput';
+import {authAPI} from "../../../m3-dal/api";
+import {PATH} from "../../../../AppRoutes";
 
 
-export const Profile = memo(() => {
-    const dispatch = useDispatch()
+export const Profile = () => {
+    const dispatch = useAppDispatch()
 
     let isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.login.isLoggedIn)
     let profileName = useSelector<AppRootStateType, string>(state => state.profile.name)
@@ -21,7 +23,6 @@ export const Profile = memo(() => {
     //takes name from email
     let getEmailName = profileName!.includes('@') ? profileName!.split('@')[0] : profileName
 
-
     const formik = useFormik( {
         initialValues:  {
             email: profileEmail,
@@ -29,23 +30,22 @@ export const Profile = memo(() => {
         },
         validate: profileValidate,
         onSubmit: values => {
-            dispatch(changeProfileInfoTC(values.name) as any)
+            dispatch(changeProfileInfoTC(values.name))
         }
     })
 
     const onLogoutHandler = () => {
-        dispatch(logoutTC() as any)
+        dispatch(logoutTC())
     }
 
 
     if (!isLoggedIn) {
-        return <Navigate to={'/'}/>
+        return <Navigate to={PATH.LOGIN}/>
     }
 
     return <>
         <Header/>
-
-        <div className={l.loginBox}>
+          <div className={l.loginBox}>
             <h2> Personal information</h2>
             <div className={l.avatarBlock}>
                 <img className={l.avatar}
@@ -73,4 +73,4 @@ export const Profile = memo(() => {
 
         </div>
     </>
-})
+}

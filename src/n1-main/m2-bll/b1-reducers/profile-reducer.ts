@@ -25,21 +25,6 @@ export const profileReducer = (state: InitialStateType = initialState, action:ac
 
 
 //thunk
-
-// export const authMe = () => {
-//     return (dispatch: Dispatch) => {
-//         authAPI.getProfile().then((res) => {
-//             if (res.status === 200) {
-//
-//                 dispatch(isLoggedInAC(true))
-//                 dispatch(setProfileInfo(res.data.name, res.data.email))
-//             }
-//         })
-//
-//     }
-// }
-
-
 export const changeProfileInfoTC = (name:string) => {
     return (dispatch: Dispatch) => {
         authAPI.changeProfileInfo(name).then(() => {

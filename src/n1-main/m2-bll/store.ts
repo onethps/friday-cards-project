@@ -1,10 +1,11 @@
-import {applyMiddleware, combineReducers, createStore} from "redux";
-import {actionTypeRegistrationReducer, registerReducer} from "./b1-reducers/register-reducer";
-import thunkMiddleware, { ThunkAction } from 'redux-thunk'
+import {Action, applyMiddleware, combineReducers, createStore} from "redux";
+import {registerReducer} from "./b1-reducers/register-reducer";
+import thunkMiddleware, {ThunkAction} from 'redux-thunk'
 import {loginReducer} from "./b1-reducers/login-reducer";
 import {profileReducer} from "./b1-reducers/profile-reducer";
 import {appReducer} from "./b1-reducers/app-reducer";
 import {ForgotPasswordReducer} from "./b1-reducers/forgot-password-reducer";
+import {TypedUseSelectorHook, useDispatch, useSelector} from "react-redux";
 
 const rootReducer  = combineReducers( {
     app:appReducer,
@@ -14,18 +15,24 @@ const rootReducer  = combineReducers( {
     forgotPassword: ForgotPasswordReducer
 })
 
-
-
-export const store = createStore(rootReducer, applyMiddleware(thunkMiddleware))
-
 export type AppRootStateType = ReturnType<typeof rootReducer>
 
-export type AppActionsType = actionTypeRegistrationReducer
+export type AppDispatch = typeof store.dispatch;
+export type RootState = ReturnType<typeof store.getState>;
+
+export type AppThunk<ReturnType = void> = ThunkAction<
+    ReturnType,
+    RootState,
+    unknown,
+    Action<string>
+    >;
 
 
-export type AppThunk<ReturnType=void>=ThunkAction<ReturnType, AppRootStateType, unknown, AppActionsType>
 
-export type AppDispatch = typeof store.dispatch
+export const useAppDispatch = () => useDispatch<AppDispatch>();
+export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
+
+export const store = createStore(rootReducer, applyMiddleware(thunkMiddleware))
 
 // @ts-ignore
 window.store = store;

@@ -19,7 +19,7 @@ export const authAPI = {
     login(loginData: LoginParamsType) {
         return instance.post<LoginParamsType, AxiosResponse<ResponseType>>('/auth/login', loginData);
     },
-    getProfile() {
+    authMe() {
         return instance.post<ResponseType>('/auth/me', {});
     },
     changeProfileInfo(name:string) {
@@ -29,16 +29,17 @@ export const authAPI = {
         return instance.delete('/auth/me', {})
     },
     forgotPassword(email: string) {
-        return instance.post('auth/forgot',
-            {
-                email: email,
-                from: 'onethps@yandex.ru',
-                message: `<div style="background-color: #FFC300; padding: 30px; border-radius: 20px">
-										<p>Please, click on the link and enter a new password</p>
-										<a href='http://localhost:3000/#/set-new-password/$token$'>Go to recovery password</a>
-									</div>
-									`
-            })
+        const data = {
+            email,
+            from: 'test-front-admin <ai73a@yandex.by>',
+            message: `<div style="background-color: lime; padding: 15px">
+                      password recovery link: 
+                        <a href='http://localhost:3000/#/set-new-password/$token$'>
+                          link
+                        </a> 
+                      </div>`,
+        }
+        return instance.post(`/auth/forgot`, data);
     }
 
 

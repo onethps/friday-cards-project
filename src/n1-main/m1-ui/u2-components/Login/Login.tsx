@@ -1,9 +1,9 @@
 import React from 'react';
 import {Navigate, NavLink} from 'react-router-dom';
 import l from "./Login.module.scss";
-import {useDispatch, useSelector} from "react-redux";
+import {useSelector} from "react-redux";
 import {useFormik} from "formik";
-import {AppDispatch, AppRootStateType} from "../../../m2-bll/store";
+import {AppRootStateType, useAppDispatch} from "../../../m2-bll/store";
 import {loginTC} from "../../../m2-bll/b1-reducers/login-reducer";
 import Preloader from "../../u1-common/c2-Preloader/Preloader";
 import {loginValidation} from "../../../m4-utils/validators/validators";
@@ -17,7 +17,7 @@ export const Login = () => {
     const errorMessage = useSelector<AppRootStateType, string | null>(state => state.login.error)
     const loadingStatus = useSelector<AppRootStateType, RequestStatusType>(state => state.login.loadingStatus)
 
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const formik = useFormik({
         initialValues: {
@@ -29,7 +29,7 @@ export const Login = () => {
         },
         validate: loginValidation,
         onSubmit: loginData => {
-            dispatch(loginTC(loginData) as any)
+            dispatch(loginTC(loginData))
             formik.resetForm()
         },
     })

@@ -3,7 +3,7 @@ import {Navigate} from 'react-router-dom';
 import l from "./Register.module.scss";
 import {useDispatch, useSelector} from "react-redux";
 import {useFormik} from "formik";
-import {AppDispatch, AppRootStateType} from "../../../m2-bll/store";
+import {AppDispatch, AppRootStateType, useAppDispatch} from "../../../m2-bll/store";
 import {registerTC} from "../../../m2-bll/b1-reducers/register-reducer";
 import Preloader from "../../u1-common/c2-Preloader/Preloader";
 import showPasswordIcon from "../../../../assets/icons/eye.svg";
@@ -17,7 +17,7 @@ import CustomInput from "../../u1-common/c1-CustomInput/CustomInput";
 
 export const Register = () => {
 
-    const dispatch : AppDispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     let errorMessage = useSelector<AppRootStateType, string>(state => state.register.errorMessage)
     let successRegistrationStatus = useSelector<AppRootStateType, boolean>(state => state.register.isRegistered)
@@ -31,7 +31,7 @@ export const Register = () => {
         },
         validate: RegisterValidate,
         onSubmit: values => {
-            dispatch(registerTC(values.email, values.password) as any)
+            dispatch(registerTC(values.email, values.password))
         }
     })
 

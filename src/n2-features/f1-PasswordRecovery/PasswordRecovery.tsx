@@ -4,13 +4,13 @@ import {useFormik} from "formik";
 import {forgotPageValidation} from "../../n1-main/m4-utils/validators/validators";
 import {NavLink} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import {AppRootStateType} from "../../n1-main/m2-bll/store";
+import {AppRootStateType, useAppDispatch} from "../../n1-main/m2-bll/store";
 import CustomInput from "../../n1-main/m1-ui/u1-common/c1-CustomInput/CustomInput";
 import {forgotPasswordTC} from "../../n1-main/m2-bll/b1-reducers/forgot-password-reducer";
 import {PATH} from "../../AppRoutes";
 
 const PasswordRecovery = () => {
-    let dispatch = useDispatch()
+    const dispatch = useAppDispatch()
 
     let forgotError = useSelector<AppRootStateType, string>(state => state.forgotPassword.error)
 
@@ -20,7 +20,7 @@ const PasswordRecovery = () => {
         },
         validate: forgotPageValidation,
         onSubmit: values => {
-            dispatch(forgotPasswordTC(values.email) as any)
+            dispatch(forgotPasswordTC(values.email))
         },
     })
 
