@@ -9,6 +9,7 @@ import Preloader from "../../u1-common/c2-Preloader/Preloader";
 import {loginValidation} from "../../../m4-utils/validators/validators";
 import CustomInput from "../../u1-common/c1-CustomInput/CustomInput";
 import {RequestStatusType} from "../../../m2-bll/b1-reducers/app-reducer";
+import {PATH} from "../../../../AppRoutes";
 
 export const Login = () => {
 
@@ -58,7 +59,7 @@ export const Login = () => {
 
 
                 <div className={l.forgotPassword}>
-                    <NavLink to={'/forgot'} >Forgot Password</NavLink>
+                    <NavLink to={PATH.RECOVERY_PASSWORD} >Forgot Password</NavLink>
                 </div>
 
                 <div className={l.rememberBox}>
@@ -77,7 +78,7 @@ export const Login = () => {
                         <button type='submit'>Login</button>
 
                         <h3>Don’t have an account?</h3>
-                        <h4><NavLink to={'/register'}>Sign Up</NavLink></h4>
+                        <h4><NavLink to={PATH.REGISTRATION}>Sign Up</NavLink></h4>
                     </div>
                 }
             </form>

@@ -7,6 +7,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../n1-main/m2-bll/store";
 import CustomInput from "../../n1-main/m1-ui/u1-common/c1-CustomInput/CustomInput";
 import {forgotPasswordTC} from "../../n1-main/m2-bll/b1-reducers/forgot-password-reducer";
+import {PATH} from "../../AppRoutes";
 
 const PasswordRecovery = () => {
     let dispatch = useDispatch()
@@ -44,7 +45,7 @@ const PasswordRecovery = () => {
                 <div className={l.loginButtonBox}>
                     <button type='submit'>Send Instructions</button>
                     <h3>Did you remember your password?</h3>
-                    <h4><NavLink to={'/login'}>Try logging in</NavLink></h4>
+                    <h4><NavLink to={PATH.LOGIN}>Try logging in</NavLink></h4>
                 </div>
 
 

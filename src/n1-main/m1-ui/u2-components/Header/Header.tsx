@@ -3,6 +3,7 @@ import l from './Header.module.scss'
 import {NavLink} from "react-router-dom";
 import profileIcon from '../../../../assets/icons/headerIcons/profileIcon.svg'
 import packListIcon from '../../../../assets/icons/headerIcons/packListIcon.svg'
+import {PATH} from "../../../../AppRoutes";
 
 const Header = () => {
     return (
@@ -13,11 +14,11 @@ const Header = () => {
 
             <nav className={l.nav}>
 
-                <NavLink to="/packlist"
+                <NavLink to={PATH.PACKS}
                          className={({ isActive }) => (isActive ? l.active : l.inactive)}>
                     <img className={l.iconStyle} src={packListIcon}/>Pack List</NavLink>
 
-                <NavLink to="/profile"
+                <NavLink to={PATH.PROFILE}
                          className={({ isActive }) => (isActive ? l.active : l.inactive)}>
                     <img src={profileIcon}/>Profile</NavLink>
 
