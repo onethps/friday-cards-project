@@ -1,9 +1,9 @@
-import {authAPI, ResponseError} from "../api/api";
+import {authAPI, ResponseError} from "../../m3-dal/api";
 import {Dispatch} from "redux";
 import {AxiosError} from "axios";
 import {actionTypeProfileReducer, setProfileInfo} from "./profile-reducer";
 import {RequestStatusType} from "./app-reducer";
-import {AppThunk} from "./store";
+import {AppThunk} from "../store";
 
 
 type InitialStateType = {

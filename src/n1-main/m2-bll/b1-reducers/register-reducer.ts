@@ -1,6 +1,6 @@
-import {authAPI, RESPONSE_TYPE, ResponseError} from "../api/api";
+import {authAPI, RESPONSE_TYPE, ResponseError} from "../../m3-dal/api";
 import {AxiosError} from "axios";
-import {AppDispatch} from "./store";
+import {AppDispatch} from "../store";
 
 
 const initialState = {
@@ -42,7 +42,7 @@ const isFetchingLoader = (loading:boolean) => {return {type: 'register/IS-FETCHI
 //thunk
 export const registerTC = (email:string, password:string) => {
     return   (dispatch: AppDispatch) => {
-        // clean past errors and turn on preloader
+        // clean past errors and turn on c2-Preloader
         dispatch(getErrorMessage(''))
         dispatch(isFetchingLoader(true))
         authAPI.register(email, password).then((res) => {

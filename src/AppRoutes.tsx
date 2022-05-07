@@ -1,10 +1,10 @@
 import {Navigate, Route, Routes} from "react-router-dom";
-import {Login} from "./components/Login/Login";
-import {Register} from "./components/Register/Register";
-import {Profile} from "./components/Profile/Profile";
-import ForgotPassword from "./features/forgot-password/ForgotPassword";
+import {Login} from "./n1-main/m1-ui/u2-components/Login/Login";
+import {Register} from "./n1-main/m1-ui/u2-components/Register/Register";
+import {Profile} from "./n1-main/m1-ui/u2-components/Profile/Profile";
+import PasswordRecovery from "./n2-features/f1-PasswordRecovery/PasswordRecovery";
 import React from "react";
-import PackList from "./components/PackLisst/PackList";
+import PackList from "./n1-main/m1-ui/u2-components/PackLisst/PackList";
 
 export const PATH = {
     LOGIN: '/login',
@@ -26,7 +26,7 @@ export const AppRoutes = () => {
             <Route path={PATH.LOGIN} element={<Login/>}/>
             <Route path={PATH.REGISTRATION} element={<Register/>}/>
             <Route path={PATH.PROFILE} element={<Profile/>}/>
-            <Route path={PATH.RECOVERY_PASSWORD} element={<ForgotPassword/>}/>
+            <Route path={PATH.RECOVERY_PASSWORD} element={<PasswordRecovery/>}/>
             <Route path={PATH.PACKS} element={<PackList/>}/>
 
         </Routes>

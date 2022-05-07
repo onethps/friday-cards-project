@@ -1,14 +1,14 @@
 import React from 'react';
-import l from './ForgotPassword.module.scss'
+import l from './PasswordRecovery.module.scss'
 import {useFormik} from "formik";
-import {forgotPageValidation} from "../../validators/validators";
+import {forgotPageValidation} from "../../n1-main/m4-utils/validators/validators";
 import {NavLink} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import {AppRootStateType} from "../../store/store";
-import CustomInput from "../../common/CustomInput/CustomInput";
-import {forgotPasswordTC} from "../../store/forgot-password-reducer";
+import {AppRootStateType} from "../../n1-main/m2-bll/store";
+import CustomInput from "../../n1-main/m1-ui/u1-common/c1-CustomInput/CustomInput";
+import {forgotPasswordTC} from "../../n1-main/m2-bll/b1-reducers/forgot-password-reducer";
 
-const ForgotPassword = () => {
+const PasswordRecovery = () => {
     let dispatch = useDispatch()
 
     let forgotError = useSelector<AppRootStateType, string>(state => state.forgotPassword.error)
@@ -53,4 +53,4 @@ const ForgotPassword = () => {
     );
 };
 
-export default ForgotPassword;
+export default PasswordRecovery;

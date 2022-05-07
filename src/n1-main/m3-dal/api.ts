@@ -1,6 +1,6 @@
 import axios, {AxiosResponse} from "axios"
-import {LoginParamsType} from "../store/login-reducer";
-import {forgotPasswordTC} from "../store/forgot-password-reducer";
+import {LoginParamsType} from "../m2-bll/b1-reducers/login-reducer";
+import {forgotPasswordTC} from "../m2-bll/b1-reducers/forgot-password-reducer";
 
 export const instance = axios.create({
     baseURL: 'https://neko-back.herokuapp.com/2.0',
@@ -9,7 +9,7 @@ export const instance = axios.create({
 
 
 
-//api
+//d1-api
 export const authAPI = {
     register(email:string, password:string) {
         return instance.post<AxiosResponse>('auth/register', {email, password} )

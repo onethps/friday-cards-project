@@ -3,12 +3,12 @@ import {Navigate, NavLink} from 'react-router-dom';
 import l from "./Login.module.scss";
 import {useDispatch, useSelector} from "react-redux";
 import {useFormik} from "formik";
-import {AppDispatch, AppRootStateType} from "../../store/store";
-import {loginTC} from "../../store/login-reducer";
-import Preloader from "../../common/preloader/Preloader";
-import {loginValidation} from "../../validators/validators";
-import CustomInput from "../../common/CustomInput/CustomInput";
-import {RequestStatusType} from "../../store/app-reducer";
+import {AppDispatch, AppRootStateType} from "../../../m2-bll/store";
+import {loginTC} from "../../../m2-bll/b1-reducers/login-reducer";
+import Preloader from "../../u1-common/c2-Preloader/Preloader";
+import {loginValidation} from "../../../m4-utils/validators/validators";
+import CustomInput from "../../u1-common/c1-CustomInput/CustomInput";
+import {RequestStatusType} from "../../../m2-bll/b1-reducers/app-reducer";
 
 export const Login = () => {
 

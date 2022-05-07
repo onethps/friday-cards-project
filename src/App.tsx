@@ -1,9 +1,9 @@
 import React, {useEffect} from 'react';
-import './App.css';
+import './App.scss';
 import {useDispatch, useSelector} from "react-redux";
-import {initializeAppTC} from "./store/app-reducer";
-import {AppRootStateType} from "./store/store";
-import Preloader from "./common/preloader/Preloader";
+import {initializeAppTC} from "./n1-main/m2-bll/b1-reducers/app-reducer";
+import {AppRootStateType} from "./n1-main/m2-bll/store";
+import Preloader from "./n1-main/m1-ui/u1-common/c2-Preloader/Preloader";
 import {AppRoutes} from "./AppRoutes";
 
 

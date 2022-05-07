@@ -1,14 +1,14 @@
 import React, {memo} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {AppRootStateType} from "../../store/store";
+import {AppRootStateType} from "../../../m2-bll/store";
 import {Navigate} from "react-router-dom";
 import {useFormik} from "formik";
 import l from './Profile.module.scss';
-import onLoadAvatarIcon from '../../common/icons/onLoadAvatar.svg'
-import {changeProfileInfoTC, logoutTC} from "../../store/profile-reducer";
+import onLoadAvatarIcon from '../../../../assets/icons/onLoadAvatar.svg'
+import {changeProfileInfoTC, logoutTC} from "../../../m2-bll/b1-reducers/profile-reducer";
 import Header from '../Header/Header';
-import {profileValidate} from "../../validators/validators";
-import CustomInput from '../../common/CustomInput/CustomInput';
+import {profileValidate} from "../../../m4-utils/validators/validators";
+import CustomInput from '../../u1-common/c1-CustomInput/CustomInput';
 
 
 export const Profile = memo(() => {

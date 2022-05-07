@@ -3,12 +3,12 @@ import {Navigate} from 'react-router-dom';
 import l from "./Register.module.scss";
 import {useDispatch, useSelector} from "react-redux";
 import {useFormik} from "formik";
-import {AppDispatch, AppRootStateType} from "../../store/store";
-import {registerTC} from "../../store/register-reducer";
-import Preloader from "../../common/preloader/Preloader";
-import showPasswordIcon from "../../common/icons/eye.svg";
-import {RegisterValidate} from "../../validators/validators";
-import CustomInput from "../../common/CustomInput/CustomInput";
+import {AppDispatch, AppRootStateType} from "../../../m2-bll/store";
+import {registerTC} from "../../../m2-bll/b1-reducers/register-reducer";
+import Preloader from "../../u1-common/c2-Preloader/Preloader";
+import showPasswordIcon from "../../../../assets/icons/eye.svg";
+import {RegisterValidate} from "../../../m4-utils/validators/validators";
+import CustomInput from "../../u1-common/c1-CustomInput/CustomInput";
 
 
 

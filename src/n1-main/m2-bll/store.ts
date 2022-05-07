@@ -1,10 +1,10 @@
 import {applyMiddleware, combineReducers, createStore} from "redux";
-import {actionTypeRegistrationReducer, registerReducer} from "./register-reducer";
+import {actionTypeRegistrationReducer, registerReducer} from "./b1-reducers/register-reducer";
 import thunkMiddleware, { ThunkAction } from 'redux-thunk'
-import {loginReducer} from "./login-reducer";
-import {profileReducer} from "./profile-reducer";
-import {appReducer} from "./app-reducer";
-import {ForgotPasswordReducer} from "./forgot-password-reducer";
+import {loginReducer} from "./b1-reducers/login-reducer";
+import {profileReducer} from "./b1-reducers/profile-reducer";
+import {appReducer} from "./b1-reducers/app-reducer";
+import {ForgotPasswordReducer} from "./b1-reducers/forgot-password-reducer";
 
 const rootReducer  = combineReducers( {
     app:appReducer,

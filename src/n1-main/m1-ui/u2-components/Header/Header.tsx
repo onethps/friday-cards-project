@@ -1,8 +1,8 @@
 import React from 'react';
 import l from './Header.module.scss'
 import {NavLink} from "react-router-dom";
-import profileIcon from '../../common/icons/headerIcons/profileIcon.svg'
-import packListIcon from '../../common/icons/headerIcons/packListIcon.svg'
+import profileIcon from '../../../../assets/icons/headerIcons/profileIcon.svg'
+import packListIcon from '../../../../assets/icons/headerIcons/packListIcon.svg'
 
 const Header = () => {
     return (
