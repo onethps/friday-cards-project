@@ -3,7 +3,7 @@ import {LoginParamsType} from "../store/login-reducer";
 import {forgotPasswordTC} from "../store/forgot-password-reducer";
 
 export const instance = axios.create({
-    baseURL: process.env.REACT_APP_BACK_URL,
+    baseURL: 'https://neko-back.herokuapp.com/2.0',
     withCredentials: true,
 })
 
@@ -12,7 +12,7 @@ export const instance = axios.create({
 //api
 export const authAPI = {
     register(email:string, password:string) {
-        return instance.post<AxiosResponse>('/auth/register', {email, password} )
+        return instance.post<AxiosResponse>('auth/register', {email, password} )
     },
 
     login(loginData: LoginParamsType) {
@@ -62,7 +62,7 @@ export type ResponseType = {
     created: Date;
     updated: Date;
     isAdmin: boolean;
-    verified: boolean;
+    verified: boolean; // подтвердил ли почту
     rememberMe: boolean;
     error?: string;
 }
