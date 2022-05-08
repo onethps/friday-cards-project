@@ -47,8 +47,8 @@ const PackList = () => {
             dataIndex: 'user_name',
             key: 'user_name',
             render:(user_name:string,) => (
-                <div style={{ textAlign:'center', minWidth:'200px'}}>
-                    <Typography.Text style={{ fontSize: '20px' }}>
+                <div style={{ textAlign:'center', width:'200px'}}>
+                    <Typography.Text style={{ fontSize: '16px' }}>
                         {user_name}
                     </Typography.Text>
                 </div>
@@ -59,8 +59,8 @@ const PackList = () => {
             dataIndex: 'updated',
             key: 'updated',
             render:(updated:string) => (
-                <div style={{ textAlign:'center', minWidth:'200px'}}>
-                    <Typography.Text style={{ fontSize: '20px' }}>
+                <div style={{ textAlign:'center', width:'150px'}}>
+                    <Typography.Text style={{ fontSize: '16px' }}>
                         {updated}
                     </Typography.Text>
                 </div>
@@ -69,10 +69,10 @@ const PackList = () => {
         {
             title: 'CARDS COUNT',
             dataIndex: 'cardsCount',
-            key: 'cardsCount',
+            key: '1',
             render:(cardsCount:string) => (
-                <div style={{textAlign:'center', minWidth:'100'}}>
-                    <Typography.Text style={{ fontSize: '20px' }}>
+                <div style={{ textAlign:'center', width:'50px'}}>
+                    <Typography.Text style={{ fontSize: '16px' }}>
                         {cardsCount}
                     </Typography.Text>
                 </div>
@@ -81,10 +81,10 @@ const PackList = () => {
         {
             title: 'Name',
             dataIndex: 'name',
-            key: 'name',
+            key: '2',
             render:(name:string) => (
-                <div style={{ textAlign:'center', minWidth:'200px'}}>
-                    <Typography.Text style={{fontSize: '20px' }}>
+                <div style={{ textAlign:'center', width:'150px'}}>
+                    <Typography.Text style={{fontSize: '15px' }}>
                         {name}
                     </Typography.Text>
                 </div>
@@ -93,7 +93,7 @@ const PackList = () => {
         {
             title: 'Actions',
             dataIndex: 'actions',
-            key: 'actions',
+            key: '3',
             render:  () =>  (  <Space size="middle">
                 <Button style={{background:'red', color:'white'}} >Delete </Button>
                 <Button type={"primary"} >Edit</Button>
@@ -102,15 +102,12 @@ const PackList = () => {
         },
     ]
 
-
-
-    const onafter = (arr:any[]) => {
-        setMinMax(arr)
+    const onChangeMinMaxSliderValue = (sliderValues:number[]) => {
+        setMinMax(sliderValues)
     }
-
     return (
 
-        <div>
+        <div style={{marginBottom: '200px'}}>
             <nav>
                 <Header/>
             </nav>
@@ -129,7 +126,7 @@ const PackList = () => {
 
                         <h3>Number of cards</h3>
                         <div>
-                            <Slider className={l.sliderStyle} onAfterChange={onafter} range defaultValue={[20,50]} disabled={false} />
+                            <Slider className={l.sliderStyle} onAfterChange={onChangeMinMaxSliderValue} range defaultValue={[20,50]} disabled={false} />
                         </div>
                     </div>
                 </div>
@@ -145,7 +142,8 @@ const PackList = () => {
                     {loader ? <div style={{width:'500px', height:'700px'}}><Preloader/></div> :
                         <div className={l.tableBlock}>
                             <div className={l.tableStyle}>
-                                <Table dataSource={currentCardsPack} columns={columns} pagination={false}/>
+                                <Table  className={l.booking_information_table} size={"large"} dataSource={currentCardsPack} columns={columns} pagination={false}/>
+                            <Table.Column/>
                             </div>
                             <Pagination onChange={(page, pageSize1) => {
                                 setCurrentPage(page)
