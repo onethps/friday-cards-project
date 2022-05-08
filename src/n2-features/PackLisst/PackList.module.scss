@@ -1,0 +1,98 @@
+
+
+
+@import "src/n1-main/m1-ui/u1-common/c3-styles/mixims";
+.modalBox {
+  @include container;
+  padding: 0;
+  display: flex;
+  min-height: 500px;
+  min-width: 450px;
+}
+//LEFT SIDE
+.leftSideContainer{
+  display: flex;
+  flex-direction: row;
+  background-color: #ECECF9;
+  min-width: 300px;
+  margin-right: 48px;
+}
+
+.leftSideContentBox{
+  display: flex;
+  flex-direction: column;
+
+  & h3 {
+    margin-bottom: 20px;
+  }
+
+  .buttonGroup{
+    display: flex;
+    margin-bottom: 20px;
+
+    .myCardsButton, .allCardsButton {
+      width: 150px;
+      border: none;
+      padding: 10px 0;
+      background-color: #6f34fe;
+      color: white;
+    }
+
+    .myCardsButton{
+      background-color: #ffff;
+      color: #6f34fe;
+    }
+  }
+
+.sliderStyle{
+  margin-top: 50px;
+}
+
+
+
+}
+
+
+
+
+
+//RIGHT SIDE
+
+.rightSideContainer{
+  display: flex;
+  flex-direction: column;
+
+
+
+  .searchBlock{
+    display: flex;
+    justify-content: space-around;
+    padding: 20px 0;
+
+
+    .inputSearch{
+      width: 75%;
+    }
+
+    & button{
+      width: 180px;
+      display: inline-block;
+      background-color: #21268F;
+      color: #ECECF9;
+      border: none;
+      outline: none;
+      border-radius: 40px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+  }
+
+
+  .tableStyle{
+    padding: 20px;
+    margin: 25px;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  }
+}
+

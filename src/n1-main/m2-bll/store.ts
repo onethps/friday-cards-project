@@ -6,13 +6,15 @@ import {profileReducer} from "./b1-reducers/profile-reducer";
 import {appReducer} from "./b1-reducers/app-reducer";
 import {ForgotPasswordReducer} from "./b1-reducers/forgot-password-reducer";
 import {TypedUseSelectorHook, useDispatch, useSelector} from "react-redux";
+import {CardsPackReducer} from "./b1-reducers/card-packs-reducer";
 
 const rootReducer  = combineReducers( {
     app:appReducer,
     register: registerReducer,
     login: loginReducer,
     profile: profileReducer,
-    forgotPassword: ForgotPasswordReducer
+    forgotPassword: ForgotPasswordReducer,
+    cardPacks: CardsPackReducer
 })
 
 export type AppRootStateType = ReturnType<typeof rootReducer>

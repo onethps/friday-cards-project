@@ -4,7 +4,7 @@ import {Register} from "./n1-main/m1-ui/u2-components/Register/Register";
 import {Profile} from "./n1-main/m1-ui/u2-components/Profile/Profile";
 import PasswordRecovery from "./n2-features/f1-PasswordRecovery/PasswordRecovery";
 import React from "react";
-import PackList from "./n1-main/m1-ui/u2-components/PackLisst/PackList";
+import PackList from "./n2-features/PackLisst/PackList";
 
 export const PATH = {
     LOGIN: '/login',

@@ -1,10 +1,9 @@
 import axios, {AxiosResponse} from "axios"
 import {LoginParamsType} from "../m2-bll/b1-reducers/login-reducer";
-import {forgotPasswordTC} from "../m2-bll/b1-reducers/forgot-password-reducer";
 
 export const instance = axios.create({
-    // baseURL: process.env.REACT_APP_BACK_URL || 'http://localhost:7542/2.0/',
-    baseURL: 'https://neko-back.herokuapp.com/2.0',
+    baseURL: process.env.REACT_APP_BACK_URL || 'http://localhost:7542/2.0/',
+    // baseURL: 'https://neko-back.herokuapp.com/2.0',
     withCredentials: true,
 })
 
@@ -13,7 +12,7 @@ export const instance = axios.create({
 //d1-api
 export const authAPI = {
     register(email:string, password:string) {
-        return instance.post<AxiosResponse>('auth/register', {email, password} )
+        return instance.post<AxiosResponse>('/auth/register', {email, password} )
     },
 
     login(loginData: LoginParamsType) {
@@ -45,6 +44,21 @@ export const authAPI = {
 
 }
 
+
+export const cardsAPI = {
+    getCardsList(currentPage:number = 1, packsPerPage:number = 50, minMax:number[]) {
+        return instance.get<ResponseCardPackType>('/cards/pack', {
+            params:
+                {
+                    page:currentPage,
+                    pageCount:packsPerPage,
+                    min:minMax[0],
+                    max:minMax[1],
+                }
+        })
+    }
+}
+
 export enum RESPONSE_TYPE {
     REGISTER_SUCCESS = 'Created',
 }
@@ -68,4 +82,54 @@ export type ResponseType = {
     rememberMe: boolean;
     error?: string;
 }
+
+
+
+export type ResponseCardType = {
+    _id:string,
+    user_id: string,
+    user_name: string,
+    private: boolean,
+    name: string,
+    path: string,
+    grade: number,
+    shots: number,
+    cardsCount: number,
+    type: string,
+    rating: number,
+    created: string,
+    updated: string,
+    more_id: string,
+    __v: number
+}
+
+
+export type ResponseCardPackType = {
+    cardPacks: ResponseCardType[]
+    cardPacksTotalCount: number
+    // количество колод
+    maxCardsCount: number
+    minCardsCount: number
+    page: number // выбранная страница
+    pageCount: number
+    // количество элементов на странице
+}
+
+
+// export type UserCardType = {
+//
+//     _id: string
+//     productName:string
+//     price: number
+//     productType: string
+//     rating: number
+//     created: string
+//     updated: string
+//     __v: number
+//     id: string
+//
+// }
+
+
+
 
