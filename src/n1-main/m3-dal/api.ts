@@ -44,19 +44,22 @@ export const authAPI = {
 
 }
 
+type cardPacksQueryParams  = {
+    packName?:string
+    min?: number
+    max?:number
+    currentPage?: number
+    packsPerPage?: number
+    sortPacks?: string
+    page?:number
+    pageCount?:number
+    user_id?:string
+}
+
 
 export const cardsAPI = {
-    getCardsList(currentPage:number = 1, packsPerPage:number = 50, minMax:number[]) {
-        return instance.get<ResponseCardPackType>('/cards/pack', {
-            params:
-                {
-                    page:currentPage,
-                    pageCount:packsPerPage,
-                    min:minMax[0],
-                    max:minMax[1],
-                }
-        })
-    }
+    getCardsList({...carPackQuerys}:cardPacksQueryParams) {
+        return instance.get<ResponseCardPackType>('/cards/pack', {params: carPackQuerys})}
 }
 
 export enum RESPONSE_TYPE {
