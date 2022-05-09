@@ -16,7 +16,7 @@ export const PATH = {
     NEW_PASSWORD: '/new_pass',
     // ERROR_404: '/404',
     // TEST: '/test',
-    CARDS: '/cards/:id',
+    CARDS: 'packlist/cards/:id',
     // TRAIN: '/train'
 }
 

@@ -1,6 +1,6 @@
 import {Dispatch} from "redux";
 import {cardAPI, cardQueryParams} from "./card-api";
-import {ResponseCardType} from "../../n1-main/m3-dal/packs-api";
+import {RequestStatusType} from "../../n1-main/m2-bll/b1-reducers/app-reducer";
 
 
 const initialState = {
@@ -8,10 +8,10 @@ const initialState = {
     cardPacksTotalCount: 0,
     maxCardsCount: 0,
     minCardsCount: 0,
-    page: 0, // выбранная страница
+    page: 0,
     pageCount: 0,
-    packUserId: ''
-    // количество элементов на странице
+    packUserId: '',
+    loading: false
 }
 
 type InitialStateType = {
@@ -20,9 +20,9 @@ type InitialStateType = {
     // количество колод
     maxCardsCount: number
     minCardsCount: number
-    page: number // выбранная страница
+    page: number
     pageCount: number
-    // количество элементов на странице
+    loading: boolean
 
 }
 
@@ -30,6 +30,8 @@ export const CardReducer = (state:InitialStateType = initialState, actions:Actio
     switch (actions.type) {
         case "card/SET-CARDS":
             return {...state, cardPacks: actions.cards}
+        case "card/SET-CARD-STATUS":
+            return {...state, loading: actions.isLoading}
         default:
             return state
     }
@@ -37,9 +39,18 @@ export const CardReducer = (state:InitialStateType = initialState, actions:Actio
 
 
 export const fetchCardsTC = (data:cardQueryParams) => (dispatch:Dispatch) => {
+    dispatch(isLoading(true))
     cardAPI.getCard(data).then((res) => {
         console.log(res)
         dispatch(setCardsAC(res.data.cards))
+
+    }).catch((err) => {
+        console.log(err)
+    })
+
+
+        .finally(() => {
+        dispatch(isLoading(false))
     })
 }
 
@@ -50,7 +61,12 @@ export const setCardsAC = (cards:ResponseCardContent[]) => {
 }
 
 
-type ActionsTypes = ReturnType<typeof setCardsAC>
+const isLoading = (isLoading:boolean) => {
+    return {type: 'card/SET-CARD-STATUS', isLoading} as const
+}
+
+
+type ActionsTypes = ReturnType<typeof setCardsAC> | ReturnType<typeof isLoading>
 
 
 export type GetCardsResponse =  {

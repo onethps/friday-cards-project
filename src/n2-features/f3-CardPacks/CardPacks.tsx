@@ -57,11 +57,10 @@ const CardPacks = () => {
 
     return (
 
-        <div style={{marginBottom: '200px'}}>
+        <div>
             <nav>
                 <Header/>
             </nav>
-
 
             <div className={l.modalBox}>
 

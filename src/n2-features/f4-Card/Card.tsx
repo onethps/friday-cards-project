@@ -8,11 +8,14 @@ import {fetchCardsTC, ResponseCardContent} from "./card-reducer";
 import {useSelector} from "react-redux";
 import {PATH} from "../../AppRoutes";
 import backButton from "../../assets/icons/back-button-img.svg"
+import Header from "../../n1-main/m1-ui/u2-components/Header/Header";
 
 const Card = () => {
 
     const Cards = useSelector<AppRootStateType, ResponseCardContent[]>(state => state.card.cardPacks
         .map(m => ({...m, updated: new Date(m.updated).toLocaleDateString("ru-RU")})))
+
+    const isLoading = useSelector<AppRootStateType, boolean>(state => state.card.loading)
 
     const [currentPage, setCurrentPage] = useState(1)
     const [packsPerPage, setPacksPerPage] = useState(5)
@@ -38,7 +41,14 @@ const Card = () => {
 
 
     return (
-        <div className={s.modalBox}>
+
+        <div>
+            <nav>
+                <Header/>
+            </nav>
+
+
+            <div className={s.modalBox}>
             <div className={s.container}>
                 <div className={s.headerBox}>
                     <img onClick={onHandleBackButton} src={backButton}/>
@@ -50,7 +60,7 @@ const Card = () => {
                     <Input placeholder={'Search by Answer...'}/>
                 </div>
                 <div className={s.tableStyle}>
-                    <Table loading={false} pagination={false} columns={CardColumns} dataSource={currentCardsPack} style={{ minWidth: '900px' }}/>
+                    <Table loading={isLoading} pagination={false} columns={CardColumns} dataSource={currentCardsPack} style={{ minWidth: '900px' }}/>
                 </div>
                 <Pagination style={{margin:'50px 0'}}
                             onChange={(page, pageSize1) => {
@@ -58,6 +68,8 @@ const Card = () => {
                                 setPacksPerPage(pageSize1)}}
                             pageSize={packsPerPage} current={currentPage} total={Cards.length}/>
             </div>
+        </div>
+
         </div>
 
     );

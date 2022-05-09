@@ -14,7 +14,7 @@ export const PackColumns = [
         dataIndex: 'name',
         key: '_id',
         render: (value:string, record:ResponseCardType) =>
-            <NavLink to={`/cards/${record._id}`}>{record.name}</NavLink>
+            <NavLink to={`/packlist/cards/${record._id}`}>{record.name}</NavLink>
     },
     {
         title: 'CardsCount',
