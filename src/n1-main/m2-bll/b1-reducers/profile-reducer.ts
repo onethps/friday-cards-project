@@ -1,5 +1,5 @@
 import {Dispatch} from "redux";
-import {authAPI} from "../../m3-dal/api";
+import {authAPI} from "../../m3-dal/auth-api";
 import {isLoggedInAC} from "./login-reducer";
 
 const initialState = {

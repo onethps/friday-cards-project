@@ -1,4 +1,4 @@
-import {authAPI, ResponseError} from "../../m3-dal/api";
+import {authAPI, ResponseError} from "../../m3-dal/auth-api";
 import {Dispatch} from "redux";
 import {AxiosError} from "axios";
 import {actionTypeProfileReducer, setProfileInfo} from "./profile-reducer";

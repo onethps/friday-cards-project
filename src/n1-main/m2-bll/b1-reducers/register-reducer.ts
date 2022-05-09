@@ -1,4 +1,4 @@
-import {authAPI, RESPONSE_TYPE, ResponseError} from "../../m3-dal/api";
+import {authAPI, RESPONSE_TYPE, ResponseError} from "../../m3-dal/auth-api";
 import {AxiosError} from "axios";
 import {AppDispatch} from "../store";
 

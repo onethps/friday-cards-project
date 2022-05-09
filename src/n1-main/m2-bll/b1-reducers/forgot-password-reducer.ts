@@ -1,4 +1,4 @@
-import {authAPI} from "../../m3-dal/api";
+import {authAPI} from "../../m3-dal/auth-api";
 import {Dispatch} from "redux";
 
 const initState = {

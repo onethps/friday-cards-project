@@ -9,7 +9,7 @@ import {changeProfileInfoTC, logoutTC} from "../../../m2-bll/b1-reducers/profile
 import Header from '../Header/Header';
 import {profileValidate} from "../../../m4-utils/validators/validators";
 import CustomInput from '../../u1-common/c1-CustomInput/CustomInput';
-import {authAPI} from "../../../m3-dal/api";
+import {authAPI} from "../../../m3-dal/auth-api";
 import {PATH} from "../../../../AppRoutes";
 
 

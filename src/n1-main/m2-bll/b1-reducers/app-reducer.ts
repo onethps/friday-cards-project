@@ -1,7 +1,7 @@
 import {Dispatch} from "redux";
 import {setProfileInfo} from "./profile-reducer";
 import {AppThunk} from "../store";
-import {authAPI, ResponseError} from "../../m3-dal/api";
+import {authAPI, ResponseError} from "../../m3-dal/auth-api";
 import {isLoggedInAC} from "./login-reducer";
 import {AxiosError} from "axios";
 

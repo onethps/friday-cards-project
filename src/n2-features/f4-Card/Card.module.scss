@@ -1,0 +1,58 @@
+@import "src/n1-main/m1-ui/u1-common/c3-styles/mixims";
+.modalBox{
+  @include container;
+  display: flex;
+  margin: 50px auto;
+  width: 1000px;
+  flex-direction: column;
+
+
+  .container{
+    width: 940px;
+    margin: 0 auto;
+
+
+    .headerBox{
+      display: flex;
+      align-items: center;
+      width: 200px;
+      height: 25px;
+      margin-top: 50px;
+      justify-content: space-between;
+
+
+      & img{
+        height: 50px;
+        cursor: pointer;
+      }
+
+      & h1 {
+        height: 50px;
+        margin: 0;
+      }
+    }
+
+    .inputBlock{
+      display: flex;
+      margin: 20px 0;
+    }
+
+
+
+    .tableStyle{
+      padding: 20px;
+      margin: 25px auto;
+      box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    }
+
+
+  }
+
+
+
+
+
+
+}
+
+

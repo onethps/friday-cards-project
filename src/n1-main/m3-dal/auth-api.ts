@@ -44,23 +44,9 @@ export const authAPI = {
 
 }
 
-type cardPacksQueryParams  = {
-    packName?:string
-    min?: number
-    max?:number
-    currentPage?: number
-    packsPerPage?: number
-    sortPacks?: string
-    page?:number
-    pageCount?:number
-    user_id?:string
-}
 
 
-export const cardsAPI = {
-    getCardsList({...carPackQuerys}:cardPacksQueryParams) {
-        return instance.get<ResponseCardPackType>('/cards/pack', {params: carPackQuerys})}
-}
+
 
 export enum RESPONSE_TYPE {
     REGISTER_SUCCESS = 'Created',
@@ -88,35 +74,7 @@ export type ResponseType = {
 
 
 
-export type ResponseCardType = {
-    _id:string,
-    user_id: string,
-    user_name: string,
-    private: boolean,
-    name: string,
-    path: string,
-    grade: number,
-    shots: number,
-    cardsCount: number,
-    type: string,
-    rating: number,
-    created: string,
-    updated: string,
-    more_id: string,
-    __v: number
-}
 
-
-export type ResponseCardPackType = {
-    cardPacks: ResponseCardType[]
-    cardPacksTotalCount: number
-    // количество колод
-    maxCardsCount: number
-    minCardsCount: number
-    page: number // выбранная страница
-    pageCount: number
-    // количество элементов на странице
-}
 
 
 // export type UserCardType = {

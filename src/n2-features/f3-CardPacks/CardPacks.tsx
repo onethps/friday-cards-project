@@ -1,20 +1,20 @@
 import {Input, Pagination, Slider, Table} from 'antd';
 import React, {useEffect, useState} from 'react';
 import Header from "../../n1-main/m1-ui/u2-components/Header/Header";
-import l from './PackList.module.scss'
+import l from './CardPack.module.scss'
 import 'antd/dist/antd.css';
-import {cardsAPI} from "../../n1-main/m3-dal/api";
 import {AppRootStateType, useAppDispatch} from "../../n1-main/m2-bll/store";
-import {setCardPacksAC} from "../../n1-main/m2-bll/b1-reducers/card-packs-reducer";
 import {useSelector} from "react-redux";
-import Search from "antd/es/input/Search";
-import TableButtonActions from "./TableActions/TableButtonActions";
+import {packsAPI} from "../../n1-main/m3-dal/packs-api";
+import {PackColumns} from "./tablePackData";
+import {setCardPacksAC} from "./card-packs-reducer";
 
 
-const PackList = () => {
+const CardPacks = () => {
     const dispatch = useAppDispatch()
+    const cardPacks = useSelector<AppRootStateType, any[]>(state => state.cardPacks.cardPacks
+        .map(m => ({...m, updated: new Date(m.updated).toLocaleDateString("ru-RU")})))
 
-    const cardPacks = useSelector<AppRootStateType, any[]>(state => state.cardPacks.cardPacks)
 
     const [currentPage, setCurrentPage] = useState(1)
     const [packsPerPage, setPacksPerPage] = useState(5)
@@ -30,19 +30,17 @@ const PackList = () => {
         const delayDebounceFn = setTimeout(() => {
             setLoader(true)
             const getCards = async () => {
-                const res = await cardsAPI.getCardsList({min:minMax[0], max:minMax[1], pageCount: 100,
-                    packName: searchText
-                })
+                const dataQueryParams = {min:minMax[0], max:minMax[1], pageCount: 100, packName: searchText}
+                const res = await packsAPI.getCardsList(dataQueryParams)
                 dispatch(setCardPacksAC(res.data.cardPacks))
                 setLoader(false)
             }
             getCards()
-        }, 500)
+        }, 1000)
 
         return () => clearTimeout(delayDebounceFn)
 
     },[minMax, searchText])
-
 
 
 
@@ -54,6 +52,7 @@ const PackList = () => {
     const onChangeMinMaxSliderValue = (sliderValues:number[]) => {
         setMinMax(sliderValues)
     }
+
 
 
     return (
@@ -91,19 +90,17 @@ const PackList = () => {
                     </div>
                     <div className={l.tableBlock}>
                         <div className={l.tableStyle}>
-                            <Table style={{ minWidth: '900px' }} loading={loader}  className={l.booking_information_table} dataSource={currentCardsPack} pagination={false}>
-                                <Table.Column title={'Created By'} dataIndex={'user_name'} key={'1'} />
-                                <Table.Column title={'Name'} dataIndex={'name'} key={'2'} />
-                                <Table.Column title={'CardsCount'} dataIndex={'cardsCount'} key={'4'} />
-                                <Table.Column title={'LAST UPDATE'} dataIndex={'updated'} key={'5'} />
-                                <Table.Column title={'Actions'} dataIndex={'actions'} render={() => <TableButtonActions/>} key={'6'} />
+                            <Table style={{ minWidth: '900px' }} columns={PackColumns}
+                                   loading={loader}  className={l.booking_information_table}
+                                   dataSource={currentCardsPack} pagination={false}/>
 
-                            </Table>
+
                         </div>
                         <Pagination onChange={(page, pageSize1) => {
                             setCurrentPage(page)
                             setPacksPerPage(pageSize1)
-                        }}  current={currentPage}   showSizeChanger pageSizeOptions={[5,10,25]} pageSize={packsPerPage} total={cardPacks.length}/>;
+                        }}  current={currentPage}   showSizeChanger pageSizeOptions={[5,10,25]}
+                                    pageSize={packsPerPage} total={cardPacks.length}/>;
                     </div>
                 </div>
             </div>
@@ -111,4 +108,4 @@ const PackList = () => {
     );
 };
 
-export default PackList;
+export default CardPacks;

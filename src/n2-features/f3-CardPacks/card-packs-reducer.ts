@@ -1,12 +1,11 @@
-import {ResponseCardType} from "../../m3-dal/api";
-import {Dispatch} from "redux";
+import {ResponseCardType} from "../../n1-main/m3-dal/packs-api";
 
 const initState = {
     cardPacks: [],
 }
 
 type initStateType = {
-    cardPacks: Array<ResponseCardType>
+    cardPacks: ResponseCardType[]
 
 }
 
@@ -15,9 +14,7 @@ export const CardsPackReducer = (state:initStateType = initState, action:cardPac
     switch (action.type) {
         case "cardpack/SET-CARD-PACK":
             return{
-                ...state, cardPacks: action.cardPacks.map
-                (m => ({...m, updated: new Date(m.updated).toLocaleDateString("ru-RU")}))
-            }
+                ...state, cardPacks: action.cardPacks}
         default:
             return state
 
