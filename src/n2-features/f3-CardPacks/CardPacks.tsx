@@ -5,14 +5,15 @@ import l from './CardPack.module.scss'
 import 'antd/dist/antd.css';
 import {AppRootStateType, useAppDispatch} from "../../n1-main/m2-bll/store";
 import {useSelector} from "react-redux";
-import {packsAPI} from "../../n1-main/m3-dal/packs-api";
+import {packsAPI, ResponseCardType} from "../../n1-main/m3-dal/packs-api";
 import {PackColumns} from "./tablePackData";
 import {setCardPacksAC} from "./card-packs-reducer";
 
 
+
 const CardPacks = () => {
     const dispatch = useAppDispatch()
-    const cardPacks = useSelector<AppRootStateType, any[]>(state => state.cardPacks.cardPacks
+    const cardPacks = useSelector<AppRootStateType, ResponseCardType[]>(state => state.cardPacks.cardPacks
         .map(m => ({...m, updated: new Date(m.updated).toLocaleDateString("ru-RU")})))
 
 
@@ -31,6 +32,7 @@ const CardPacks = () => {
             setLoader(true)
             const getCards = async () => {
                 const dataQueryParams = {min:minMax[0], max:minMax[1], pageCount: 100, packName: searchText}
+                setCurrentPage(1)
                 const res = await packsAPI.getCardsList(dataQueryParams)
                 dispatch(setCardPacksAC(res.data.cardPacks))
                 setLoader(false)
@@ -74,7 +76,7 @@ const CardPacks = () => {
 
                         <h3>Number of cards</h3>
                         <div>
-                            <Slider className={l.sliderStyle} onChange={onChangeMinMaxSliderValue} range defaultValue={[20,50]} disabled={false} />
+                            <Slider className={l.sliderStyle} onChange={onChangeMinMaxSliderValue} range defaultValue={[minMax[0],minMax[1]]} disabled={false} />
                         </div>
                     </div>
                 </div>

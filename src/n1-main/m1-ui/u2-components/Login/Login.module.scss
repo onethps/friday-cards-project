@@ -6,20 +6,19 @@
 }
 
 .loginBox h1 {
-  font-family: Poppins, sans-serif;
   color: #2D2E46;
   text-align: center;
 }
 
 .loginBox h2 {
-  font-family: Poppins, sans-serif;
+
   margin-top: 50px;
   color: #2D2E46;
   text-align: center;
 }
 
 .loginBox h3 {
-  font-family: Poppins, sans-serif;
+
   margin-top: 31px;
   color: grey;
   font-weight: 600;
@@ -29,7 +28,7 @@
 }
 
 .loginBox h4 {
-  font-family: Poppins, sans-serif;
+
   margin-top: 25px;
   color: #21268F;
   font-size: 16px;
@@ -79,7 +78,6 @@
   }
 
   & label {
-    font-family: 'Poppins', sans-serif;
     font-weight: 600;
     margin: 0 20px;
   }
@@ -106,7 +104,6 @@
 
 .forgotPassword{
   text-align: right;
-  font-family: Poppins, sans-serif;
   font-weight: 400;
   font-size: 16px;
 
@@ -119,7 +116,6 @@
 
 .loginBox .errorMessage{
   color: red;
-  font-family: Poppins, sans-serif;
   font-weight: 600;
 }
 

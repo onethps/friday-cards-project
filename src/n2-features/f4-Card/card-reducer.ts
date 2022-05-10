@@ -4,6 +4,7 @@ import {RequestStatusType} from "../../n1-main/m2-bll/b1-reducers/app-reducer";
 
 
 const initialState = {
+    // cardName:'',
     cardPacks: [],
     cardPacksTotalCount: 0,
     maxCardsCount: 0,
@@ -41,7 +42,6 @@ export const CardReducer = (state:InitialStateType = initialState, actions:Actio
 export const fetchCardsTC = (data:cardQueryParams) => (dispatch:Dispatch) => {
     dispatch(isLoading(true))
     cardAPI.getCard(data).then((res) => {
-        console.log(res)
         dispatch(setCardsAC(res.data.cards))
 
     }).catch((err) => {

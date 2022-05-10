@@ -12,24 +12,32 @@ import Header from "../../n1-main/m1-ui/u2-components/Header/Header";
 
 const Card = () => {
 
+    const dispatch = useAppDispatch()
+    const {id} = useParams()
+    const navigate = useNavigate();
+
     const Cards = useSelector<AppRootStateType, ResponseCardContent[]>(state => state.card.cardPacks
         .map(m => ({...m, updated: new Date(m.updated).toLocaleDateString("ru-RU")})))
+
+    const currentCardName = useSelector<AppRootStateType, any>(state => state.cardPacks.cardPacks
+        .filter(f => f._id === id && f.name))
+
+
+
 
     const isLoading = useSelector<AppRootStateType, boolean>(state => state.card.loading)
 
     const [currentPage, setCurrentPage] = useState(1)
     const [packsPerPage, setPacksPerPage] = useState(5)
 
-    const dispatch = useAppDispatch()
-    const {id} = useParams()
-    const navigate = useNavigate();
+
 
     const onHandleBackButton = () => {
         navigate(PATH.PACKS)
     }
 
     useEffect(() => {
-        if (id !== undefined) {
+        if (id) {
             dispatch(fetchCardsTC({cardsPack_id:id, pageCount:100}))
         }
 
@@ -49,26 +57,26 @@ const Card = () => {
 
 
             <div className={s.modalBox}>
-            <div className={s.container}>
-                <div className={s.headerBox}>
-                    <img onClick={onHandleBackButton} src={backButton}/>
-                    <h1>Pack Name</h1>
-                </div>
+                <div className={s.container}>
+                    <div className={s.headerBox}>
+                        <img onClick={onHandleBackButton} src={backButton}/>
+                        <h1>{currentCardName[0].name}</h1>
+                    </div>
 
-                <div className={s.inputBlock}>
-                    <Input placeholder={'Search by Question...'}/>
-                    <Input placeholder={'Search by Answer...'}/>
+                    <div className={s.inputBlock}>
+                        <Input placeholder={'Search by Question...'}/>
+                        <Input placeholder={'Search by Answer...'}/>
+                    </div>
+                    <div className={s.tableStyle}>
+                        <Table style={{ minWidth: '900px' }} loading={isLoading} pagination={false} columns={CardColumns} dataSource={currentCardsPack} />
+                    </div>
+                    <Pagination style={{margin:'50px 0'}}
+                                onChange={(page, pageSize1) => {
+                                    setCurrentPage(page)
+                                    setPacksPerPage(pageSize1)}}
+                                pageSize={packsPerPage} current={currentPage} total={Cards.length}/>
                 </div>
-                <div className={s.tableStyle}>
-                    <Table loading={isLoading} pagination={false} columns={CardColumns} dataSource={currentCardsPack} style={{ minWidth: '900px' }}/>
-                </div>
-                <Pagination style={{margin:'50px 0'}}
-                            onChange={(page, pageSize1) => {
-                                setCurrentPage(page)
-                                setPacksPerPage(pageSize1)}}
-                            pageSize={packsPerPage} current={currentPage} total={Cards.length}/>
             </div>
-        </div>
 
         </div>
 

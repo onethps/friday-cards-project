@@ -3,6 +3,8 @@ import {ResponseCardType} from "../../n1-main/m3-dal/packs-api";
 import {NavLink} from "react-router-dom";
 import React from "react";
 
+
+
 export const PackColumns = [
     {
         title: 'Created By',

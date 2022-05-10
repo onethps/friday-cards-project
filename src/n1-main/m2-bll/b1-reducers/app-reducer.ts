@@ -38,7 +38,8 @@ export const initializeAppTC = ():AppThunk => (dispatch:Dispatch<appReducerTypes
         dispatch(setAppStatus('idle'))
         dispatch(isInitializedApp(true))
         dispatch(isLoggedInAC(true))
-        dispatch(setProfileInfo(resolve.data.email, resolve.data.name))
+        let {email, name, _id} = resolve.data
+        dispatch(setProfileInfo(email, name, _id))
     }).catch((error:AxiosError<ResponseError>) => {
         dispatch(setAppErrorAC(error.response?.data ? error.response.data.error: error.message))
 

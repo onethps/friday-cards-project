@@ -28,14 +28,12 @@
 }
 
 .loginBox h1 {
-    font-family: 'Poppins', sans-serif;
     color: #2D2E46;
     text-align: center;
 }
 
 
 .loginBox h2 {
-    font-family: 'Poppins', sans-serif;
     font-style: normal;
     margin: 36px 0;
     font-weight: 600;
@@ -80,7 +78,6 @@
     & a {
         display: inline-block;
         cursor: pointer;
-        font-family: Poppins, sans-serif;
         text-decoration: none;
         text-align: center;
         font-weight: 600;
@@ -112,7 +109,6 @@
 
 .loginBox .errorMessage{
     color: red;
-    font-family: 'Poppins', sans-serif;
     font-weight: 600;
 }
 

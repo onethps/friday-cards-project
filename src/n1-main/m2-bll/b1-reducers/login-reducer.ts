@@ -48,8 +48,8 @@ export const loginTC = (loginData: LoginParamsType): AppThunk => {
         dispatch(setLoadingStatusAC('loading'))
         authAPI.login(loginData).then( (res) => {
             dispatch(isLoggedInAC(true))
-            let {email, name} = res.data
-            dispatch(setProfileInfo(email, name))
+            let {email, name, _id} = res.data
+            dispatch(setProfileInfo(email, name, _id))
         }).catch((error:AxiosError<ResponseError>) => {
             dispatch(errorLoginMessage(error.response?.data ? error.response.data.error: error.message))
         }).finally( () => {
