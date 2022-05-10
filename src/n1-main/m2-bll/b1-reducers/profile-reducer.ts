@@ -7,7 +7,8 @@ const initialState = {
     email: '',
     name:'',
     error: null,
-    status: 'idle'
+    status: 'idle',
+    changeMessageStatus: ''
 }
 
 type InitialStateType = typeof initialState
@@ -18,6 +19,8 @@ export const profileReducer = (state: InitialStateType = initialState, action:ac
             return {...state, name: action.name, email: action.email, id: action.id}
         case "profile/SET-LOADING-STATUS":
             return {...state, status: action.status}
+        case "profile/SET-CHANGE-MESSAGE-STATUS":
+            return {...state, changeMessageStatus: action.status}
         default:
             return state
     }
@@ -28,8 +31,17 @@ export const profileReducer = (state: InitialStateType = initialState, action:ac
 //thunk
 export const changeProfileInfoTC = (name:string) => {
     return (dispatch: Dispatch) => {
-        authAPI.changeProfileInfo(name).then(() => {
+        dispatch(setLoadingStatus('loading'))
+        authAPI.changeProfileInfo(name)
+            .then(() => {
+            dispatch(changeMessageStatusAC('Name successfully changed'))
         })
+            .catch((e) => {
+                console.log(e)
+            })
+            .finally(() => {
+                dispatch(setLoadingStatus('idle'))
+            })
     }
 }
 
@@ -48,8 +60,10 @@ export const setProfileInfo = (email:string, name:string, id:string) => ({type: 
 
 export const setLoadingStatus = (status:string) => ({type: 'profile/SET-LOADING-STATUS', status} as const)
 
+export const changeMessageStatusAC = (status:string) => ({type: 'profile/SET-CHANGE-MESSAGE-STATUS', status} as const)
+
 
 //types
-export type actionTypeProfileReducer =
-    ReturnType<typeof setProfileInfo>
+export type actionTypeProfileReducer = ReturnType<typeof setProfileInfo>
     | ReturnType<typeof setLoadingStatus>
+    | ReturnType<typeof changeMessageStatusAC>

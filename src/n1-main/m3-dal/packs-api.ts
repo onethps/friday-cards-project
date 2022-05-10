@@ -1,5 +1,5 @@
 import {instance} from "./auth-api";
-import {GetCardsResponse} from "../../n2-features/f4-Card/card-reducer";
+import {GetCardsResponse} from "../m1-ui/u2-components/Content/f3-Card/card-reducer";
 
 
 export const packsAPI = {

@@ -1,12 +1,12 @@
 import {Navigate, Route, Routes} from "react-router-dom";
-import {Login} from "./n1-main/m1-ui/u2-components/Login/Login";
-import {Register} from "./n1-main/m1-ui/u2-components/Register/Register";
-import {Profile} from "./n1-main/m1-ui/u2-components/Profile/Profile";
-import PasswordRecovery from "./n2-features/f1-PasswordRecovery/PasswordRecovery";
+import {Login} from "./n1-main/m1-ui/u2-components/Auth/a2-Login/Login";
+import {Register} from "./n1-main/m1-ui/u2-components/Auth/a1-Register/Register";
+import {Profile} from "./n1-main/m1-ui/u2-components/Content/f1-Profile/Profile";
+import PasswordRecovery from "./n1-main/m1-ui/u2-components/Auth/a3-PasswordRecovery/PasswordRecovery";
 import React from "react";
-import CardPacks from "./n2-features/f3-CardPacks/CardPacks";
-import Card from "./n2-features/f4-Card/Card";
-import NewPassword from "./n2-features/f1-PasswordRecovery/p3-NewPassword/NewPassword";
+import CardPacks from "./n1-main/m1-ui/u2-components/Content/f2-CardPacks/CardPacks";
+import Card from "./n1-main/m1-ui/u2-components/Content/f3-Card/Card";
+import NewPassword from "./n1-main/m1-ui/u2-components/Auth/a3-PasswordRecovery/p3-NewPassword/NewPassword";
 
 export const PATH = {
     LOGIN: '/login',

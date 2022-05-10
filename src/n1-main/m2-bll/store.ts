@@ -6,8 +6,8 @@ import {profileReducer} from "./b1-reducers/profile-reducer";
 import {appReducer} from "./b1-reducers/app-reducer";
 import {ForgotPasswordReducer} from "./b1-reducers/forgot-password-reducer";
 import {TypedUseSelectorHook, useDispatch, useSelector} from "react-redux";
-import {CardsPackReducer} from "../../n2-features/f3-CardPacks/card-packs-reducer";
-import {CardReducer} from "../../n2-features/f4-Card/card-reducer";
+import {CardsPackReducer} from "../m1-ui/u2-components/Content/f2-CardPacks/card-packs-reducer";
+import {CardReducer} from "../m1-ui/u2-components/Content/f3-Card/card-reducer";
 
 const rootReducer  = combineReducers( {
     app:appReducer,

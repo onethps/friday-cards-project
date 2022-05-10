@@ -36,6 +36,10 @@ type FormikErrorProfileType = {
 }
 
 
+type forgotPageValidationType = {
+    email:string
+}
+
 export const loginValidation = (values:loginValues) => {
     const errors: FormikErrorType = {};
     if (!values.email) {
@@ -96,9 +100,6 @@ export const profileValidate = (values:profileType) => {
 }
 
 
-type forgotPageValidationType = {
-    email:string
-}
 
 
 export const forgotPageValidation = (values:forgotPageValidationType) => {

@@ -48,9 +48,6 @@ export const authAPI = {
 }
 
 
-
-
-
 export enum RESPONSE_TYPE {
     REGISTER_SUCCESS = 'Created',
 }
@@ -74,26 +71,5 @@ export type ResponseType = {
     rememberMe: boolean;
     error?: string;
 }
-
-
-
-
-
-
-// export type UserCardType = {
-//
-//     _id: string
-//     productName:string
-//     price: number
-//     productType: string
-//     rating: number
-//     created: string
-//     updated: string
-//     __v: number
-//     id: string
-//
-// }
-
-
 
 
