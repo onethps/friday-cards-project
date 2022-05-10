@@ -24,7 +24,7 @@ export const Login = () => {
             // email: '',
             // password: '',
             email: 'onethps@gmail.com',
-            password: 'dwqdqw24142',
+            password: 'dwqdwqdqw214124',
             rememberMe: false
         },
         validate: loginValidation,

@@ -6,6 +6,7 @@ import PasswordRecovery from "./n2-features/f1-PasswordRecovery/PasswordRecovery
 import React from "react";
 import CardPacks from "./n2-features/f3-CardPacks/CardPacks";
 import Card from "./n2-features/f4-Card/Card";
+import NewPassword from "./n2-features/f1-PasswordRecovery/p3-NewPassword/NewPassword";
 
 export const PATH = {
     LOGIN: '/login',
@@ -13,7 +14,7 @@ export const PATH = {
     PROFILE: '/profile',
     RECOVERY_PASSWORD: '/forgot_pass',
     PACKS: '/packlist',
-    NEW_PASSWORD: '/new_pass',
+    NEW_PASSWORD: '/new_pass/:token',
     // ERROR_404: '/404',
     // TEST: '/test',
     CARDS: 'packlist/cards/:id',
@@ -28,6 +29,8 @@ export const AppRoutes = () => {
             <Route path={PATH.REGISTRATION} element={<Register/>}/>
             <Route path={PATH.PROFILE} element={<Profile/>}/>
             <Route path={PATH.RECOVERY_PASSWORD} element={<PasswordRecovery/>}/>
+            <Route path={PATH.NEW_PASSWORD} element={<NewPassword/>}/>
+
             <Route path={PATH.PACKS} element={<CardPacks/>}/>
             <Route path={PATH.CARDS} element={<Card/>}/>
 

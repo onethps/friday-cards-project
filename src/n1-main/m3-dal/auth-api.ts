@@ -33,12 +33,15 @@ export const authAPI = {
             from: 'test-front-admin <ai73a@yandex.by>',
             message: `<div style="background-color: lime; padding: 15px">
                       password recovery link: 
-                        <a href='http://localhost:3000/#/set-new-password/$token$'>
+                        <a href='http://localhost:3000/#/new_pass/$token$'>
                           link
                         </a> 
                       </div>`,
         }
         return instance.post(`/auth/forgot`, data);
+    },
+    setNewPassword(password:string, resetPasswordToken:string) {
+        return instance.post<{info:string}>('/auth/set-new-password', {password, resetPasswordToken})
     }
 
 

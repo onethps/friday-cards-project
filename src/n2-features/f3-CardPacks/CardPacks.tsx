@@ -19,7 +19,7 @@ const CardPacks = () => {
 
     const [currentPage, setCurrentPage] = useState(1)
     const [packsPerPage, setPacksPerPage] = useState(5)
-    const [minMax, setMinMax] = useState<number[]>([0,20])
+    const [minMax, setMinMax] = useState<number[]>([10,50])
     const [searchText, setSearchText] = useState<string>('')
 
 
@@ -27,7 +27,6 @@ const CardPacks = () => {
     const [loader, setLoader] = useState(false)
 
     useEffect(() => {
-
         const delayDebounceFn = setTimeout(() => {
             setLoader(true)
             const getCards = async () => {
