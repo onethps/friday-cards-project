@@ -6,9 +6,10 @@ import {CardColumns} from "./tableCardData";
 import {AppRootStateType, useAppDispatch} from "../../../../m2-bll/store";
 import {fetchCardsTC, ResponseCardContent} from "./card-reducer";
 import {useSelector} from "react-redux";
-import {PATH} from "../../../../../AppRoutes";
+import {PATH} from "../../AppRoutes";
 import backButton from "../../../../../assets/icons/back-button-img.svg"
 import Header from "../../Header/Header";
+import {useTypedSelector} from "../../../../../n3-hooks/useTypedSelector";
 
 const Card = () => {
 
@@ -16,10 +17,10 @@ const Card = () => {
     const {id} = useParams()
     const navigate = useNavigate();
 
-    const Cards = useSelector<AppRootStateType, ResponseCardContent[]>(state => state.card.cardPacks
+    const Cards = useTypedSelector<ResponseCardContent[]>(state => state.card.cardPacks
         .map(m => ({...m, updated: new Date(m.updated).toLocaleDateString("ru-RU")})))
 
-    const currentCardName = useSelector<AppRootStateType, any>(state => state.cardPacks.cardPacks
+    const currentCardName = useTypedSelector(state => state.cardPacks.cardPacks
         .filter(f => f._id === id && f.name))
 
 

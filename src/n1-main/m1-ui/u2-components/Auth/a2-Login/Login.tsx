@@ -1,30 +1,30 @@
 import React from 'react';
 import {Navigate, NavLink} from 'react-router-dom';
 import l from "./Login.module.scss";
-import {useSelector} from "react-redux";
 import {useFormik} from "formik";
-import {AppRootStateType, useAppDispatch} from "../../../../m2-bll/store";
+import {useAppDispatch} from "../../../../m2-bll/store";
 import {loginTC} from "../../../../m2-bll/b1-reducers/login-reducer";
 import Preloader from "../../../u1-common/c2-Preloader/Preloader";
 import {loginValidation} from "../../../../m4-utils/validators/validators";
 import CustomInput from "../../../u1-common/c1-CustomInput/CustomInput";
 import {RequestStatusType} from "../../../../m2-bll/b1-reducers/app-reducer";
-import {PATH} from "../../../../../AppRoutes";
+import {PATH} from "../../AppRoutes";
+import {useTypedSelector} from "../../../../../n3-hooks/useTypedSelector";
 
 export const Login = () => {
 
-    const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.login.isLoggedIn)
-    const errorMessage = useSelector<AppRootStateType, string | null>(state => state.login.error)
-    const loadingStatus = useSelector<AppRootStateType, RequestStatusType>(state => state.login.loadingStatus)
+    const isLoggedIn = useTypedSelector(state => state.login.isLoggedIn)
+    const errorMessage = useTypedSelector(state => state.login.error)
+    const loadingStatus = useTypedSelector<RequestStatusType>(state => state.login.loadingStatus)
 
     const dispatch = useAppDispatch();
 
     const formik = useFormik({
         initialValues: {
-            // email: '',
-            // password: '',
-            email: 'onethps@gmail.com',
-            password: 'dwqdwqdqw214124',
+            email: '',
+            password: '',
+            // email: 'onethps@gmail.com',
+            // password: 'dwqdwqdqw214124',
             rememberMe: false
         },
         validate: loginValidation,

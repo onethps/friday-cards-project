@@ -1,27 +1,22 @@
 import React, {useState} from 'react';
 import {Navigate} from 'react-router-dom';
 import l from "./Register.module.scss";
-import {useDispatch, useSelector} from "react-redux";
 import {useFormik} from "formik";
-import {AppDispatch, AppRootStateType, useAppDispatch} from "../../../../m2-bll/store";
+import {useAppDispatch} from "../../../../m2-bll/store";
 import {registerTC} from "../../../../m2-bll/b1-reducers/register-reducer";
 import Preloader from "../../../u1-common/c2-Preloader/Preloader";
-import showPasswordIcon from "../../../../../assets/icons/eye.svg";
 import {RegisterValidate} from "../../../../m4-utils/validators/validators";
 import CustomInput from "../../../u1-common/c1-CustomInput/CustomInput";
-
-
-
-
+import {useTypedSelector} from "../../../../../n3-hooks/useTypedSelector";
 
 
 export const Register = () => {
 
     const dispatch = useAppDispatch();
 
-    let errorMessage = useSelector<AppRootStateType, string>(state => state.register.errorMessage)
-    let successRegistrationStatus = useSelector<AppRootStateType, boolean>(state => state.register.isRegistered)
-    let isFetchingLoader = useSelector<AppRootStateType, boolean>(state => state.register.isFetchingLoader)
+    let errorMessage = useTypedSelector(state => state.register.errorMessage)
+    let successRegistrationStatus = useTypedSelector(state => state.register.isRegistered)
+    let isFetchingLoader = useTypedSelector(state => state.register.isFetchingLoader)
 
     const formik = useFormik( {
         initialValues:  {

@@ -3,7 +3,7 @@ import l from './Header.module.scss'
 import {NavLink} from "react-router-dom";
 import profileIcon from '../../../../assets/icons/headerIconsTabs/profileIcon.svg'
 import packListIcon from '../../../../assets/icons/headerIconsTabs/packListIcon.svg'
-import {PATH} from "../../../../AppRoutes";
+import {PATH} from "../AppRoutes";
 
 const Header = () => {
     return (

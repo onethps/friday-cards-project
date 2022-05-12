@@ -3,17 +3,16 @@ import React, {useEffect, useState} from 'react';
 import Header from "../../Header/Header";
 import l from './CardPack.module.scss'
 import 'antd/dist/antd.css';
-import {AppRootStateType, useAppDispatch} from "../../../../m2-bll/store";
-import {useSelector} from "react-redux";
+import {useAppDispatch} from "../../../../m2-bll/store";
 import {packsAPI, ResponseCardType} from "../../../../m3-dal/packs-api";
 import {PackColumns} from "./tablePackData";
 import {setCardPacksAC} from "./card-packs-reducer";
-
+import {useTypedSelector} from "../../../../../n3-hooks/useTypedSelector";
 
 
 const CardPacks = () => {
     const dispatch = useAppDispatch()
-    const cardPacks = useSelector<AppRootStateType, ResponseCardType[]>(state => state.cardPacks.cardPacks
+    const cardPacks = useTypedSelector<ResponseCardType[]>(state => state.cardPacks.cardPacks
         .map(m => ({...m, updated: new Date(m.updated).toLocaleDateString("ru-RU")})))
 
 

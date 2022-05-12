@@ -1,12 +1,11 @@
 import React from 'react';
 import l from "../PasswordRecovery.module.scss";
 import sendMsgImg from '../../../../../../assets/icons/send-message.svg'
-import {useSelector} from "react-redux";
-import {AppRootStateType} from "../../../../../m2-bll/store";
+import {useTypedSelector} from "../../../../../../n3-hooks/useTypedSelector";
 
 const SuccessMessage = () => {
 
-    const email =  useSelector<AppRootStateType, string | undefined>(state => state.forgotPassword.email)
+    const email =  useTypedSelector(state => state.forgotPassword.email)
 
 
     return (

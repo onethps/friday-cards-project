@@ -1,13 +1,12 @@
 import React from 'react';
 import l from "../../PasswordRecovery.module.scss";
 import {NavLink} from "react-router-dom";
-import {PATH} from "../../../../../../../AppRoutes";
-import {useSelector} from "react-redux";
-import {AppRootStateType} from "../../../../../../m2-bll/store";
+import {PATH} from "../../../../AppRoutes";
+import {useTypedSelector} from "../../../../../../../n3-hooks/useTypedSelector";
 
 const SuccessPasswordChanged = () => {
 
-    const message = useSelector<AppRootStateType, string | undefined>(state => state.forgotPassword.newPasswordStatus)
+    const message = useTypedSelector(state => state.forgotPassword.newPasswordStatus)
 
     return (
         <div className={l.loginBox}>

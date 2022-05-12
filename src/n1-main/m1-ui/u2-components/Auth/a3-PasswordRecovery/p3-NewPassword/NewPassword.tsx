@@ -3,18 +3,17 @@ import s from './NewPassword.module.scss'
 import CustomInput from "../../../../u1-common/c1-CustomInput/CustomInput";
 import {senNewPasswordTC} from "../../../../../m2-bll/b1-reducers/forgot-password-reducer";
 import {useParams} from "react-router-dom";
-import {AppRootStateType, useAppDispatch} from "../../../../../m2-bll/store";
-import {useSelector} from "react-redux";
+import {useAppDispatch} from "../../../../../m2-bll/store";
 import Preloader from "../../../../u1-common/c2-Preloader/Preloader";
 import SuccessPasswordChanged from "./n1-SuccessPasswordChanged/SuccessPasswordChanged";
+import {useTypedSelector} from "../../../../../../n3-hooks/useTypedSelector";
 
 const NewPassword = () => {
     const {token} = useParams()
     const dispatch = useAppDispatch()
 
-    const isLoading = useSelector<AppRootStateType>(state => state.forgotPassword.isLoading)
-
-    const newPasswordStatus = useSelector<AppRootStateType, string| undefined>(state => state.forgotPassword.newPasswordStatus)
+    const isLoading = useTypedSelector(state => state.forgotPassword.isLoading)
+    const newPasswordStatus = useTypedSelector(state => state.forgotPassword.newPasswordStatus)
 
 
     const [password, setPassword] = useState('')

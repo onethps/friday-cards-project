@@ -1,6 +1,5 @@
 import React, {useEffect} from 'react';
-import {useSelector} from "react-redux";
-import {AppRootStateType, useAppDispatch} from "../../../../m2-bll/store";
+import {useAppDispatch} from "../../../../m2-bll/store";
 import {Navigate} from "react-router-dom";
 import {useFormik} from "formik";
 import l from './Profile.module.scss';
@@ -9,18 +8,19 @@ import {changeMessageStatusAC, changeProfileInfoTC, logoutTC} from "../../../../
 import Header from '../../Header/Header';
 import {profileValidate} from "../../../../m4-utils/validators/validators";
 import CustomInput from '../../../u1-common/c1-CustomInput/CustomInput';
-import {PATH} from "../../../../../AppRoutes";
+import {PATH} from "../../AppRoutes";
 import Preloader from "../../../u1-common/c2-Preloader/Preloader";
+import {useTypedSelector} from "../../../../../n3-hooks/useTypedSelector";
 
 
 export const Profile = () => {
     const dispatch = useAppDispatch()
 
-    let isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.login.isLoggedIn)
-    let profileName = useSelector<AppRootStateType, string>(state => state.profile.name)
-    let profileEmail = useSelector<AppRootStateType, string>(state => state.profile.email)
-    let loadingStatus = useSelector<AppRootStateType, string | undefined>(state => state.profile.status)
-    let changeMessageStatus = useSelector<AppRootStateType, string | undefined>(state => state.profile.changeMessageStatus)
+    let isLoggedIn = useTypedSelector(state => state.login.isLoggedIn)
+    let profileName = useTypedSelector(state => state.profile.name)
+    let profileEmail = useTypedSelector(state => state.profile.email)
+    let loadingStatus = useTypedSelector(state => state.profile.status)
+    let changeMessageStatus = useTypedSelector(state => state.profile.changeMessageStatus)
     //takes name from email
     let getEmailName = profileName!.includes('@') ? profileName!.split('@')[0] : profileName
 

@@ -1,14 +1,13 @@
 import React from 'react';
 import {Button, Space} from "antd";
-import {useSelector} from "react-redux";
 import s from './TableButtonActions.module.scss'
-import {AppRootStateType} from "../../../../../m2-bll/store";
+import {useTypedSelector} from "../../../../../../n3-hooks/useTypedSelector";
 
 
 const TableButtonActions = () => {
 
-    const profileId = useSelector<AppRootStateType, string>(state => state.profile.id)
-    const isCardPackOwner = useSelector<AppRootStateType, any>(state => state.cardPacks.cardPacks.some(() => !profileId))
+    const profileId = useTypedSelector(state => state.profile.id)
+    const isCardPackOwner = useTypedSelector(state => state.cardPacks.cardPacks.some(() => !profileId))
 
 
     return (
