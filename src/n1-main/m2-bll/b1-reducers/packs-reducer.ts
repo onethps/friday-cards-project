@@ -54,10 +54,11 @@ export const pageChangingAC = (currentPage:number, pageSize:number) =>
 
 
 //thunk
-export const fetchPacksTC = (minCardsCount:number, maxCardsCount:number, searchPackName:string):AppThunk =>
+export const fetchPacksTC = (minCardsCount:number, maxCardsCount:number, searchText:string, userID:string):AppThunk =>
     async (dispatch, getState: () => AppRootStateType) => {
    const {pageCount, page} = getState().cardPacks
-    const dataQueryParams = {min:minCardsCount, max:maxCardsCount, packName: searchPackName, pageCount, page}
+    const dataQueryParams = {min:minCardsCount,
+        max:maxCardsCount, packName: searchText, pageCount, page, user_id: userID ? userID : '' }
     const res = await packsAPI.getPacks(dataQueryParams)
     dispatch(setCardPacksAC(res.data))
 }

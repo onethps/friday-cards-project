@@ -18,12 +18,17 @@ const Packs = () => {
 
     const {cardPacksTotalCount, pageCount, page}  = useTypedSelector(state => state.cardPacks)
 
-  const [showPackListToggle, setShowPackListToggle] = useState(false)
 
+    //switching cardPacks
+    const [showPackListToggle, setShowPackListToggle] = useState(true)
+
+
+    //gets myID from Profile
+    const {id} = useTypedSelector(state => state.profile)
 
 
     //sets settings on double slider
-    const [minMax, setMinMax] = useState<number[]>([10,50])
+    const [minMax, setMinMax] = useState<number[]>([0,50])
 
     // Input search State
     const [searchText, setSearchText] = useState<string>('')
@@ -37,7 +42,9 @@ const Packs = () => {
         const delayDebounceFn = setTimeout(() => {
             setLoader(true)
             const getPacks = async () => {
-                await dispatch(fetchPacksTC(minMax[0], minMax[1], searchText))
+                // if toggled "My" - fetching userID from Profile, if "All" - fetching '' instead id
+                const setUserId =  showPackListToggle ? id : ''
+                await dispatch(fetchPacksTC(minMax[0], minMax[1], searchText, setUserId))
                 //always back on first page, coz on others pages search result not shows
                 setLoader(false)
             }
@@ -46,7 +53,7 @@ const Packs = () => {
 
         return () => clearTimeout(delayDebounceFn)
 
-    },[minMax, searchText, pageCount, page])
+    },[minMax, searchText, pageCount, page, showPackListToggle])
 
 
     // settings of DoubleSlider
@@ -60,7 +67,12 @@ const Packs = () => {
 
     }
 
-const activePacksButtonStyle = showPackListToggle ? l.allCardsButton : l.myCardsButton
+
+    const onClickShowMyCardList = () => {
+        setShowPackListToggle(!showPackListToggle)
+    }
+
+
 
     return (
 
@@ -75,8 +87,10 @@ const activePacksButtonStyle = showPackListToggle ? l.allCardsButton : l.myCards
                     <div className={l.leftSideContentBox}>
                         <h3>Show packs cards</h3>
                         <div className={l.buttonGroup}>
-                            <button className={!showPackListToggle ? l.myCardsButton : l.allCardsButton}>My</button>
-                            <button className={showPackListToggle ?  l.myCardsButton : l.allCardsButton}>All</button>
+                            <button onClick={onClickShowMyCardList}
+                                    className={!showPackListToggle ? l.myCardsButton : l.allCardsButton}>My</button>
+                            <button onClick={onClickShowMyCardList}
+                                className={showPackListToggle ?  l.myCardsButton : l.allCardsButton}>All</button>
                         </div>
 
                         <h3>Number of cards</h3>

@@ -16,7 +16,6 @@ const Card = () => {
 
     //gets card it from url
     const {id} = useParams()
-
     const navigate = useNavigate();
 
     // map method to convert grinvich to CIS date

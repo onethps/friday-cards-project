@@ -47,7 +47,7 @@ export const changeProfileInfoTC = (name:string) => {
 
 export const logoutTC = () => {
     return (dispatch: Dispatch) => {
-        authAPI.logout().then((res) => {
+        authAPI.logout().then(() => {
             dispatch(setProfileInfo( '', '', ''))
             dispatch(isLoggedInAC(false))
         })
