@@ -1,14 +1,13 @@
 import {Dispatch} from "redux";
-import {cardAPI, cardQueryParams} from "./card-api";
-import {RequestStatusType} from "../../../../m2-bll/b1-reducers/app-reducer";
+import {cardAPI, cardQueryParams} from "../../m3-dal/card-api";
+import {RequestStatusType} from "./app-reducer";
 
 
 const initialState = {
-    // cardName:'',
-    cardPacks: [],
-    cardPacksTotalCount: 0,
-    maxCardsCount: 0,
-    minCardsCount: 0,
+    cards: [],
+    cardsTotalCount: 0,
+    maxGrade: 0,
+    minGrade: 0,
     page: 0,
     pageCount: 0,
     packUserId: '',
@@ -16,39 +15,38 @@ const initialState = {
 }
 
 type InitialStateType = {
-    cardPacks: ResponseCardContent[]
-    cardPacksTotalCount: number
+    cards: ResponseCardContent[]
     // количество колод
-    maxCardsCount: number
-    minCardsCount: number
+    cardsTotalCount: number
+    maxGrade: number
+    minGrade: number
     page: number
     pageCount: number
     loading: boolean
 
 }
 
-export const CardReducer = (state:InitialStateType = initialState, actions:ActionsTypes):InitialStateType => {
-    switch (actions.type) {
+export const CardReducer = (state:InitialStateType = initialState, action:ActionsTypes):InitialStateType => {
+    switch (action.type) {
         case "card/SET-CARDS":
-            return {...state, cardPacks: actions.cards}
+            return {...state,  ...action.cards}
         case "card/SET-CARD-STATUS":
-            return {...state, loading: actions.isLoading}
+            return {...state, loading: action.isLoading}
         default:
             return state
     }
 }
 
-
+//thunk
 export const fetchCardsTC = (data:cardQueryParams) => (dispatch:Dispatch) => {
     dispatch(isLoading(true))
     cardAPI.getCard(data).then((res) => {
-        dispatch(setCardsAC(res.data.cards))
+        dispatch(setCardsAC(res.data))
 
     }).catch((err) => {
         console.log(err)
     })
-
-
+        //stopping loading in any case
         .finally(() => {
         dispatch(isLoading(false))
     })
@@ -56,12 +54,12 @@ export const fetchCardsTC = (data:cardQueryParams) => (dispatch:Dispatch) => {
 
 
 
-export const setCardsAC = (cards:ResponseCardContent[]) => {
+export const setCardsAC = (cards:GetCardsResponse) => {
     return {type: 'card/SET-CARDS', cards} as const
 }
 
 
-const isLoading = (isLoading:boolean) => {
+export const isLoading = (isLoading:boolean) => {
     return {type: 'card/SET-CARD-STATUS', isLoading} as const
 }
 

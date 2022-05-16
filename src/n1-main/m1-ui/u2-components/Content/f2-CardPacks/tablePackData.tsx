@@ -2,7 +2,6 @@ import TableButtonActions from "./TableActions/TableButtonActions";
 import {ResponseCardType} from "../../../../m3-dal/packs-api";
 import {NavLink} from "react-router-dom";
 import React from "react";
-import {PATH} from "../../AppRoutes";
 
 
 

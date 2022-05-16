@@ -3,7 +3,7 @@ import {Navigate, NavLink} from 'react-router-dom';
 import l from "./Login.module.scss";
 import {useFormik} from "formik";
 import {useAppDispatch} from "../../../../m2-bll/store";
-import {loginTC} from "../../../../m2-bll/b1-reducers/login-reducer";
+import {loginTC} from "../../../../m2-bll/b1-reducers/login/login-reducer";
 import Preloader from "../../../u1-common/c2-Preloader/Preloader";
 import {loginValidation} from "../../../../m4-utils/validators/validators";
 import CustomInput from "../../../u1-common/c1-CustomInput/CustomInput";
@@ -21,10 +21,10 @@ export const Login = () => {
 
     const formik = useFormik({
         initialValues: {
-            email: '',
-            password: '',
-            // email: 'onethps@gmail.com',
-            // password: 'dwqdwqdqw214124',
+            // email: '',
+            // password: '',
+            email: 'onethps@gmail.com',
+            password: 'dwqdwqdqw214124',
             rememberMe: false
         },
         validate: loginValidation,
@@ -35,7 +35,7 @@ export const Login = () => {
     })
 
     if (isLoggedIn) {
-        return <Navigate to='/profile'/>
+        return <Navigate to={PATH.PROFILE}/>
     }
 
     return (

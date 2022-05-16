@@ -1,31 +1,38 @@
-import {authAPI, ResponseError} from "../../m3-dal/auth-api";
+import {authAPI, ResponseError} from "../../../m3-dal/auth-api";
 import {Dispatch} from "redux";
 import {AxiosError} from "axios";
-import {actionTypeProfileReducer, setProfileInfo} from "./profile-reducer";
-import {RequestStatusType} from "./app-reducer";
-import {AppThunk} from "../store";
+import {actionTypeProfileReducer, setProfileInfo} from "../profile-reducer";
+import {RequestStatusType} from "../app-reducer";
+import {AppThunk} from "../../store";
 
 
-type InitialStateType = {
+export interface loginState {
     isLoggedIn: boolean
     loadingStatus: RequestStatusType
     error:string | null
 }
 
-const initialState: InitialStateType = {
+export enum LoginActionEnum {
+    SET_LOGGED_IN = "login/IS-LOGGED-IN",
+    SET_LOADING_STATUS = "login/SET-LOADING-STATUS",
+    SET_ERROR_MESSAGE = "login/ERROR-MESSAGE"
+}
+
+
+const initialState: loginState = {
     isLoggedIn: false,
     loadingStatus:'idle',
-    error:null
+    error:null,
 
 }
 // reducers
-export const loginReducer = (state: InitialStateType = initialState, action: ActionsType): InitialStateType => {
+export const loginReducer = (state: loginState = initialState, action: ActionsType): loginState => {
     switch (action.type) {
-        case 'login/IS-LOGGED-IN':
+        case LoginActionEnum.SET_LOGGED_IN:
             return {...state, isLoggedIn: action.isLoggedIn}
-        case "login/SET-LOADING-STATUS":
+        case LoginActionEnum.SET_LOADING_STATUS:
             return {...state, loadingStatus: action.status}
-        case 'login/ERROR-MESSAGE':
+        case LoginActionEnum.SET_ERROR_MESSAGE:
             return {...state, error: action.message}
         default:
             return state

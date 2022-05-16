@@ -1,59 +1,66 @@
 import {Input, Pagination, Slider, Table} from 'antd';
-import React, {useEffect, useState} from 'react';
+import React, {ChangeEvent, useEffect, useState} from 'react';
 import Header from "../../Header/Header";
 import l from './CardPack.module.scss'
 import 'antd/dist/antd.css';
 import {useAppDispatch} from "../../../../m2-bll/store";
 import {packsAPI, ResponseCardType} from "../../../../m3-dal/packs-api";
 import {PackColumns} from "./tablePackData";
-import {setCardPacksAC} from "./card-packs-reducer";
+import {fetchPacksTC, pageChangingAC} from "../../../../m2-bll/b1-reducers/packs-reducer";
 import {useTypedSelector} from "../../../../../n3-hooks/useTypedSelector";
 
 
-const CardPacks = () => {
+const Packs = () => {
+
     const dispatch = useAppDispatch()
     const cardPacks = useTypedSelector<ResponseCardType[]>(state => state.cardPacks.cardPacks
         .map(m => ({...m, updated: new Date(m.updated).toLocaleDateString("ru-RU")})))
 
+    const {cardPacksTotalCount, pageCount, page}  = useTypedSelector(state => state.cardPacks)
 
-    const [currentPage, setCurrentPage] = useState(1)
-    const [packsPerPage, setPacksPerPage] = useState(5)
+  const [showPackListToggle, setShowPackListToggle] = useState(false)
+
+
+
+    //sets settings on double slider
     const [minMax, setMinMax] = useState<number[]>([10,50])
+
+    // Input search State
     const [searchText, setSearchText] = useState<string>('')
 
 
-
+    // isLoading Table of Packs
     const [loader, setLoader] = useState(false)
 
     useEffect(() => {
+        //delay search on 1 second after stop typing in input search
         const delayDebounceFn = setTimeout(() => {
             setLoader(true)
-            const getCards = async () => {
-                const dataQueryParams = {min:minMax[0], max:minMax[1], pageCount: 100, packName: searchText}
-                setCurrentPage(1)
-                const res = await packsAPI.getCardsList(dataQueryParams)
-                dispatch(setCardPacksAC(res.data.cardPacks))
+            const getPacks = async () => {
+                await dispatch(fetchPacksTC(minMax[0], minMax[1], searchText))
+                //always back on first page, coz on others pages search result not shows
                 setLoader(false)
             }
-            getCards()
+            getPacks()
         }, 1000)
 
         return () => clearTimeout(delayDebounceFn)
 
-    },[minMax, searchText])
+    },[minMax, searchText, pageCount, page])
 
 
-
-    const lastCardPackIndex = currentPage * packsPerPage
-    const firstCardPackIndex = lastCardPackIndex - packsPerPage
-    const currentCardsPack = cardPacks.slice(firstCardPackIndex, lastCardPackIndex)
-
-
+    // settings of DoubleSlider
     const onChangeMinMaxSliderValue = (sliderValues:number[]) => {
         setMinMax(sliderValues)
+
     }
 
+    const onSearchInputHandler  = (e: ChangeEvent<HTMLInputElement>) => {
+        setSearchText(e.currentTarget.value)
 
+    }
+
+const activePacksButtonStyle = showPackListToggle ? l.allCardsButton : l.myCardsButton
 
     return (
 
@@ -68,8 +75,8 @@ const CardPacks = () => {
                     <div className={l.leftSideContentBox}>
                         <h3>Show packs cards</h3>
                         <div className={l.buttonGroup}>
-                            <button className={l.myCardsButton}>My</button>
-                            <button className={l.allCardsButton}>All</button>
+                            <button className={!showPackListToggle ? l.myCardsButton : l.allCardsButton}>My</button>
+                            <button className={showPackListToggle ?  l.myCardsButton : l.allCardsButton}>All</button>
                         </div>
 
                         <h3>Number of cards</h3>
@@ -83,23 +90,22 @@ const CardPacks = () => {
 
                     <h2 style={{textAlign:'left'}}>Packs List</h2>
                     <div className={l.searchBlock}>
-                        <Input value={searchText} onChange={(e) => {setSearchText(e.currentTarget.value)}
-                        } placeholder={"Search by Name..."} className={l.inputSearch}/>
-                        <button>Add new pack</button>
+                        <Input value={searchText} onChange={onSearchInputHandler}
+                               placeholder={"Search by Name..."} className={l.inputSearch}/>
+                        <button onClick={() => {packsAPI.addCardPack()}}>Add new pack</button>
                     </div>
                     <div className={l.tableBlock}>
                         <div className={l.tableStyle}>
-                            <Table style={{ minWidth: '900px' }} columns={PackColumns}
-                                   loading={loader}  className={l.booking_information_table}
-                                   dataSource={currentCardsPack} pagination={false}/>
+                            <Table loading={loader}  style={{ minWidth: '900px' }} columns={PackColumns}
+                                   className={l.booking_information_table}
+                                   dataSource={cardPacks} pagination={false}/>
 
 
                         </div>
                         <Pagination onChange={(page, pageSize1) => {
-                            setCurrentPage(page)
-                            setPacksPerPage(pageSize1)
-                        }}  current={currentPage}   showSizeChanger pageSizeOptions={[5,10,25]}
-                                    pageSize={packsPerPage} total={cardPacks.length}/>;
+                            dispatch(pageChangingAC(page, pageSize1))}}
+                                    current={page}   showSizeChanger pageSizeOptions={[5,10,25]}
+                                    pageSize={pageCount} total={cardPacksTotalCount}/>;
                     </div>
                 </div>
             </div>
@@ -107,4 +113,4 @@ const CardPacks = () => {
     );
 };
 
-export default CardPacks;
+export default Packs;

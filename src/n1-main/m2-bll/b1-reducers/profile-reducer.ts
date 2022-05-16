@@ -1,6 +1,6 @@
 import {Dispatch} from "redux";
 import {authAPI} from "../../m3-dal/auth-api";
-import {isLoggedInAC} from "./login-reducer";
+import {isLoggedInAC} from "./login/login-reducer";
 
 const initialState = {
     id:'',
@@ -61,7 +61,6 @@ export const setProfileInfo = (email:string, name:string, id:string) => ({type: 
 export const setLoadingStatus = (status:string) => ({type: 'profile/SET-LOADING-STATUS', status} as const)
 
 export const changeMessageStatusAC = (status:string) => ({type: 'profile/SET-CHANGE-MESSAGE-STATUS', status} as const)
-
 
 //types
 export type actionTypeProfileReducer = ReturnType<typeof setProfileInfo>

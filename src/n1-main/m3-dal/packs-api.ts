@@ -1,17 +1,16 @@
 import {instance} from "./auth-api";
-import {GetCardsResponse} from "../m1-ui/u2-components/Content/f3-Card/card-reducer";
 
 
 export const packsAPI = {
-    getCardsList({...packParams}:cardPacksQueryParams) {
+    getPacks({...packParams}:cardPacksQueryParams) {
         return instance.get<ResponseCardPackType>('/cards/pack', {params: packParams})},
 
-    addCardPack({...params}:addCardPackType) {
-        return instance.post('/cards/pack', {cardsPack:{params}})
+    addCardPack() {
+        return instance.post(`/cards/pack`, {cardsPack: {}})
     },
 
     changeCardPack({...params}:changeCardPackType) {
-        return instance.put('/cards/pack', {cardsPack:{_id:'617ff51fd7b1030004090a1f'}})
+        return instance.put('/cards/pack')
     },
 
 

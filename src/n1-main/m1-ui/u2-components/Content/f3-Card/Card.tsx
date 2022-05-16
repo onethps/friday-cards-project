@@ -3,9 +3,8 @@ import {useNavigate, useParams} from "react-router-dom";
 import s from './Card.module.scss'
 import {Input, Pagination, Table} from "antd";
 import {CardColumns} from "./tableCardData";
-import {AppRootStateType, useAppDispatch} from "../../../../m2-bll/store";
-import {fetchCardsTC, ResponseCardContent} from "./card-reducer";
-import {useSelector} from "react-redux";
+import {useAppDispatch} from "../../../../m2-bll/store";
+import {fetchCardsTC, isLoading} from "../../../../m2-bll/b1-reducers/card-reducer";
 import {PATH} from "../../AppRoutes";
 import backButton from "../../../../../assets/icons/back-button-img.svg"
 import Header from "../../Header/Header";
@@ -14,36 +13,76 @@ import {useTypedSelector} from "../../../../../n3-hooks/useTypedSelector";
 const Card = () => {
 
     const dispatch = useAppDispatch()
+
+    //gets card it from url
     const {id} = useParams()
+
     const navigate = useNavigate();
 
-    const Cards = useTypedSelector<ResponseCardContent[]>(state => state.card.cardPacks
-        .map(m => ({...m, updated: new Date(m.updated).toLocaleDateString("ru-RU")})))
+    // map method to convert grinvich to CIS date
+    const Cards = useTypedSelector(state => state.card.cards)
+        .map(m => ({...m, updated: new Date(m.updated).toLocaleDateString("ru-RU")}))
 
-    const currentCardName = useTypedSelector(state => state.cardPacks.cardPacks
-        .filter(f => f._id === id && f.name))
+    /// find current card name and show in title
+    const currentCard = useTypedSelector(state => state.cardPacks.cardPacks
+        .find(f => f._id === id && f))
+
+
+    const {loading} = useTypedSelector(state => state.card)
 
 
 
 
-    const isLoading = useSelector<AppRootStateType, boolean>(state => state.card.loading)
-
+    // currrent page = 100 units (hardcoded)
     const [currentPage, setCurrentPage] = useState(1)
-    const [packsPerPage, setPacksPerPage] = useState(5)
+
+    // how cards will be shows on one page
+    const [packsPerPage, setPacksPerPage] = useState(10)
 
 
-
+    // back to all cardpacks list
     const onHandleBackButton = () => {
         navigate(PATH.PACKS)
     }
 
+    const [searchByQuestion, setSearchByQuestion] = useState('')
+    const [searchByAnswer, setSearchByAnswer] = useState('')
+
+
     useEffect(() => {
-        if (id) {
-            dispatch(fetchCardsTC({cardsPack_id:id, pageCount:100}))
+        //delay search on 1 second after stop typing in input search
+        dispatch(isLoading(true))
+        const dataObj = {
+            //gets id from currentCard useParams
+            cardsPack_id: id,
+            // gets from object total cards in current cardPack
+            pageCount:currentCard!.cardsCount,
+            cardQuestion: searchByQuestion ? searchByQuestion : '',
+            cardAnswer: searchByAnswer ? searchByAnswer : '',
         }
+        const delayDebounceFn = setTimeout(() => {
+            const findSearchResults = () => {
+                if (searchByQuestion) {
+                    dispatch(fetchCardsTC(dataObj))
+                }
+                if (searchByAnswer) {
+                    dispatch(fetchCardsTC(dataObj))
+                }
+                // first loading and if no any results - show all cards
+                if (!searchByAnswer && !searchByQuestion)  {
+                    dispatch(fetchCardsTC(dataObj))
+                }
+            }
+            findSearchResults()
+        }, 1000)
+        //stopping loader
+        dispatch(isLoading(false))
+        return () => clearTimeout(delayDebounceFn)
 
-    }, [])
+    },[searchByQuestion, searchByAnswer])
 
+
+    // gets pagination of all cards
     const lastCardPackIndex = currentPage * packsPerPage
     const firstCardPackIndex = lastCardPackIndex - packsPerPage
     const currentCardsPack = Cards.slice(firstCardPackIndex, lastCardPackIndex)
@@ -55,21 +94,21 @@ const Card = () => {
             <nav>
                 <Header/>
             </nav>
-
-
             <div className={s.modalBox}>
                 <div className={s.container}>
                     <div className={s.headerBox}>
                         <img onClick={onHandleBackButton} src={backButton}/>
-                        <h1>{currentCardName[0].name}</h1>
+                        <h1>{currentCard!.name}</h1>
                     </div>
 
                     <div className={s.inputBlock}>
-                        <Input placeholder={'Search by Question...'}/>
-                        <Input placeholder={'Search by Answer...'}/>
+                        <Input placeholder={'Search by Question...'} value={searchByQuestion}
+                               onChange={(e) => setSearchByQuestion(e.currentTarget.value)}/>
+                        <Input placeholder={'Search by Answer...'} value={searchByAnswer}
+                               onChange={(e) => setSearchByAnswer(e.currentTarget.value)}/>
                     </div>
                     <div className={s.tableStyle}>
-                        <Table style={{ minWidth: '900px' }} loading={isLoading} pagination={false} columns={CardColumns} dataSource={currentCardsPack} />
+                        <Table loading={loading} style={{ minWidth: '900px' }}  pagination={false} columns={CardColumns} dataSource={currentCardsPack} />
                     </div>
                     <Pagination style={{margin:'50px 0'}}
                                 onChange={(page, pageSize1) => {

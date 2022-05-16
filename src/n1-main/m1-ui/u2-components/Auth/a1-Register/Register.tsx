@@ -14,9 +14,7 @@ export const Register = () => {
 
     const dispatch = useAppDispatch();
 
-    let errorMessage = useTypedSelector(state => state.register.errorMessage)
-    let successRegistrationStatus = useTypedSelector(state => state.register.isRegistered)
-    let isFetchingLoader = useTypedSelector(state => state.register.isFetchingLoader)
+    const {errorMessage, isRegistered, isFetchingLoader} = useTypedSelector(state => state.register)
 
     const formik = useFormik( {
         initialValues:  {
@@ -30,21 +28,7 @@ export const Register = () => {
         }
     })
 
-
-    const[showPassword, setShowPassword] = useState<boolean>(false)
-    const[showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false)
-
-
-
-    const onShowPassword = () => {
-        setShowPassword(!showPassword)
-    }
-
-    const onShowConfirmPassword = () => {
-        setShowConfirmPassword(!showConfirmPassword)
-    }
-
-    if (successRegistrationStatus) {
+    if (isRegistered) {
         return <Navigate to={'/login'}/>
     }
 

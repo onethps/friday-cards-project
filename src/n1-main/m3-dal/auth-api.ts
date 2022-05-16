@@ -1,8 +1,8 @@
 import axios, {AxiosResponse} from "axios"
-import {LoginParamsType} from "../m2-bll/b1-reducers/login-reducer";
+import {LoginParamsType} from "../m2-bll/b1-reducers/login/login-reducer";
 
 export const instance = axios.create({
-    baseURL: process.env.REACT_APP_BACK_URL || 'http://localhost:7542/2.0/',
+    baseURL:'http://localhost:7542/2.0/',
     // baseURL: 'https://neko-back.herokuapp.com/2.0',
     withCredentials: true,
 })
@@ -18,9 +18,11 @@ export const authAPI = {
     login(loginData: LoginParamsType) {
         return instance.post<LoginParamsType, AxiosResponse<ResponseType>>('/auth/login', loginData);
     },
+    //check auth on initialization app
     authMe() {
         return instance.post<ResponseType>('/auth/me', {});
     },
+    //change name in profile
     changeProfileInfo(name:string) {
         return instance.put<ResponseType>('/auth/me', {name});
     },

@@ -40,6 +40,9 @@ type forgotPageValidationType = {
     email:string
 }
 
+
+
+
 export const loginValidation = (values:loginValues) => {
     const errors: FormikErrorType = {};
     if (!values.email) {
