@@ -1,22 +1,35 @@
 import React from 'react';
-import {Button, Space} from "antd";
-import s from './TableButtonActions.module.scss'
 import {useTypedSelector} from "../../../../../../n3-hooks/useTypedSelector";
+import {Button, Row, Space} from "antd";
+import s from './TableButtonActions.module.scss'
 
 
-const TableButtonActions = () => {
+type TableType = {
+    myId:string
+}
 
-    const profileId = useTypedSelector(state => state.profile.id)
-    const isCardPackOwner = useTypedSelector(state => state.cardPacks.cardPacks.some(() => !profileId))
+const TableButtonActions = ({myId}:TableType) => {
+
+    const {id} = useTypedSelector(state => state.profile)
 
 
     return (
         <div>
-            <Space size="middle">
-                <Button className={isCardPackOwner ? s.redButtonStyle : s.redButtonHiddenStyle}>Delete </Button>
-                <Button className={isCardPackOwner ? s.blueButton : s.redButtonHiddenStyle} >Edit</Button>
-                <Button type={"primary"}>Learn</Button>
-            </Space>
+            <Row justify={'end'} >
+                <Space size={'middle'}>
+                    {myId === id ?
+                        <>
+                            <Button className={s.redButtonStyle}>Delete</Button>
+                            <Button className={s.blueButton} >Edit</Button>
+                            <Button type={"primary"}>Learn</Button>
+                        </>
+
+                        :
+                        <Button type={"primary"}>Learn</Button>
+
+                    }
+                </Space>
+            </Row>
         </div>
     );
 };

@@ -90,7 +90,7 @@ const Packs = () => {
                             <button onClick={onClickShowMyCardList}
                                     className={!showPackListToggle ? l.myCardsButton : l.allCardsButton}>My</button>
                             <button onClick={onClickShowMyCardList}
-                                className={showPackListToggle ?  l.myCardsButton : l.allCardsButton}>All</button>
+                                    className={showPackListToggle ?  l.myCardsButton : l.allCardsButton}>All</button>
                         </div>
 
                         <h3>Number of cards</h3>
@@ -112,7 +112,8 @@ const Packs = () => {
                         <div className={l.tableStyle}>
                             <Table loading={loader}  style={{ minWidth: '900px' }} columns={PackColumns}
                                    className={l.booking_information_table}
-                                   dataSource={cardPacks} pagination={false}/>
+                                   dataSource={cardPacks} pagination={false}>
+                            </Table>
 
 
                         </div>
