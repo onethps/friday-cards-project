@@ -1,31 +1,42 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {useTypedSelector} from "../../../../../../n3-hooks/useTypedSelector";
 import {Button, Row, Space} from "antd";
-import s from './TableButtonActions.module.scss'
+import {NavLink} from "react-router-dom";
+import DeleteModal from "../ModalContainer/DeleteModal/DeleteModal";
 
 
 type TableType = {
-    myId:string
+    userId:string
+    packId:string
+    packName:string
 }
 
-const TableButtonActions = ({myId}:TableType) => {
+
+const TableButtonActions = ({userId, packId, packName}:TableType) => {
 
     const {id} = useTypedSelector(state => state.profile)
 
+    const [ModalDelete, setModalDelete] = useState(false)
+    const [ModalEdit, setModalEdit] = useState(false)
 
     return (
         <div>
+            <DeleteModal showModal={ModalDelete} setShowModal={setModalDelete} packName={packName}/>
             <Row justify={'end'} >
-                <Space size={'middle'}>
-                    {myId === id ?
-                        <>
-                            <Button className={s.redButtonStyle}>Delete</Button>
-                            <Button className={s.blueButton} >Edit</Button>
-                            <Button type={"primary"}>Learn</Button>
-                        </>
 
+                <Space size={'middle'}>
+                    {userId === id ?
+                        <>
+                            <Button type="primary" danger onClick={() =>setModalDelete(true)}>Delete</Button>
+                            <Button type="primary" >Edit</Button>
+                            <NavLink to={`/packlist/cards/${packId}`}>
+                                <Button type={"primary"}>Learn</Button>
+                            </NavLink>
+                        </>
                         :
-                        <Button type={"primary"}>Learn</Button>
+                        <NavLink to={`/packlist/cards/${packId}`}>
+                            <Button type={"primary"}>Learn</Button>
+                        </NavLink>
 
                     }
                 </Space>

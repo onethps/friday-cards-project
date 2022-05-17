@@ -5,6 +5,7 @@ import Preloader from "./n1-main/m1-ui/u1-common/c2-Preloader/Preloader";
 import {AppRoutes} from "./n1-main/m1-ui/u2-components/AppRoutes";
 import {initializeAppTC} from "./n1-main/m2-bll/b1-reducers/app-reducer";
 import {useTypedSelector} from "./n3-hooks/useTypedSelector";
+import Modal from "./n2-features/f3-modal/Modal";
 
 const App = () => {
 
@@ -27,6 +28,7 @@ const App = () => {
     return (
         <div className='App'>
             <AppRoutes/>
+
         </div>
     );
 }

@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useAppDispatch} from "../../../../m2-bll/store";
 import {Navigate} from "react-router-dom";
 import {useFormik} from "formik";
@@ -11,6 +11,7 @@ import CustomInput from '../../../u1-common/c1-CustomInput/CustomInput';
 import {PATH} from "../../AppRoutes";
 import Preloader from "../../../u1-common/c2-Preloader/Preloader";
 import {useTypedSelector} from "../../../../../n3-hooks/useTypedSelector";
+import Modal from "../../../../../n2-features/f3-modal/Modal";
 
 
 export const Profile = () => {
@@ -45,12 +46,29 @@ export const Profile = () => {
         }, 2000)
     }, [changeMessageStatus])
 
+
+    const [show, setShow] = useState(false);
+
     if (!isLoggedIn) {
         return <Navigate to={PATH.LOGIN}/>
     }
 
     return <>
         <Header/>
+        <button onClick={() => setShow(true)}>show simple Modal</button>
+        <div>
+            <Modal
+                enableBackground={true}
+                backgroundOnClick={() => setShow(false)}
+                width={300}
+                height={200}
+                show={show}
+            >
+
+                Simple Modal
+                <button onClick={() => setShow(false)}>Close</button>
+            </Modal>
+        </div>
         <div className={l.loginBox}>
             <h2> Personal information</h2>
             <div className={l.avatarBlock}>

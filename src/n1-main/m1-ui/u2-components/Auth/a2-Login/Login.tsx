@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Navigate, NavLink} from 'react-router-dom';
 import l from "./Login.module.scss";
 import {useFormik} from "formik";
@@ -10,6 +10,7 @@ import CustomInput from "../../../u1-common/c1-CustomInput/CustomInput";
 import {RequestStatusType} from "../../../../m2-bll/b1-reducers/app-reducer";
 import {PATH} from "../../AppRoutes";
 import {useTypedSelector} from "../../../../../n3-hooks/useTypedSelector";
+import Modal from "../../../../../n2-features/f3-modal/Modal";
 
 export const Login = () => {
 
@@ -34,54 +35,62 @@ export const Login = () => {
         },
     })
 
+
+
+
+
     if (isLoggedIn) {
         return <Navigate to={PATH.PROFILE}/>
     }
 
     return (
-        <div className={l.loginBox}>
-            <h1>It-incubator</h1>
-            <h2>Sign In</h2>
-            <form onSubmit={formik.handleSubmit}>
+        <>
 
 
-                <CustomInput
-                    label={'Email'} {...formik.getFieldProps('email')}
-                    error={formik.touched.email && formik.errors.email ? formik.errors.email : ''}
-                />
-
-                <CustomInput
-                    password
-                    label={'Password'} {...formik.getFieldProps('password')}
-                    error={formik.touched.password && formik.errors.password ? formik.errors.password : ''}
-                />
+            <div className={l.loginBox}>
+                <h1>It-incubator</h1>
+                <h2>Sign In</h2>
+                <form onSubmit={formik.handleSubmit}>
 
 
-
-                <div className={l.forgotPassword}>
-                    <NavLink to={PATH.RECOVERY_PASSWORD} >Forgot Password</NavLink>
-                </div>
-
-                <div className={l.rememberBox}>
-                    <input type={'checkbox'}
-                           {...formik.getFieldProps('rememberMe')}
+                    <CustomInput
+                        label={'Email'} {...formik.getFieldProps('email')}
+                        error={formik.touched.email && formik.errors.email ? formik.errors.email : ''}
                     />
-                    <label>Remember Me</label>
-                </div>
+
+                    <CustomInput
+                        password
+                        label={'Password'} {...formik.getFieldProps('password')}
+                        error={formik.touched.password && formik.errors.password ? formik.errors.password : ''}
+                    />
 
 
-                {loadingStatus === 'loading' ? <div className={l.preloaderBox}> <Preloader/></div> :
-                    <div className={l.loginButtonBox}>
-                        <div className={l.errorBox}>
-                            {errorMessage && <div className={l.errorMessage}>{errorMessage}</div>}
-                        </div>
-                        <button type='submit'>Login</button>
 
-                        <h3>Don’t have an account?</h3>
-                        <h4><NavLink to={PATH.REGISTRATION}>Sign Up</NavLink></h4>
+                    <div className={l.forgotPassword}>
+                        <NavLink to={PATH.RECOVERY_PASSWORD} >Forgot Password</NavLink>
                     </div>
-                }
-            </form>
-        </div>
+
+                    <div className={l.rememberBox}>
+                        <input type={'checkbox'}
+                               {...formik.getFieldProps('rememberMe')}
+                        />
+                        <label>Remember Me</label>
+                    </div>
+
+
+                    {loadingStatus === 'loading' ? <div className={l.preloaderBox}> <Preloader/></div> :
+                        <div className={l.loginButtonBox}>
+                            <div className={l.errorBox}>
+                                {errorMessage && <div className={l.errorMessage}>{errorMessage}</div>}
+                            </div>
+                            <button type='submit'>Login</button>
+
+                            <h3>Don’t have an account?</h3>
+                            <h4><NavLink to={PATH.REGISTRATION}>Sign Up</NavLink></h4>
+                        </div>
+                    }
+                </form>
+            </div>
+        </>
     )
 }

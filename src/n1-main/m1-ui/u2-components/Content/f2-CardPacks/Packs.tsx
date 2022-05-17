@@ -4,8 +4,8 @@ import Header from "../../Header/Header";
 import l from './CardPack.module.scss'
 import 'antd/dist/antd.css';
 import {useAppDispatch} from "../../../../m2-bll/store";
-import {packsAPI, ResponseCardType} from "../../../../m3-dal/packs-api";
-import {PackColumns} from "./tablePackData";
+import {ResponseCardType} from "../../../../m3-dal/packs-api";
+import {PackColumns} from "./PackData";
 import {fetchPacksTC, pageChangingAC} from "../../../../m2-bll/b1-reducers/packs-reducer";
 import {useTypedSelector} from "../../../../../n3-hooks/useTypedSelector";
 
@@ -52,35 +52,28 @@ const Packs = () => {
         }, 1000)
 
         return () => clearTimeout(delayDebounceFn)
-
     },[minMax, searchText, pageCount, page, showPackListToggle])
 
 
     // settings of DoubleSlider
-    const onChangeMinMaxSliderValue = (sliderValues:number[]) => {
-        setMinMax(sliderValues)
+    const onChangeMinMaxSliderValue = (sliderValues:number[]) => setMinMax(sliderValues)
 
-    }
-
-    const onSearchInputHandler  = (e: ChangeEvent<HTMLInputElement>) => {
-        setSearchText(e.currentTarget.value)
-
-    }
+    const onSearchInputHandler  = (e: ChangeEvent<HTMLInputElement>) =>setSearchText(e.currentTarget.value)
 
     // toggl "my" and "all" tabs
     const onClickShowMyCardList = () => {
         setShowPackListToggle(!showPackListToggle)
     }
 
-    return (
 
+
+    return (
         <div>
             <nav>
                 <Header/>
             </nav>
 
             <div className={l.modalBox}>
-
                 <div className={l.leftSideContainer}>
                     <div className={l.leftSideContentBox}>
                         <h3>Show packs cards</h3>
@@ -104,14 +97,14 @@ const Packs = () => {
                     <div className={l.searchBlock}>
                         <Input value={searchText} onChange={onSearchInputHandler}
                                placeholder={"Search by Name..."} className={l.inputSearch}/>
-                        <button onClick={() => {packsAPI.addCardPack()}}>Add new pack</button>
+                        <button>Add new pack</button>
                     </div>
                     <div className={l.tableBlock}>
                         <div className={l.tableStyle}>
                             <Table loading={loader}  style={{ minWidth: '900px' }} columns={PackColumns}
                                    className={l.booking_information_table}
-                                   dataSource={cardPacks} pagination={false}>
-                            </Table>
+                                   dataSource={cardPacks} pagination={false}/>
+
 
 
                         </div>

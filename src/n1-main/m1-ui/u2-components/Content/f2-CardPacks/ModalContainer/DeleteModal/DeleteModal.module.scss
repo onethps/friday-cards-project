@@ -1,0 +1,45 @@
+.modalContainer{
+  padding: 15px 24px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  width: 100%;
+
+  & h1 {
+    display: inline;
+  }
+
+  & span {
+    font-size: 2em;
+    font-weight: 500;
+  }
+
+  .border{
+    background-color: black;
+    height: 2px;
+    width: 100%;
+    opacity: 0.1;
+  }
+
+  & p{
+    margin: 26px 0;
+    font-size: 14px;
+    line-height: 24px;
+    font-weight: 400;
+
+    & span {
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+  }
+
+  .buttonCancel{
+    padding: 10px 37px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+  }
+
+
+}
