@@ -20,7 +20,7 @@ const Packs = () => {
 
 
     //switching cardPacks
-    const [showPackListToggle, setShowPackListToggle] = useState(true)
+    const [showPackListToggle, setShowPackListToggle] = useState(false)
 
 
     //gets myID from Profile
@@ -67,12 +67,10 @@ const Packs = () => {
 
     }
 
-
+    // toggl "my" and "all" tabs
     const onClickShowMyCardList = () => {
         setShowPackListToggle(!showPackListToggle)
     }
-
-
 
     return (
 
