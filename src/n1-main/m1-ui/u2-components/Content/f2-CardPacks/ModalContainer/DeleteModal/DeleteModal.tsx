@@ -2,7 +2,7 @@ import React from 'react';
 import Modal from "../../../../../../../n2-features/f3-modal/Modal";
 import s from './DeleteModal.module.scss'
 import {useAppDispatch} from "../../../../../../m2-bll/store";
-import {deletePackTC, fetchPacksTC} from "../../../../../../m2-bll/b1-reducers/packs-reducer";
+import {deletePackTC} from "../../../../../../m2-bll/b1-reducers/packs-reducer";
 
 type DeleteModal = {
     showModal:boolean

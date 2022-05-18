@@ -6,21 +6,16 @@ import 'antd/dist/antd.css';
 import {useAppDispatch} from "../../../../m2-bll/store";
 import {packsAPI, ResponseCardType} from "../../../../m3-dal/packs-api";
 import {PackColumns} from "./PackData";
-import {fetchPacksTC, pageChangingAC, setCurrentTabAC} from "../../../../m2-bll/b1-reducers/packs-reducer";
+import {fetchPacks, setCardPacksAC, setCurrentTabAC} from "../../../../m2-bll/b1-reducers/packs-reducer";
 import {useTypedSelector} from "../../../../../n3-hooks/useTypedSelector";
 
 
 const Packs = () => {
-
     const dispatch = useAppDispatch()
     const cardPacks = useTypedSelector<ResponseCardType[]>(state => state.cardPacks.cardPacks
         .map(m => ({...m, updated: new Date(m.updated).toLocaleDateString("ru-RU")})))
 
-    const {cardPacksTotalCount, pageCount, page, togglePacks}  = useTypedSelector(state => state.cardPacks)
-
-
-    //switching cardPacks
-    // const [showPackListToggle, setShowPackListToggle] = useState(false)
+    const {cardPacksTotalCount, togglePacks, loading}  = useTypedSelector(state => state.cardPacks)
 
     //gets myID from Profile
     const {id} = useTypedSelector(state => state.profile)
@@ -32,25 +27,16 @@ const Packs = () => {
     const [searchText, setSearchText] = useState<string>('')
 
 
-    // isLoading Table of Packs
-    const [loader, setLoader] = useState(false)
+    const [currentPage, setCurrentPage] = useState(1)
+    const [pageCount, setPageCount] = useState(5)
 
-    useEffect(() => {
-        //delay search on 1 second after stop typing in input search
-        const delayDebounceFn = setTimeout(() => {
-            setLoader(true)
-            const getPacks = async () => {
-                // if toggled "My" - fetching userID from Profile, if "All" - fetching '' instead id
-                const setUserId =  togglePacks === 'my' ? id : ''
-                await dispatch(fetchPacksTC(minMax[0], minMax[1], searchText, setUserId))
-                //always back on first page, coz on others pages search result not shows
-                setLoader(false)
-            }
-            getPacks()
-        }, 1000)
 
-        return () => clearTimeout(delayDebounceFn)
-    },[minMax, searchText, pageCount, page, togglePacks])
+    useEffect(  () => {
+        const switchTab = togglePacks === "my" ? id : ''
+        dispatch(fetchPacks(minMax[0], minMax[1], currentPage, pageCount, switchTab))
+    }, [togglePacks, currentPage, pageCount])
+
+
 
 
     // settings of DoubleSlider
@@ -61,10 +47,12 @@ const Packs = () => {
     // toggl "my" and "all" tabs
     const setAllPacks = () => {
         dispatch(setCurrentTabAC('all'))
+        // dispatch(fetchPacksTC(minCardsCount, maxCardsCount, ''))
     }
 
     const setMyPacks = () => {
         dispatch(setCurrentTabAC('my'))
+        // dispatch(fetchMyPacks(id))
     }
 
     return (
@@ -101,7 +89,7 @@ const Packs = () => {
                     </div>
                     <div className={l.tableBlock}>
                         <div className={l.tableStyle}>
-                            <Table loading={loader}  style={{ minWidth: '900px' }} columns={PackColumns}
+                            <Table loading={loading === 'loading'}  style={{ minWidth: '900px' }} columns={PackColumns}
                                    className={l.booking_information_table}
                                    dataSource={cardPacks} pagination={false}/>
 
@@ -109,8 +97,10 @@ const Packs = () => {
 
                         </div>
                         <Pagination onChange={(page, pageSize1) => {
-                            dispatch(pageChangingAC(page, pageSize1))}}
-                                    current={page}   showSizeChanger pageSizeOptions={[5,10,25]}
+                            setCurrentPage(page)
+                            setPageCount(pageSize1)
+                        }}
+                                    current={currentPage}   showSizeChanger pageSizeOptions={[5,10,25]}
                                     pageSize={pageCount} total={cardPacksTotalCount}/>;
                     </div>
                 </div>

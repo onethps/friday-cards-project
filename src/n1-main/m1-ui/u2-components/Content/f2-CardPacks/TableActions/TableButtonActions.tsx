@@ -21,7 +21,7 @@ const TableButtonActions = ({userId, packId, packName, toggle}:TableType) => {
     const [ModalEdit, setModalEdit] = useState(false)
 
     return (
-        <div>
+        <div key={packId}>
             <DeleteModal
                 showModal={ModalDelete}
                 setShowModal={setModalDelete}
