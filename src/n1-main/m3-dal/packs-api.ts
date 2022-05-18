@@ -2,16 +2,23 @@ import {instance} from "./auth-api";
 
 
 export const packsAPI = {
+    //done
     getPacks({...props}:cardPacksQueryParams) {
         return instance.get<ResponseCardPackType>('/cards/pack',
             {params: {...props} })},
 
-    addCardPack() {
-        return instance.post(`/cards/pack`, {cardsPack: {}})
+    //done
+    addCardPack(packName:string) {
+        return instance.post(`/cards/pack`, {cardsPack: {name: packName}})
     },
 
+    //done
     deletePack(packId:string) {
         return instance.delete(`/cards/pack?id=${packId}`)
+    },
+    //done
+    editPackName(id:string, name:string) {
+        return instance.put(`/cards/pack`, {cardsPack: {_id: id, name:name}})
     },
 
 

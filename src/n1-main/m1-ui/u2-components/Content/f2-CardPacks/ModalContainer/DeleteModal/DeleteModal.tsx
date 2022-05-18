@@ -38,8 +38,6 @@ const DeleteModal = ({showModal, setShowModal, packName, packId}:DeleteModal) =>
 
                     <button className={s.buttonCancel} onClick={() => setShowModal(false)}>Cancel</button>
                     <button className={s.buttonCancel} onClick={onDeleteHandler}>Delete</button>
-
-
                 </div>
 
             </Modal>

@@ -8,6 +8,7 @@ import {packsAPI, ResponseCardType} from "../../../../m3-dal/packs-api";
 import {PackColumns} from "./PackData";
 import {useTypedSelector} from "../../../../../n3-hooks/useTypedSelector";
 import {fetchPacks, pageChangingAC, setCurrentTabAC} from "../../../../m2-bll/b1-reducers/packs-reducer";
+import AddPackModal from "./ModalContainer/AddPackModal/AddPackModal";
 
 
 const Packs = () => {
@@ -67,12 +68,14 @@ const Packs = () => {
         dispatch(pageChangingAC(1, pageCount))
     }
 
+    const [showAddPackModal, setShowAddPackModal] = useState<boolean>(false)
+
     return (
         <div>
             <nav>
                 <Header/>
             </nav>
-
+            <AddPackModal showAddModal={showAddPackModal} setShowAddModal={setShowAddPackModal}/>
             <div className={l.modalBox}>
                 <div className={l.leftSideContainer}>
                     <div className={l.leftSideContentBox}>
@@ -97,7 +100,7 @@ const Packs = () => {
                     <div className={l.searchBlock}>
                         <Input value={searchText} onChange={onSearchInputHandler}
                                placeholder={"Search by Name..."} className={l.inputSearch}/>
-                        <button onClick={() => packsAPI.addCardPack()}>Add new pack</button>
+                        <button onClick={() => setShowAddPackModal(true)}>Add new pack</button>
                     </div>
                     <div className={l.tableBlock}>
                         <div className={l.tableStyle}>

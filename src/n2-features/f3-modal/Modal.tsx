@@ -55,12 +55,13 @@ const Modal:React.FC<IModal> = (
                 style={{
                     position: 'fixed',
                     top:'20vh',
-                    borderRadius:'20px',
+                    borderRadius:'5px',
                     left:'40vw',
                     width,
                     height,
                     background: 'white',
                     zIndex: 21,
+                    boxShadow:'5px 10px 18px #888888',
 
                     ...modalStyle,
                 }}

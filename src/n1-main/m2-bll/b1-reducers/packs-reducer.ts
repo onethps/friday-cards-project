@@ -53,6 +53,7 @@ export const setCardPacksAC = (
         cardPacks,
         cardPacksTotalCount,
         maxCardsCount,
+        minCardsCount,
         page,
         pageCount
     }
@@ -62,6 +63,7 @@ export const setCardPacksAC = (
             cardPacks,
             cardPacksTotalCount,
             maxCardsCount,
+            minCardsCount,
             page,
             pageCount,
         }
@@ -79,31 +81,20 @@ export const setLoadingPackAC = (status:RequestStatusType) =>
     ({type:'pack/SET-LOADING-STATUS', status} as const)
 
 
-//thunk
-// export const fetchPacksTC = (minCardsCount:number, maxCardsCount:number, searchText:string, userId:string):AppThunk =>
-//     async (dispatch, getState: () => AppRootStateType) => {
-//         dispatch(setLoadingPackAC('loading'))
-//         const {pageCount, page} = getState().cardPacks
-//         const dataQueryParams = {min:minCardsCount,
-//             max:maxCardsCount, packName: searchText, pageCount, page, user_id:userId }
-//         try {
-//             const res = await packsAPI.getPacks(dataQueryParams)
-//             dispatch(setCardPacksAC(res.data))
-//         } catch (e) {
-//             console.log(e)
-//         }
-//         finally {
-//             dispatch(setLoadingPackAC('succeeded'))
-//         }
-//     }
-
 
 export const fetchPacks = (min:number,max:number, currentPage:number, pageCount:number, userId:string):AppThunk =>
     async (dispatch, getState: () => AppRootStateType) => {
         dispatch(setLoadingPackAC('loading'))
-        const res  = await packsAPI.getPacks({min:min, max:max, page:currentPage, pageCount:pageCount, user_id:userId})
-        dispatch(setCardPacksAC(res.data))
-        dispatch(setLoadingPackAC('succeeded'))
+        try {
+            const res  = await packsAPI.getPacks({min:min, max:max, page:currentPage, pageCount:pageCount, user_id:userId})
+            dispatch(setCardPacksAC(res.data))
+        } catch (e) {
+            console.log(e)
+        } finally {
+            dispatch(setLoadingPackAC('succeeded'))
+        }
+
+
     }
 
 
@@ -112,16 +103,12 @@ export const deletePackTC = (packId:string):AppThunk =>
     async (dispatch, getState: () => AppRootStateType) => {
         dispatch(setLoadingPackAC('loading'))
         try {
+            await packsAPI.deletePack(packId)
             const {minCardsCount, maxCardsCount, togglePacks, page, pageCount} = getState().cardPacks
             const profileId = getState().profile.id
-            await packsAPI.deletePack(packId)
             // check toggle position, if toggled "my" tab - do fetch with userID, if "all" - fetch '' instead userID
-           if (togglePacks === 'my') {
-               // dispatch(fetchMyTasks(minCardsCount, maxCardsCount, page, pageCount, profileId ))
-           }
-           if (togglePacks === 'all') {
-               // dispatch(fetchAllTasks(minCardsCount, maxCardsCount, page, pageCount))
-           }
+            const currentActionTab = togglePacks === 'my' ? profileId : ''
+            dispatch(fetchPacks(minCardsCount, maxCardsCount, page, pageCount, currentActionTab))
         } catch (e) {
             console.log(e)
         }
@@ -129,6 +116,46 @@ export const deletePackTC = (packId:string):AppThunk =>
             dispatch(setLoadingPackAC('succeeded'))
         }
     }
+
+
+    export const addNewPackTC = (packName:string):AppThunk =>
+    async (dispatch, getState: () => AppRootStateType) => {
+        dispatch(setLoadingPackAC('loading'))
+        try {
+            await packsAPI.addCardPack(packName)
+            const {minCardsCount, maxCardsCount, togglePacks, page, pageCount} = getState().cardPacks
+            const profileId = getState().profile.id
+            // check toggle position, if toggled "my" tab - do fetch with userID, if "all" - fetch '' instead userID
+            const currentActionTab = togglePacks === 'my' ? profileId : ''
+            dispatch(fetchPacks(minCardsCount, maxCardsCount, page, pageCount, currentActionTab))
+        } catch (e) {
+            console.log(e)
+        }
+        finally {
+            dispatch(setLoadingPackAC('succeeded'))
+        }
+    }
+
+
+    export const editPackNameTC = (id:string, name:string):AppThunk =>
+    async (dispatch, getState: () => AppRootStateType) => {
+        dispatch(setLoadingPackAC('loading'))
+        try {
+            await packsAPI.editPackName(id, name)
+            const {minCardsCount, maxCardsCount, togglePacks, page, pageCount} = getState().cardPacks
+            const profileId = getState().profile.id
+            // check toggle position, if toggled "my" tab - do fetch with userID, if "all" - fetch '' instead userID
+            const currentActionTab = togglePacks === 'my' ? profileId : ''
+            dispatch(fetchPacks(minCardsCount, maxCardsCount, page, pageCount, currentActionTab))
+        } catch (e) {
+            console.log(e)
+        }
+        finally {
+            dispatch(setLoadingPackAC('succeeded'))
+        }
+    }
+
+
 
 //types
 type cardPackReducerTypes = ReturnType<typeof setCardPacksAC>
