@@ -45,19 +45,21 @@
       display: flex;
       margin-bottom: 20px;
 
-      .myCardsButton, .allCardsButton {
+      .tabButton {
         width: 150px;
         border: none;
-            font-weight: 600;
+        font-weight: 600;
         padding: 10px 0;
+        background-color: white;
+        color: #9A91C8;
+      }
+
+      .tabButton.active{
         background-color: #9A91C8;
         color: white;
       }
 
-      .myCardsButton{
-        background-color: #ffff;
-        color: #9A91C8;
-      }
+
     }
 
     .sliderStyle{

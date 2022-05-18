@@ -1,18 +1,25 @@
 import React from 'react';
 import Modal from "../../../../../../../n2-features/f3-modal/Modal";
 import s from './DeleteModal.module.scss'
+import {useAppDispatch} from "../../../../../../m2-bll/store";
+import {deletePackTC, fetchPacksTC} from "../../../../../../m2-bll/b1-reducers/packs-reducer";
 
 type DeleteModal = {
     showModal:boolean
     setShowModal: (bool:boolean) => void
     packName:string
+    packId:string
 }
 
 
-const DeleteModal = ({showModal, setShowModal, packName}:DeleteModal) => {
+const DeleteModal = ({showModal, setShowModal, packName, packId}:DeleteModal) => {
+    const dispatch = useAppDispatch()
 
+    const onDeleteHandler = () => {
+        dispatch(deletePackTC(packId))
+        setShowModal(false)
 
-
+    }
 
 
     return (
@@ -30,7 +37,7 @@ const DeleteModal = ({showModal, setShowModal, packName}:DeleteModal) => {
                     </p>
 
                     <button className={s.buttonCancel} onClick={() => setShowModal(false)}>Cancel</button>
-                    <button className={s.buttonCancel}>Delete</button>
+                    <button className={s.buttonCancel} onClick={onDeleteHandler}>Delete</button>
 
 
                 </div>

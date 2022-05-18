@@ -9,9 +9,10 @@ export const packsAPI = {
         return instance.post(`/cards/pack`, {cardsPack: {}})
     },
 
-    changeCardPack({...params}:changeCardPackType) {
-        return instance.put('/cards/pack')
+    deletePack(packId:string) {
+        return instance.delete(`/cards/pack?id=${packId}`)
     },
+
 
 
 }

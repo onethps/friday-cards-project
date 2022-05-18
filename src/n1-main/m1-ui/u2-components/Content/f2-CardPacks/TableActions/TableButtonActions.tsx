@@ -9,10 +9,11 @@ type TableType = {
     userId:string
     packId:string
     packName:string
+    toggle?:boolean
 }
 
 
-const TableButtonActions = ({userId, packId, packName}:TableType) => {
+const TableButtonActions = ({userId, packId, packName, toggle}:TableType) => {
 
     const {id} = useTypedSelector(state => state.profile)
 
@@ -21,9 +22,11 @@ const TableButtonActions = ({userId, packId, packName}:TableType) => {
 
     return (
         <div>
-            <DeleteModal showModal={ModalDelete} setShowModal={setModalDelete} packName={packName}/>
+            <DeleteModal
+                showModal={ModalDelete}
+                setShowModal={setModalDelete}
+                packName={packName} packId={packId}/>
             <Row justify={'end'} >
-
                 <Space size={'middle'}>
                     {userId === id ?
                         <>

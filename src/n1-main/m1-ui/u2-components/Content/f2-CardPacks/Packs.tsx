@@ -1,12 +1,12 @@
 import {Input, Pagination, Slider, Table} from 'antd';
 import React, {ChangeEvent, useEffect, useState} from 'react';
 import Header from "../../Header/Header";
-import l from './CardPack.module.scss'
+import l from './Pack.module.scss'
 import 'antd/dist/antd.css';
 import {useAppDispatch} from "../../../../m2-bll/store";
-import {ResponseCardType} from "../../../../m3-dal/packs-api";
+import {packsAPI, ResponseCardType} from "../../../../m3-dal/packs-api";
 import {PackColumns} from "./PackData";
-import {fetchPacksTC, pageChangingAC} from "../../../../m2-bll/b1-reducers/packs-reducer";
+import {fetchPacksTC, pageChangingAC, setCurrentTabAC} from "../../../../m2-bll/b1-reducers/packs-reducer";
 import {useTypedSelector} from "../../../../../n3-hooks/useTypedSelector";
 
 
@@ -16,16 +16,14 @@ const Packs = () => {
     const cardPacks = useTypedSelector<ResponseCardType[]>(state => state.cardPacks.cardPacks
         .map(m => ({...m, updated: new Date(m.updated).toLocaleDateString("ru-RU")})))
 
-    const {cardPacksTotalCount, pageCount, page}  = useTypedSelector(state => state.cardPacks)
+    const {cardPacksTotalCount, pageCount, page, togglePacks}  = useTypedSelector(state => state.cardPacks)
 
 
     //switching cardPacks
-    const [showPackListToggle, setShowPackListToggle] = useState(false)
-
+    // const [showPackListToggle, setShowPackListToggle] = useState(false)
 
     //gets myID from Profile
     const {id} = useTypedSelector(state => state.profile)
-
 
     //sets settings on double slider
     const [minMax, setMinMax] = useState<number[]>([0,50])
@@ -43,7 +41,7 @@ const Packs = () => {
             setLoader(true)
             const getPacks = async () => {
                 // if toggled "My" - fetching userID from Profile, if "All" - fetching '' instead id
-                const setUserId =  showPackListToggle ? id : ''
+                const setUserId =  togglePacks === 'my' ? id : ''
                 await dispatch(fetchPacksTC(minMax[0], minMax[1], searchText, setUserId))
                 //always back on first page, coz on others pages search result not shows
                 setLoader(false)
@@ -52,7 +50,7 @@ const Packs = () => {
         }, 1000)
 
         return () => clearTimeout(delayDebounceFn)
-    },[minMax, searchText, pageCount, page, showPackListToggle])
+    },[minMax, searchText, pageCount, page, togglePacks])
 
 
     // settings of DoubleSlider
@@ -61,11 +59,13 @@ const Packs = () => {
     const onSearchInputHandler  = (e: ChangeEvent<HTMLInputElement>) =>setSearchText(e.currentTarget.value)
 
     // toggl "my" and "all" tabs
-    const onClickShowMyCardList = () => {
-        setShowPackListToggle(!showPackListToggle)
+    const setAllPacks = () => {
+        dispatch(setCurrentTabAC('all'))
     }
 
-
+    const setMyPacks = () => {
+        dispatch(setCurrentTabAC('my'))
+    }
 
     return (
         <div>
@@ -78,10 +78,10 @@ const Packs = () => {
                     <div className={l.leftSideContentBox}>
                         <h3>Show packs cards</h3>
                         <div className={l.buttonGroup}>
-                            <button onClick={onClickShowMyCardList}
-                                    className={!showPackListToggle ? l.myCardsButton : l.allCardsButton}>My</button>
-                            <button onClick={onClickShowMyCardList}
-                                    className={showPackListToggle ?  l.myCardsButton : l.allCardsButton}>All</button>
+                            <button onClick={setMyPacks}
+                                    className={togglePacks === 'my' ? `${l.tabButton} ${l.active}` : `${l.tabButton}`}>My</button>
+                            <button onClick={setAllPacks}
+                                    className={togglePacks === 'all' ? `${l.tabButton} ${l.active}` : `${l.tabButton}`}>All</button>
                         </div>
 
                         <h3>Number of cards</h3>
@@ -97,7 +97,7 @@ const Packs = () => {
                     <div className={l.searchBlock}>
                         <Input value={searchText} onChange={onSearchInputHandler}
                                placeholder={"Search by Name..."} className={l.inputSearch}/>
-                        <button>Add new pack</button>
+                        <button onClick={() => packsAPI.addCardPack()}>Add new pack</button>
                     </div>
                     <div className={l.tableBlock}>
                         <div className={l.tableStyle}>
