@@ -12,7 +12,7 @@ const initState = {
     minCardsCount: 0,
     maxCardsCount: 50,
     page: 1,
-    pageCount: 10,
+    pageCount: 5,
     togglePacks: "all" as const,
     loading: 'idle' as const
 }
@@ -53,7 +53,6 @@ export const setCardPacksAC = (
         cardPacks,
         cardPacksTotalCount,
         maxCardsCount,
-        minCardsCount,
         page,
         pageCount
     }
@@ -63,7 +62,6 @@ export const setCardPacksAC = (
             cardPacks,
             cardPacksTotalCount,
             maxCardsCount,
-            minCardsCount,
             page,
             pageCount,
         }

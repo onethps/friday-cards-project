@@ -6,8 +6,8 @@ import 'antd/dist/antd.css';
 import {useAppDispatch} from "../../../../m2-bll/store";
 import {packsAPI, ResponseCardType} from "../../../../m3-dal/packs-api";
 import {PackColumns} from "./PackData";
-import {fetchPacks, setCardPacksAC, setCurrentTabAC} from "../../../../m2-bll/b1-reducers/packs-reducer";
 import {useTypedSelector} from "../../../../../n3-hooks/useTypedSelector";
+import {fetchPacks, pageChangingAC, setCurrentTabAC} from "../../../../m2-bll/b1-reducers/packs-reducer";
 
 
 const Packs = () => {
@@ -15,7 +15,7 @@ const Packs = () => {
     const cardPacks = useTypedSelector<ResponseCardType[]>(state => state.cardPacks.cardPacks
         .map(m => ({...m, updated: new Date(m.updated).toLocaleDateString("ru-RU")})))
 
-    const {cardPacksTotalCount, togglePacks, loading}  = useTypedSelector(state => state.cardPacks)
+    const {cardPacksTotalCount, togglePacks, loading, page, pageCount}  = useTypedSelector(state => state.cardPacks)
 
     //gets myID from Profile
     const {id} = useTypedSelector(state => state.profile)
@@ -26,18 +26,30 @@ const Packs = () => {
     // Input search State
     const [searchText, setSearchText] = useState<string>('')
 
-
-    const [currentPage, setCurrentPage] = useState(1)
-    const [pageCount, setPageCount] = useState(5)
-
-
-    useEffect(  () => {
-        const switchTab = togglePacks === "my" ? id : ''
-        dispatch(fetchPacks(minMax[0], minMax[1], currentPage, pageCount, switchTab))
-    }, [togglePacks, currentPage, pageCount])
+    //
+    // const [currentPage, setCurrentPage] = useState(1)
+    // const [spageCount, setPageCount] = useState(5)
 
 
+    useEffect(() => {
+        //delay search on 1 second after stop typing in input search
+        const delayDebounceFn = setTimeout(() => {
+            const getPacks = async () => {
+                // if toggled "My" - fetching userID from Profile, if "All" - fetching '' instead id
+                if (togglePacks === 'my') {
+                    //always back on first page, coz on others pages search result not shows
+                    await  dispatch(fetchPacks(minMax[0], minMax[1], page, pageCount, id))
+                }
+                if (togglePacks === 'all') {
+                    await  dispatch(fetchPacks(minMax[0], minMax[1], page, pageCount, ''))
+                }
+            }
+            getPacks()
+        }, 1000)
 
+        return () => clearTimeout(delayDebounceFn)
+
+    },[togglePacks, page, pageCount, minMax])
 
     // settings of DoubleSlider
     const onChangeMinMaxSliderValue = (sliderValues:number[]) => setMinMax(sliderValues)
@@ -52,7 +64,7 @@ const Packs = () => {
 
     const setMyPacks = () => {
         dispatch(setCurrentTabAC('my'))
-        // dispatch(fetchMyPacks(id))
+        dispatch(pageChangingAC(1, pageCount))
     }
 
     return (
@@ -97,10 +109,9 @@ const Packs = () => {
 
                         </div>
                         <Pagination onChange={(page, pageSize1) => {
-                            setCurrentPage(page)
-                            setPageCount(pageSize1)
+                            dispatch(pageChangingAC(page, pageSize1))
                         }}
-                                    current={currentPage}   showSizeChanger pageSizeOptions={[5,10,25]}
+                                    current={page}   showSizeChanger pageSizeOptions={[5,10,25]}
                                     pageSize={pageCount} total={cardPacksTotalCount}/>;
                     </div>
                 </div>
