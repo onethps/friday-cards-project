@@ -4,11 +4,13 @@ import Header from "../../Header/Header";
 import l from './Pack.module.scss'
 import 'antd/dist/antd.css';
 import {useAppDispatch} from "../../../../m2-bll/store";
-import {packsAPI, ResponseCardType} from "../../../../m3-dal/packs-api";
+import {ResponseCardType} from "../../../../m3-dal/packs-api";
 import {PackColumns} from "./PackData";
 import {useTypedSelector} from "../../../../../n3-hooks/useTypedSelector";
 import {fetchPacks, pageChangingAC, setCurrentTabAC} from "../../../../m2-bll/b1-reducers/packs-reducer";
 import AddPackModal from "./ModalContainer/AddPackModal/AddPackModal";
+import DialogModalContainer from "../../../u1-common/DialogModalContainer/DialogModalContainer";
+import CustomInput from "../../../u1-common/c1-CustomInput/CustomInput";
 
 
 const Packs = () => {
@@ -75,7 +77,10 @@ const Packs = () => {
             <nav>
                 <Header/>
             </nav>
-            <AddPackModal showAddModal={showAddPackModal} setShowAddModal={setShowAddPackModal}/>
+
+            <AddPackModal showAddModal={showAddPackModal}
+                          setShowAddModal={setShowAddPackModal}/>
+
             <div className={l.modalBox}>
                 <div className={l.leftSideContainer}>
                     <div className={l.leftSideContentBox}>

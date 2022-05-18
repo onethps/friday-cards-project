@@ -3,6 +3,7 @@ import Modal from "../../../../../../../n2-features/f3-modal/Modal";
 import s from './DeleteModal.module.scss'
 import {useAppDispatch} from "../../../../../../m2-bll/store";
 import {deletePackTC} from "../../../../../../m2-bll/b1-reducers/packs-reducer";
+import DialogModalContainer from "../../../../../u1-common/DialogModalContainer/DialogModalContainer";
 
 type DeleteModal = {
     showModal:boolean
@@ -24,23 +25,21 @@ const DeleteModal = ({showModal, setShowModal, packName, packId}:DeleteModal) =>
 
     return (
         <div>
-            <Modal width={500} height={240} show={showModal}
-                   enableBackground={true} backgroundOnClick={() => setShowModal(false)}>
-                <div className={s.modalContainer}>
-                    <h1>Delete Pack</h1>
-                    <span>X</span>
-                    <div className={s.border}/>
-                    <p>
-                        Do you really want to remove
-                        <span> {packName} </span>
-                        All cards will be excluded from this course.
-                    </p>
-
+            <DialogModalContainer
+                title={"Delete Pack"}
+                active={showModal}
+                setActive={setShowModal}
+            >
+                <p style={{margin: '20px 0'}}>
+                    Do you really want to remove
+                    <span style={{fontSize:'22px', fontWeight:'600'}}> {packName} </span>
+                    All cards will be excluded from this course.
+                </p>
+                <div className={s.buttonBlock}>
                     <button className={s.buttonCancel} onClick={() => setShowModal(false)}>Cancel</button>
-                    <button className={s.buttonCancel} onClick={onDeleteHandler}>Delete</button>
+                    <button className={s.buttonSubmit} onClick={onDeleteHandler}>Delete</button>
                 </div>
-
-            </Modal>
+            </DialogModalContainer>
         </div>
     );
 };

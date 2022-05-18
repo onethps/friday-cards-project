@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
-import Modal from "../../../../../../../n2-features/f3-modal/Modal";
 import s from './AddPackModal.module.scss'
 import CustomInput from "../../../../../u1-common/c1-CustomInput/CustomInput";
 import {useAppDispatch} from "../../../../../../m2-bll/store";
 import {addNewPackTC} from "../../../../../../m2-bll/b1-reducers/packs-reducer";
+import DialogModalContainer from "../../../../../u1-common/DialogModalContainer/DialogModalContainer";
 
 type AddPackModalType = {
     showAddModal: boolean
@@ -27,21 +27,19 @@ const AddPackModal = ({showAddModal, setShowAddModal}:AddPackModalType) => {
 
     return (
         <>
-            <Modal width={500} height={300} show={showAddModal}
-                   backgroundOnClick={() => setShowAddModal(false)}
-                   enableBackground={true}>
-
-                <div className={s.modalContainer}>
-                    <h1>Add New Pack</h1>
-                    <span>X</span>
-                    <div className={s.border}/>
-                    <div className={s.customInput}>
-                        <CustomInput label={'Name Pack'} type={'text'} value={value} onChange={(e) => setValue(e.currentTarget.value)}/>
-                    </div>
+            <DialogModalContainer title={"Add New Pack"} onASubmit={onAddPackHandler}
+                                  active={showAddModal} setActive={setShowAddModal}>
+                <div className={s.customInput}>
+                    <CustomInput label={'Name Pack'} type={'text'}
+                                 value={value}
+                                 onChange={(e) => setValue(e.currentTarget.value)}/>
+                </div>
+                <div className={s.buttonBlock}>
                     <button className={s.buttonCancel} onClick={() => setShowAddModal(false)}>Cancel</button>
                     <button className={s.buttonSubmit} onClick={onAddPackHandler}>Save</button>
                 </div>
-            </Modal>
+
+            </DialogModalContainer>
         </>
     );
 };

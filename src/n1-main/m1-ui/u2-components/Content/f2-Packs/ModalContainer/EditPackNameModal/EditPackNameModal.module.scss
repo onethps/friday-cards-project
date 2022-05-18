@@ -1,0 +1,19 @@
+.buttonBlock {
+  display: flex;
+  justify-content: space-between;
+
+  .buttonCancel, .buttonSubmit {
+    padding: 10px 37px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    background-color: #9890C7;
+    color: white;
+    width: 150px;
+  }
+
+  .buttonSubmit {
+    background-color: blue;
+  }
+
+}

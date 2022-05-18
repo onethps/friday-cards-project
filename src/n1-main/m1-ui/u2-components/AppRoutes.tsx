@@ -4,7 +4,7 @@ import {Register} from "./Auth/a1-Register/Register";
 import {Profile} from "./Content/f1-Profile/Profile";
 import PasswordRecovery from "./Auth/a3-PasswordRecovery/PasswordRecovery";
 import React from "react";
-import Packs from "./Content/f2-CardPacks/Packs";
+import Packs from "./Content/f2-Packs/Packs";
 import Card from "./Content/f3-Card/Card";
 import NewPassword from "./Auth/a3-PasswordRecovery/p3-NewPassword/NewPassword";
 

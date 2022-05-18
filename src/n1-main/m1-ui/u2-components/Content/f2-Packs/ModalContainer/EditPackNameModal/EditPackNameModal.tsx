@@ -5,6 +5,7 @@ import {useAppDispatch} from "../../../../../../m2-bll/store";
 import {editPackNameTC} from "../../../../../../m2-bll/b1-reducers/packs-reducer";
 import CustomInput from "../../../../../u1-common/c1-CustomInput/CustomInput";
 import closeIcon from "../../../../../../../assets/icons/close-modal-icon.svg"
+import DialogModalContainer from "../../../../../u1-common/DialogModalContainer/DialogModalContainer";
 
 type EditPackNameModal = {
     showModal:boolean
@@ -27,21 +28,18 @@ const EditPackNameModal = ({showModal, setShowModal, packId, packName}:EditPackN
 
     return (
         <div>
-            <Modal width={400} height={240} show={showModal}
-                   enableBackground={true} backgroundOnClick={() => setShowModal(false)}>
-                <div className={s.modalContainer}>
-                    <h1>Edit Pack Name</h1>
-                    <img src={closeIcon}/>
-                    <div className={s.border}/>
-                    <div className={s.customInput}>
-                        <CustomInput label={"New Pack Name"} value={value}
-                                     onChange={(e) => setValue(e.currentTarget.value)}/>
-                    </div>
-                    <button className={s.buttonCancel} onClick={() => setShowModal(false)}>Cancel</button>
-                    <button className={s.buttonCancel} onClick={onEditPackNameHandler}>Save</button>
-                </div>
 
-            </Modal>
+            <DialogModalContainer
+                active={showModal} setActive={setShowModal}
+                title={"Edit Pack Name"} onASubmit={onEditPackNameHandler}>
+                <CustomInput label={"New Pack Name"} value={value}
+                             onChange={(e) => setValue(e.currentTarget.value)}/>
+                <div className={s.buttonBlock}>
+                    <button className={s.buttonCancel} onClick={() => setShowModal(false)}>Cancel</button>
+                    <button className={s.buttonSubmit} onClick={onEditPackNameHandler}>Delete</button>
+                </div>
+            </DialogModalContainer>
+
         </div>
     );
 };

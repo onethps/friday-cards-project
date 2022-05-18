@@ -1,0 +1,62 @@
+.modalContainer{
+  padding: 15px 24px;
+  display: flex;
+  flex-direction: column;
+
+  .titleBox{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+     .title {
+      font-size: 18px;
+      display: inline;
+      margin: 0;
+    }
+
+    & img {
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+    }
+  }
+
+  .border{
+    margin: 15px 0;
+    background-color: black;
+    height: 2px;
+    width: 100%;
+    opacity: 0.1;
+  }
+
+
+  .modalContent{
+   
+  }
+
+
+  .buttonBlock{
+    display: flex;
+    justify-content: space-between;
+
+    .buttonCancel, .buttonSubmit{
+      padding: 10px 37px;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+      background-color: #9890C7;
+      color: white;
+      width: 150px;
+    }
+
+    .buttonSubmit{
+      background-color: #2D2E46;
+    }
+
+  }
+
+
+
+
+}
+
