@@ -1,0 +1,7 @@
+@import "../../../common/styles/mixims";
+
+.loginBox {
+  @include authContainer();
+  min-height: 540px;
+  min-width: 450px;
+}

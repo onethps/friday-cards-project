@@ -1,36 +1,34 @@
-import React, {useEffect} from 'react';
+import React, { ReactElement, useEffect } from 'react';
+
 import './App.scss';
-import {useAppDispatch} from "./n1-main/m2-bll/store";
-import Preloader from "./n1-main/m1-ui/u1-common/c2-Preloader/Preloader";
-import {AppRoutes} from "./n1-main/m1-ui/u2-components/AppRoutes";
-import {initializeAppTC} from "./n1-main/m2-bll/b1-reducers/app-reducer";
-import {useTypedSelector} from "./n3-hooks/useTypedSelector";
-import Modal from "./n2-features/f3-modal/Modal";
+import { AppRoutes } from 'components/AppRoutes';
+import { Preloader } from 'components/common';
+import { useTypedSelector } from 'hooks/useTypedSelector';
+import { initializeAppTC } from 'store/reducers/app';
+import { useAppDispatch } from 'store/store';
 
-const App = () => {
+const App = (): ReactElement => {
+  const dispatch = useAppDispatch();
 
-    const dispatch = useAppDispatch();
+  const AppLoadingStatus = useTypedSelector(state => state.app.status);
 
-    let AppLoadingStatus = useTypedSelector((state) => state.app.status)
+  useEffect(() => {
+    dispatch(initializeAppTC());
+  }, []);
 
-    useEffect(() => {
-        dispatch(initializeAppTC())
-    }, [])
-
-    if (AppLoadingStatus === 'loading') {
-        return (
-            <div className='preloaderPosition'>
-                <Preloader/>
-            </div>
-        )
-    }
-
+  if (AppLoadingStatus === 'loading') {
     return (
-        <div className='App'>
-            <AppRoutes/>
-
-        </div>
+      <div className="preloaderPosition">
+        <Preloader />
+      </div>
     );
-}
+  }
+
+  return (
+    <div className="App">
+      <AppRoutes />
+    </div>
+  );
+};
 
 export default App;

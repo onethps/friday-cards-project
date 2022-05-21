@@ -1,21 +1,23 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.scss';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
-import {HashRouter} from 'react-router-dom';
-import {Provider} from "react-redux";
-import {store} from "./n1-main/m2-bll/store";
 
-const root = ReactDOM.createRoot(
-    document.getElementById('root') as HTMLElement
-);
+// eslint-disable-next-line import/order
+import ReactDOM from 'react-dom/client';
+
+import './index.scss';
+import { Provider } from 'react-redux';
+import { HashRouter } from 'react-router-dom';
+
+import App from './App';
+import { store } from 'store/store';
+import reportWebVitals from './reportWebVitals';
+
+const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
-        <HashRouter>
-            <Provider store={store}>
-                <App/>
-            </Provider>
-        </HashRouter>
+  <HashRouter>
+    <Provider store={store}>
+      <App />
+    </Provider>
+  </HashRouter>,
 );
 
 reportWebVitals();

@@ -1,0 +1,88 @@
+@import "../../common/styles/mixims";
+.loginBox {
+@include authContainer
+}
+
+
+/* It-incubator */
+.loginBox h1 {
+  color: #2D2E46;
+
+  text-align: center;
+}
+
+/* It-sign-Up */
+.loginBox h2 {
+
+  margin-top: 50px;
+  color: #2D2E46;
+  text-align: center;
+}
+
+.loginBox h3 {
+  margin-top: 31px;
+  color: grey;
+  font-size: 14px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.loginBox h4 {
+  margin-top: 25px;
+  color: #21268F;
+  font-size: 16px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.loginBox h4:hover {
+  opacity: 0.8;
+}
+
+.loginBox h3:hover {
+  opacity: 0.8;
+}
+
+
+.loginBox a {
+  text-decoration: none;
+  text-align: center;
+  font-weight: 600;
+  font-size: 16px;
+  border: none;
+  width: 124px;
+  height: 36px;
+  padding: 5px;
+  color: #21268F;
+  background-color: #D7D8EF;
+  border-radius: 30px;
+}
+
+
+.loginBox .buttonBlock{
+  display: flex;
+  justify-content: space-around;
+  padding: 50px 0;
+}
+
+
+
+.loginBox .submitButton{
+  font-weight: 500;
+  cursor: pointer;
+  font-size: 16px;
+  line-height: 19px;
+  text-align: center;
+  letter-spacing: 0.01em;
+  border: none;
+  width: 187px;
+  height: 36px;
+  background: #21268F;
+  border-radius: 30px;
+  color: #ECECF9;
+}
+
+.loginBox .errorMessage{
+  color: red;
+  font-weight: 600;
+}
