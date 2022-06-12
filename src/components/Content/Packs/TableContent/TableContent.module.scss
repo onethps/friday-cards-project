@@ -1,0 +1,43 @@
+//RIGHT SIDE
+
+.rightSideContainer{
+  display: flex;
+  flex-direction: column;
+
+
+  & h2 {
+    margin: 20px 0 0 15px;
+    font-weight: 700;
+  }
+
+  .searchBlock{
+    display: flex;
+    justify-content: space-around;
+    padding: 20px 0;
+
+
+    .inputSearch{
+      width: 75%;
+    }
+
+    & button{
+      width: 180px;
+      display: inline-block;
+      background-color: #21268F;
+      color: #ECECF9;
+      border: none;
+      outline: none;
+      border-radius: 40px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+  }
+
+
+  .tableStyle{
+    padding: 20px;
+    margin: 25px;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  }
+}

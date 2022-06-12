@@ -1,13 +1,10 @@
 import { AxiosError } from 'axios';
 import { Dispatch } from 'redux';
 
-import { RequestStatusType } from 'store/reducers/app';
-import {
-  actionTypeProfileReducer,
-  setProfileInfo,
-} from 'store/reducers/profile';
-import { AppThunk } from 'store/store';
 import { auth, ResponseError } from 'api/auth';
+import { RequestStatusType } from 'store/reducers/app';
+import { actionTypeProfileReducer, setProfileInfo } from 'store/reducers/profile';
+import { AppThunk } from 'store/store';
 
 export interface loginState {
   isLoggedIn: boolean;

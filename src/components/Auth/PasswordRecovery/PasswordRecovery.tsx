@@ -4,8 +4,8 @@ import { useFormik } from 'formik';
 import { NavLink } from 'react-router-dom';
 
 import { PATH } from 'components/AppRoutes';
+import style from 'components/Auth/PasswordRecovery/PasswordRecovery.module.scss';
 import SuccessMessage from 'components/Auth/PasswordRecovery/SuccessMessage/SuccessMessage';
-import l from 'components/Auth/PasswordRecovery/PasswordRecovery.module.scss';
 import CustomInput from 'components/common/CustomInput/CustomInput';
 import Preloader from 'components/common/Preloader/Preloader';
 import { useTypedSelector } from 'hooks/useTypedSelector';
@@ -35,7 +35,7 @@ const PasswordRecovery = (): ReactElement => {
   }
 
   return (
-    <div className={l.loginBox}>
+    <div className={style.loginBox}>
       <h1>It-incubator</h1>
 
       {isLoadingStatus ? (
@@ -56,9 +56,11 @@ const PasswordRecovery = (): ReactElement => {
 
             <h3>Enter your email address and we will send you further instructions </h3>
 
-            <div className={l.errorBox}>{forgotError && <span>{forgotError}</span>}</div>
+            <div className={style.errorBox}>
+              {forgotError && <span>{forgotError}</span>}
+            </div>
 
-            <div className={l.loginButtonBox}>
+            <div className={style.loginButtonBox}>
               <button type="submit">Send Instructions</button>
               <h3>Did you remember your password?</h3>
               <h4>

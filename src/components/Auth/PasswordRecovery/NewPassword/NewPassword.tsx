@@ -2,8 +2,8 @@ import React, { ReactElement, useState } from 'react';
 
 import { useParams } from 'react-router-dom';
 
-import SuccessPasswordChanged from 'components/Auth/PasswordRecovery/NewPassword/SuccessPasswordChanged/SuccessPasswordChanged';
 import style from 'components/Auth/PasswordRecovery/NewPassword/NewPassword.module.scss';
+import SuccessPasswordChanged from 'components/Auth/PasswordRecovery/NewPassword/SuccessPasswordChanged/SuccessPasswordChanged';
 import CustomInput from 'components/common/CustomInput/CustomInput';
 import Preloader from 'components/common/Preloader/Preloader';
 import { useTypedSelector } from 'hooks/useTypedSelector';

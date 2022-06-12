@@ -9,7 +9,7 @@ import Preloader from 'components/common/Preloader/Preloader';
 import { PATH } from 'components/AppRoutes';
 import Header from 'components/Header/Header';
 
-import l from 'components/Content/f1-Profile/Profile.module.scss';
+import l from 'components/Content/Profile/Profile.module.scss';
 
 import {
   changeMessageStatusAC,

@@ -2,9 +2,7 @@ import React, { memo, ReactElement, useState } from 'react';
 
 import CustomInput from 'components/common/CustomInput/CustomInput';
 import ModalContainer from 'components/common/ModalContainer/ModalContainer';
-
-import s from 'components/Content/f2-Packs/ModalContainer/AddPackModal/AddPackModal.module.scss';
-
+import s from 'components/Content/Packs/TableContent/TableModals/AddPackModal/AddPackModal.module.scss';
 import { addNewPackTC } from 'store/reducers/packs';
 import { useAppDispatch } from 'store/store';
 
@@ -29,7 +27,6 @@ const AddPackModal = memo(
       <>
         <ModalContainer
           title="Add New Pack"
-          onASubmit={onAddPackHandler}
           active={showAddModal}
           setActive={setShowAddModal}
         >

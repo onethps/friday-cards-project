@@ -2,20 +2,20 @@ import React, { FC } from 'react';
 
 import { Navigate, Route, Routes } from 'react-router-dom';
 
-import { Register } from 'components/Auth/Register/Register';
 import { Login } from 'components/Auth/Login/Login';
 import NewPassword from 'components/Auth/PasswordRecovery/NewPassword/NewPassword';
 import PasswordRecovery from 'components/Auth/PasswordRecovery/PasswordRecovery';
-import { Profile } from 'components/Content/f1-Profile/Profile';
-import Packs from 'components/Content/f2-Packs/Packs';
-import Card from 'components/Content/f3-Card/Card';
+import { Register } from 'components/Auth/Register/Register';
+import Card from 'components/Content/Card/Card';
+import Packs from 'components/Content/Packs/Packs';
+import { Profile } from 'components/Content/Profile/Profile';
 
 export const PATH = {
   LOGIN: '/login',
   REGISTRATION: '/registration',
   PROFILE: '/profile',
   RECOVERY_PASSWORD: '/forgot_pass',
-  PACKS: '/packlist',
+  PACKS: '/packlist/:category',
   NEW_PASSWORD: '/new_pass/:token',
   // ERROR_404: '/404',
   // TEST: '/test',

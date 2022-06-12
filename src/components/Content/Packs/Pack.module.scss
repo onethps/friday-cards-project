@@ -1,0 +1,28 @@
+@import "../../common/styles/mixims";
+
+//.booking_information_table {
+//  :global {
+//    .ant-table-thead > tr > th,
+//    .ant-table-tbody > tr > td {
+//      padding: 0 0 !important;
+//      background-color: red;
+//      border: none;
+//      overflow-wrap: break-word;
+//    }
+//  }
+//}
+
+
+.settingsContainer {
+  @include container;
+  display: flex;
+  margin: 50px auto;
+  width: 1400px;
+
+
+
+
+
+
+}
+

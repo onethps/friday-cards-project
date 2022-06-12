@@ -45,7 +45,7 @@ export const setAppErrorAC = (error: string) =>
   ({ type: 'app/SET-ERROR', error } as const);
 
 // thunk
-export const initializeAppTC = (): AppThunk => (dispatch: Dispatch<appReducerTypes>) => {
+export const initializeAppTC = () => (dispatch: Dispatch<appReducerTypes>) => {
   auth
     .authMe()
     .then(resolve => {

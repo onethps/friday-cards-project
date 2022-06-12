@@ -1,6 +1,6 @@
 import {ResponseCardType} from "api/packs";
 import React from "react";
-import TableButtonActions from "components/Content/f2-Packs/TableActions/TableButtonActions";
+import TableButtonActions from "components/Content/Packs/TableContent/TableActionsButtons/TableButtonActions";
 
 
 export const PackColumns = [
