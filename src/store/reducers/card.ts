@@ -1,6 +1,13 @@
-import {Dispatch} from "redux";
-import {card, cardQueryParams} from "api/card";
-import {RequestStatusType} from "store/reducers/app";
+import { Dispatch } from "redux";
+import { card, cardQueryParams } from "api/card";
+import { GetCardsResponse, ResponseCardContent } from "types";
+
+
+export enum CARD_ACTIONS_TYPE {
+    SET_CARDS = 'card/SET-CARDS',
+    SET_CARD_STATUS = 'card/SET-CARD-STATUS',
+    SET_NEW_CARD = 'card/SET-NEW-CARD'
+}
 
 
 const initialState = {
@@ -26,66 +33,67 @@ type InitialStateType = {
 
 }
 
-export const Card = (state:InitialStateType = initialState, action:ActionsTypes):InitialStateType => {
+export const Card = (state: InitialStateType = initialState, action: ActionsTypes): InitialStateType => {
     switch (action.type) {
-        case "card/SET-CARDS":
-            return {...state,  ...action.cards}
-        case "card/SET-CARD-STATUS":
+        case CARD_ACTIONS_TYPE.SET_CARDS:
+            return {...state, ...action.cards}
+        case CARD_ACTIONS_TYPE.SET_CARD_STATUS:
             return {...state, loading: action.isLoading}
+        case CARD_ACTIONS_TYPE.SET_NEW_CARD:
+            return {...state, cards: [...action.newCard, ...state.cards]}
         default:
             return state
     }
 }
 
 //thunk
-export const fetchCardsTC = (data:cardQueryParams) => (dispatch:Dispatch) => {
+export const fetchCardsTC = (data: cardQueryParams) => (dispatch: Dispatch) => {
     dispatch(isLoading(true))
     card.getCard(data).then((res) => {
         dispatch(setCardsAC(res.data))
-
     }).catch((err) => {
         console.log(err)
     })
-        //stopping loading in any case
-        .finally(() => {
+      //stopping loading in any case
+      .finally(() => {
+          dispatch(isLoading(false))
+      })
+}
+
+export const setNewCardTC = (data: ResponseCardContent) => async (dispatch: Dispatch) => {
+    dispatch(isLoading(true))
+    try {
+        const res = await card.setNewCard(data)
+        dispatch(setNewCardAC(res.data))
+    } catch (e) {
+        throw new Error(e as any)
+    } finally {
         dispatch(isLoading(false))
-    })
+        dispatch(fetchCardsTC({cardsPack_id: data.cardsPack_id}) as any)
+    }
 }
 
 
+//actions
+export const setCardsAC = (cards: GetCardsResponse) => {
+    return {type: CARD_ACTIONS_TYPE.SET_CARDS, cards} as const
+}
+export const isLoading = (isLoading: boolean) => {
+    return {type: CARD_ACTIONS_TYPE.SET_CARD_STATUS, isLoading} as const
+}
 
-export const setCardsAC = (cards:GetCardsResponse) => {
-    return {type: 'card/SET-CARDS', cards} as const
+export const setNewCardAC = (newCard: ResponseCardContent) => {
+    return {
+        type: CARD_ACTIONS_TYPE.SET_NEW_CARD,
+        newCard
+    } as const
 }
 
 
-export const isLoading = (isLoading:boolean) => {
-    return {type: 'card/SET-CARD-STATUS', isLoading} as const
-}
+//types
+type ActionsTypes = ReturnType<typeof setCardsAC>
+  | ReturnType<typeof isLoading>
+  | ReturnType<typeof setNewCardAC>
+  | any
 
 
-type ActionsTypes = ReturnType<typeof setCardsAC> | ReturnType<typeof isLoading>
-
-
-export type GetCardsResponse =  {
-    cards: ResponseCardContent[]
-    cardsTotalCount: number
-    maxGrade: number
-    minGrade: number
-    page: number
-    pageCount: number
-    packUserId: string
-}
-
-
-export type ResponseCardContent = {
-    answer: string
-    question: string
-    cardsPack_id: string
-    grade: number
-    shots: number
-    user_id: string
-    created: string
-    updated: string
-    _id: string
-}

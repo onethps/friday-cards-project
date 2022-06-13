@@ -9,20 +9,21 @@ import style from 'components/Content/Card/Card.module.scss';
 import { CardColumns } from 'components/Content/Card/data';
 import Header from 'components/Header/Header';
 import { useTypedSelector } from 'hooks/useTypedSelector';
-import { fetchCardsTC, isLoading } from 'store/reducers/card';
+import { fetchCardsTC, isLoading, setNewCardTC } from 'store/reducers/card';
 import { useAppDispatch } from 'store/store';
+import ModalContainer from "components/common/ModalContainer/ModalContainer";
+import CustomInput from "components/common/CustomInput/CustomInput";
 
 const Card = (): ReactElement => {
   const dispatch = useAppDispatch();
 
   // gets card it from url
-  const { id } = useParams();
+  const {id} = useParams();
   const navigate = useNavigate();
 
-  // map method to convert grinvich to CIS date
+  // convert grinvich to CIS date
   const Cards = useTypedSelector(state => state.card.cards).map(m => ({
-    ...m,
-    updated: new Date(m.updated).toLocaleDateString('ru-RU'),
+    ...m, updated: new Date(m.updated!).toLocaleDateString('ru-RU'),
   }));
 
   /// find current card name and show in title
@@ -30,7 +31,7 @@ const Card = (): ReactElement => {
     state.cardPacks.cardPacks.find(f => f._id === id && f),
   );
 
-  const { loading } = useTypedSelector(state => state.card);
+  const {loading} = useTypedSelector(state => state.card);
 
   // currrent page = 100 units (hardcoded)
   const [currentPage, setCurrentPage] = useState(1);
@@ -53,7 +54,7 @@ const Card = (): ReactElement => {
       // gets id from currentCard useParams
       cardsPack_id: id,
       // gets from object total cards in current cardPack
-      pageCount: currentCard!.cardsCount,
+      pageCount: currentCard?.cardsCount,
       cardQuestion: searchByQuestion || '',
       cardAnswer: searchByAnswer || '',
     };
@@ -82,16 +83,47 @@ const Card = (): ReactElement => {
   const firstCardPackIndex = lastCardPackIndex - packsPerPage;
   const currentCardsPack = Cards.slice(firstCardPackIndex, lastCardPackIndex);
 
+  const [showModal, setShowModal] = useState(false)
+  const [question, setQuestion] = useState('')
+  const [answer, setAnswer] = useState('')
+
+  const setNewCard = () => {
+    dispatch(setNewCardTC({question, answer, cardsPack_id: id!}))
+    setShowModal(false)
+  }
+
+
   return (
     <div>
       <nav>
-        <Header />
+        <Header/>
       </nav>
+
+      <ModalContainer
+        title={"Card Info"}
+        active={showModal}
+        setActive={setShowModal}>
+        <CustomInput
+          label={'Question'} value={question}
+          onChange={(e) => setQuestion(e.currentTarget.value)}/>
+        <CustomInput
+          label={'Answer'} value={answer}
+          onChange={(e) => setAnswer(e.currentTarget.value)}/>
+
+        <div className={style.modalStyle}>
+          <button className={style.buttonCancel}>Cancel</button>
+          <button onClick={setNewCard} className={style.buttonSubmit}>Save</button>
+        </div>
+      </ModalContainer>
+
       <div className={style.settingsContainer}>
         <div className={style.container}>
           <div className={style.headerBox}>
-            <img onClick={onHandleBackButton} src={backButton} />
-            <h1>{currentCard!.name}</h1>
+            <div className={style.textAndName}>
+              <img onClick={onHandleBackButton} src={backButton}/>
+              <h1>{currentCard?.name}</h1>
+            </div>
+            <button onClick={() => setShowModal(true)}>Add new Card</button>
           </div>
 
           <div className={style.inputBlock}>
@@ -108,15 +140,16 @@ const Card = (): ReactElement => {
           </div>
           <div className={style.tableStyle}>
             <Table
+              rowKey={(record) => record.cardsPack_id + Math.random()}
               loading={loading}
-              style={{ minWidth: '900px' }}
+              style={{minWidth: '900px'}}
               pagination={false}
               columns={CardColumns}
               dataSource={currentCardsPack}
             />
           </div>
           <Pagination
-            style={{ margin: '50px 0' }}
+            style={{margin: '50px 0'}}
             onChange={(page, pageSize1) => {
               setCurrentPage(page);
               setPacksPerPage(pageSize1);

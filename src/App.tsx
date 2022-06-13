@@ -9,7 +9,6 @@ import { useAppDispatch } from 'store/store';
 
 const App = (): ReactElement => {
   const dispatch = useAppDispatch();
-
   const AppLoadingStatus = useTypedSelector(state => state.app.status);
 
   useEffect(() => {

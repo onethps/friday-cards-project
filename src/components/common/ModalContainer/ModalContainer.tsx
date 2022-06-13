@@ -8,7 +8,7 @@ type ModalContainerType = {
   active: boolean;
   setActive: (bool: boolean) => void;
   children: React.ReactNode;
-  title: string;
+  title?: string;
 };
 
 const ModalContainer: React.FC<ModalContainerType> = ({
@@ -20,7 +20,7 @@ const ModalContainer: React.FC<ModalContainerType> = ({
   <>
     <Modal
       width={400}
-      height={270}
+      height={370}
       show={active}
       enableBackground
       backgroundOnClick={() => setActive(false)}

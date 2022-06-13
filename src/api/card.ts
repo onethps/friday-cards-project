@@ -1,10 +1,12 @@
-import { GetCardsResponse } from 'store/reducers/card';
-
 import { instance } from 'services/api/config';
+import { GetCardsResponse, ResponseCardContent } from "types";
 
 export const card = {
-  getCard({ ...packParams }: cardQueryParams) {
-    return instance.get<GetCardsResponse>('/cards/card', { params: packParams });
+  getCard({...packParams}: cardQueryParams) {
+    return instance.get<GetCardsResponse>('/cards/card', {params: packParams});
+  },
+  setNewCard(data: ResponseCardContent) {
+    return instance.post<ResponseCardContent>('/cards/card', {card: data});
   },
 };
 

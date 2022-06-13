@@ -7,3 +7,27 @@ export type {
   profileType,
   registerValueType,
 } from './formikValadationTypes';
+
+
+export type GetCardsResponse = {
+  cards: ResponseCardContent[]
+  cardsTotalCount: number
+  maxGrade: number
+  minGrade: number
+  page: number
+  pageCount: number
+  packUserId: string
+}
+
+
+export type ResponseCardContent = {
+  answer: string
+  question: string
+  cardsPack_id: string
+  grade?: number
+  shots?: number
+  user_id?: string
+  created?: string
+  updated?: string
+  _id?: string
+}

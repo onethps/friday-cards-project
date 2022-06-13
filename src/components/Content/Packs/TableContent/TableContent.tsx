@@ -1,18 +1,23 @@
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, FC, useState } from 'react';
 import style from "./TableContent.module.scss";
-import { Input, Table } from "antd";
+import { Input, Pagination, Table } from "antd";
 import { PackColumns } from "components/Content/Packs/TableContent/TablePackData";
-import {
-  cardPacksTotalCount,
-  FormatedCardPackData,
-  loading,
-  selectCardPacks
-} from "store/selectors/selectCardPacks";
+import { cardPacksTotalCount, FormatedCardPackData, loading, selectCardPacks } from "store/selectors/selectCardPacks";
 import AddPackModal from "components/Content/Packs/TableContent/TableModals/AddPackModal/AddPackModal";
 import { useTypedSelector } from "hooks/useTypedSelector";
 import { useAppDispatch } from "store/store";
+import { PAGE_SIZES_OPTIONS } from "components/Content/Packs/enums";
+import { setFilterAC } from "store/reducers/packs";
 
-const TableContent = () => {
+
+type TableContentType = {
+  searchText: string
+  setSearchText: (search: string) => void
+  page:number
+  pageCount:number
+}
+
+const TableContent: FC<TableContentType> = ({searchText, setSearchText, page, pageCount}) => {
 
   const dispatch = useAppDispatch();
 
@@ -20,7 +25,6 @@ const TableContent = () => {
   const cardPacksTotal = useTypedSelector(cardPacksTotalCount);
   const loadingStatus = useTypedSelector(loading);
 
-  const [searchText, setSearchText] = useState<string>('');
 
   const onSearchInputHandler = (e: ChangeEvent<HTMLInputElement>): void => setSearchText(e.currentTarget.value);
 
@@ -57,23 +61,23 @@ const TableContent = () => {
               pagination={false}
             />
           </div>
-          {/*<Pagination*/}
-          {/*  onChange={(paginatorPage, paginatorPageSize) => {*/}
-          {/*    // dispatch(pageChangingAC(paginatorPage, paginatorPageSize));*/}
-          {/*  }}*/}
-          {/*  current={currentPage}*/}
-          {/*  showSizeChanger*/}
-          {/*  pageSizeOptions={[*/}
-          {/*    PAGE_SIZES_OPTIONS.FIVE_PACKS_PER_PAGE,*/}
-          {/*    PAGE_SIZES_OPTIONS.TEN_PACKS_PER_PAGE,*/}
-          {/*    PAGE_SIZES_OPTIONS.TWENTY_FIVE_PACKS_PER_PAGE,*/}
-          {/*  ]}*/}
-          {/*  pageSize={packsOnOnePage}*/}
-          {/*  total={cardPacksTotal}*/}
-          {/*/>*/}
+          <Pagination
+            onChange={(paginatorPage, paginatorPageSize) => {
+              dispatch(setFilterAC({page: paginatorPage, pageCount:paginatorPageSize}))
+            }}
+            current={page}
+            showSizeChanger
+            pageSizeOptions={[
+              PAGE_SIZES_OPTIONS.FIVE_PACKS_PER_PAGE,
+              PAGE_SIZES_OPTIONS.TEN_PACKS_PER_PAGE,
+              PAGE_SIZES_OPTIONS.TWENTY_FIVE_PACKS_PER_PAGE,
+            ]}
+            pageSize={pageCount}
+            total={cardPacksTotal}
+          />
         </div>
       </div>
-      </>
+    </>
   );
 };
 

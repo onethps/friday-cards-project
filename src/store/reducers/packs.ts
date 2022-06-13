@@ -78,11 +78,20 @@ export const setFilterAC = (filters: any) =>
   } as const)
 
 
-export const fetchPacks = (min: number, max: number, currentPage: number, pageCount: number, userId: string): AppThunk =>
+export const fetchPacksTC = (min: number, max: number, currentPage: number, pageCount: number, packName: string, category: string): AppThunk =>
   async (dispatch, getState: () => AppRootStateType) => {
     dispatch(setLoadingPackAC('loading'))
     try {
-      const res = await packs.getPacks({min: min, max: max, page: currentPage, pageCount: pageCount, user_id: userId})
+      const myId = getState().profile.id
+      const res = await packs.getPacks(
+        {
+          min: min,
+          max: max,
+          page: currentPage,
+          pageCount: pageCount,
+          packName: packName,
+          user_id: category === 'my' ? myId : ''
+        })
       dispatch(setCardPacksAC(res.data))
     } catch (e) {
       console.log(e)
@@ -94,7 +103,7 @@ export const fetchPacks = (min: number, max: number, currentPage: number, pageCo
   }
 
 
-export const deletePackTC = (packId: string, category:string): AppThunk =>
+export const deletePackTC = (packId: string, category: string): AppThunk =>
   async (dispatch, getState: () => AppRootStateType) => {
     dispatch(setLoadingPackAC('loading'))
     try {
@@ -102,7 +111,7 @@ export const deletePackTC = (packId: string, category:string): AppThunk =>
       const {minCardsCount, maxCardsCount, page, pageCount} = getState().cardPacks
       const profileId = getState().profile.id
       const fetchCategoryPacks = category === 'my' ? profileId : ''
-      dispatch(fetchPacks(+minCardsCount, +maxCardsCount, page, pageCount, fetchCategoryPacks))
+      dispatch(fetchPacksTC(+minCardsCount, +maxCardsCount, page, pageCount, '', fetchCategoryPacks))
     } catch (e) {
       console.log(e)
     } finally {
@@ -112,7 +121,7 @@ export const deletePackTC = (packId: string, category:string): AppThunk =>
 
 
 export const addNewPackTC = (packName: string): AppThunk =>
-  async (dispatch, getState: () => AppRootStateType) => {
+  async (dispatch) => {
     dispatch(setLoadingPackAC('loading'))
     try {
       await packs.addCardPack(packName)
@@ -124,7 +133,6 @@ export const addNewPackTC = (packName: string): AppThunk =>
   }
 
 
-
 export const editPackNameTC = (id: string, name: string, category: string): AppThunk =>
   async (dispatch, getState: () => AppRootStateType) => {
     dispatch(setLoadingPackAC('loading'))
@@ -133,7 +141,7 @@ export const editPackNameTC = (id: string, name: string, category: string): AppT
       const {minCardsCount, maxCardsCount, page, pageCount} = getState().cardPacks
       const profileId = getState().profile.id
       const fetchCategoryPacks = category === 'my' ? profileId : ''
-       dispatch(fetchPacks(+minCardsCount, +maxCardsCount, page, pageCount, fetchCategoryPacks))
+      dispatch(fetchPacksTC(+minCardsCount, +maxCardsCount, page, pageCount, '', fetchCategoryPacks))
     } catch (e) {
       console.log(e)
     } finally {

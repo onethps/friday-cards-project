@@ -4,11 +4,11 @@ import { Dispatch } from 'redux';
 import { auth, ResponseError } from 'api/auth';
 import { isLoggedInAC } from 'store/reducers/login';
 import { setProfileInfo } from 'store/reducers/profile';
-import { AppThunk } from 'store/store';
+import { fetchPacksTC } from "store/reducers/packs";
 
 const initialState = {
   isInitializedApp: false,
-  status: 'idle',
+  status: 'loading',
   error: null,
 };
 
@@ -24,11 +24,11 @@ export const app = (
 ): InitialStateType => {
   switch (action.type) {
     case 'app/SET-APP-STATUS':
-      return { ...state, status: action.status };
+      return {...state, status: action.status};
     case 'app/IS-INITIALIZED-APP':
-      return { ...state, isInitializedApp: action.isInitialized };
+      return {...state, isInitializedApp: action.isInitialized};
     case 'app/SET-ERROR':
-      return { ...state, error: action.error };
+      return {...state, error: action.error};
     default:
       return state;
   }
@@ -37,12 +37,12 @@ export const app = (
 // actions
 
 export const setAppStatus = (status: RequestStatusType) =>
-  ({ type: 'app/SET-APP-STATUS', status } as const);
+  ({type: 'app/SET-APP-STATUS', status} as const);
 export const isInitializedApp = (isInitialized: boolean) =>
-  ({ type: 'app/IS-INITIALIZED-APP', isInitialized } as const);
+  ({type: 'app/IS-INITIALIZED-APP', isInitialized} as const);
 
 export const setAppErrorAC = (error: string) =>
-  ({ type: 'app/SET-ERROR', error } as const);
+  ({type: 'app/SET-ERROR', error} as const);
 
 // thunk
 export const initializeAppTC = () => (dispatch: Dispatch<appReducerTypes>) => {
@@ -52,8 +52,9 @@ export const initializeAppTC = () => (dispatch: Dispatch<appReducerTypes>) => {
       dispatch(setAppStatus('idle'));
       dispatch(isInitializedApp(true));
       dispatch(isLoggedInAC(true));
-      const { email, name, _id } = resolve.data;
+      const {email, name, _id} = resolve.data;
       dispatch(setProfileInfo(email, name, _id));
+      dispatch(fetchPacksTC(0, 10, 1, 5, '', 'all'));
     })
     .catch((error: AxiosError<ResponseError>) => {
       dispatch(

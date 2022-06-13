@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
 
-import { NavLink, useParams } from 'react-router-dom';
+import { NavLink, useLocation, useParams } from 'react-router-dom';
 
 import packListIcon from 'assets/icons/headerIconsTabs/packListIcon.svg';
 import profileIcon from 'assets/icons/headerIconsTabs/profileIcon.svg';
@@ -8,6 +8,9 @@ import { PATH } from 'components/AppRoutes';
 import l from 'components/Header/Header.module.scss';
 
 const Header = (): ReactElement => {
+
+  const location = useLocation()
+  const activeTabStyle = location.pathname.includes('packlist') ? l.active : l.inactive
 
   return(
     <header className={l.headerBox}>
@@ -18,7 +21,7 @@ const Header = (): ReactElement => {
       <nav className={l.nav}>
         <NavLink
           to={'/packlist/' + 'all'}
-          className={({isActive}) => (isActive ? l.active : l.inactive)}
+          className={activeTabStyle}
         >
           <img className={l.iconStyle} src={packListIcon}/>
           Pack List

@@ -3,7 +3,7 @@ import Header from 'components/Header/Header';
 import l from 'components/Content/Packs/Pack.module.scss';
 import 'antd/dist/antd.min.css';
 import { useTypedSelector } from 'hooks/useTypedSelector';
-import { fetchPacks, setFilterAC } from 'store/reducers/packs';
+import { fetchPacksTC, setFilterAC } from 'store/reducers/packs';
 import { useAppDispatch } from 'store/store';
 import { useNavigate, useParams } from 'react-router-dom';
 import TableContent from "components/Content/Packs/TableContent/TableContent";
@@ -15,11 +15,9 @@ const Packs = (): ReactElement => {
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate()
-
   const {category} = useParams()
 
 
-  const myId = useTypedSelector(state => state.profile.id);
   const page = useTypedSelector(state => state.cardPacks.page);
   const pageCount = useTypedSelector(state => state.cardPacks.pageCount);
   const minCardsCount = useTypedSelector(state => state.cardPacks.minCardsCount)
@@ -30,20 +28,20 @@ const Packs = (): ReactElement => {
   const [isMounted, setIsMounted] = useState(false)
 
   const [minMaxSlider, setMinMaxSlider] = useState([minCardsCount, maxCardsCount])
-
+  const [searchText, setSearchText] = useState<string>('');
 
   useEffect(() => {
     if (isMounted) {
       const queryString = qs.stringify({
         minCardsCount,
         maxCardsCount,
+        searchText,
         page
       })
       navigate(`?${queryString}`)
     }
     setIsMounted(true)
-
-  }, [page, minMaxSlider])
+  }, [page, minMaxSlider, searchText])
 
 
   useEffect(() => {
@@ -61,14 +59,16 @@ const Packs = (): ReactElement => {
 
   const getPacks = async (): Promise<void> => {
     await dispatch(
-      fetchPacks(
-        minMaxSlider[0],
-        minMaxSlider[1],
-        page,
-        pageCount,
-        category === 'my' ? myId : '',
-      ),
-    );
+        fetchPacksTC(
+          minMaxSlider[0],
+          minMaxSlider[1],
+          page,
+          pageCount,
+          searchText,
+          category!,
+        ),
+      );
+
   };
 
 
@@ -81,7 +81,9 @@ const Packs = (): ReactElement => {
     }
 
     setIsSearch(false)
-  }, [minCardsCount, maxCardsCount, page, category, minMaxSlider]);
+  }, [minCardsCount, maxCardsCount, page, minMaxSlider, searchText]);
+
+
 
   return (
     <>
@@ -91,7 +93,11 @@ const Packs = (): ReactElement => {
 
       <div className={l.settingsContainer}>
         <Settings minMaxSlider={minMaxSlider} setMinMaxSlider={setMinMaxSlider}/>
-        <TableContent/>
+        <TableContent searchText={searchText}
+                      setSearchText={setSearchText}
+                      page={page}
+                      pageCount={pageCount}
+        />
       </div>
     </>
   );
