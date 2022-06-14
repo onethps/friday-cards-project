@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import style from "components/Content/Packs/Settings/Settings.module.scss";
 import { Slider } from "antd";
 import { useNavigate, useParams } from "react-router-dom";
+import useDebounce from "hooks/debounceHook";
+import { debounceFn } from "utils/debounce";
 
 const Settings = ({
                     minMaxSlider,
@@ -11,8 +13,7 @@ const Settings = ({
   const navigate = useNavigate()
   const {category} = useParams()
 
-
-  // const onChangeMinMaxSliderValue = (sliderValues: number[]): void => Max(sliderValues);
+  const debouncedHandler = useCallback(debounceFn(setMinMaxSlider, 500), []);
 
   let styleButton = category === 'my' ? `${style.tabButton} ${style.active}` : `${style.tabButton}`
   let styleButtonAll = category === 'my' ? `${style.tabButton}` : `${style.tabButton} ${style.active}`
@@ -33,7 +34,7 @@ const Settings = ({
 
           <Slider
             className={style.sliderStyle}
-            onChange={setMinMaxSlider}
+            onChange={debouncedHandler}
             range
             defaultValue={[
               minMaxSlider[0],

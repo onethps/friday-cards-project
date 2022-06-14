@@ -21,6 +21,7 @@ export type GetCardsResponse = {
 
 
 export type ResponseCardContent = {
+  _id?: string
   answer: string
   question: string
   cardsPack_id: string
@@ -29,5 +30,5 @@ export type ResponseCardContent = {
   user_id?: string
   created?: string
   updated?: string
-  _id?: string
+
 }

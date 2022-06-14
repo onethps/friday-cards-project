@@ -30,6 +30,7 @@ type InitialStateType = {
     page: number
     pageCount: number
     loading: boolean
+    packUserId: string,
 
 }
 
@@ -70,6 +71,18 @@ export const setNewCardTC = (data: ResponseCardContent) => async (dispatch: Disp
     } finally {
         dispatch(isLoading(false))
         dispatch(fetchCardsTC({cardsPack_id: data.cardsPack_id}) as any)
+    }
+}
+
+export const deleteCardTC = (cardId: string, cardPackId: string) => async (dispatch: Dispatch) => {
+    dispatch(isLoading(true))
+    try {
+        await card.deleteCard(cardId)
+    } catch (e) {
+        throw new Error(e as any)
+    } finally {
+        dispatch(isLoading(false))
+        dispatch(fetchCardsTC({cardsPack_id: cardPackId}) as any)
     }
 }
 

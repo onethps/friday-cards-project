@@ -11,11 +11,7 @@ import Header from 'components/Header/Header';
 
 import l from 'components/Content/Profile/Profile.module.scss';
 
-import {
-  changeMessageStatusAC,
-  changeProfileInfoTC,
-  logoutTC,
-} from 'store/reducers/profile';
+import { changeMessageStatusAC, changeProfileInfoTC, logoutTC, } from 'store/reducers/profile';
 import { useAppDispatch } from 'store/store';
 import { profileValidate } from 'utils/validators/validators';
 import { useTypedSelector } from 'hooks/useTypedSelector';
@@ -51,18 +47,22 @@ export const Profile: FC = () => {
   };
 
   useEffect(() => {
-    setTimeout(() => {
+
+    const delayDebounceFn = setTimeout(() => {
       dispatch(changeMessageStatusAC(''));
     }, 2000);
+
+    return () => clearTimeout(delayDebounceFn)
+
   }, [changeMessageStatus]);
 
   if (!isLoggedIn) {
-    return <Navigate to={PATH.LOGIN} />;
+    return <Navigate to={PATH.LOGIN}/>;
   }
 
   return (
     <>
-      <Header />
+      <Header/>
 
       <div className={l.loginBox}>
         <h2> Personal information</h2>
@@ -71,12 +71,12 @@ export const Profile: FC = () => {
             className={l.avatar}
             src="https://i.pinimg.com/originals/ff/a0/9a/ffa09aec412db3f54deadf1b3781de2a.png"
           />
-          <img className={l.loadAvatar} alt="loadAvatarIcon" src={onLoadAvatarIcon} />
+          <img className={l.loadAvatar} alt="loadAvatarIcon" src={onLoadAvatarIcon}/>
         </div>
 
         {loadingStatus === 'loading' ? (
-          <div style={{ marginTop: '45%' }}>
-            <Preloader />
+          <div style={{marginTop: '45%'}}>
+            <Preloader/>
           </div>
         ) : (
           <form onSubmit={formik.handleSubmit}>
@@ -92,8 +92,8 @@ export const Profile: FC = () => {
                 formik.touched.email && formik.errors.email ? formik.errors.email : ''
               }
             />
-            <div style={{ height: '50px' }}>
-              <h3 style={{ color: 'green' }}>{changeMessageStatus}</h3>
+            <div style={{height: '50px'}}>
+              <h3 style={{color: 'green'}}>{changeMessageStatus}</h3>
             </div>
             <div className={l.buttonBlock}>
               <a onClick={onLogoutHandler} className={l.backToLoginLink}>

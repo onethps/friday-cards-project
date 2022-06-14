@@ -13,8 +13,8 @@ import { setFilterAC } from "store/reducers/packs";
 type TableContentType = {
   searchText: string
   setSearchText: (search: string) => void
-  page:number
-  pageCount:number
+  page: number
+  pageCount: number
 }
 
 const TableContent: FC<TableContentType> = ({searchText, setSearchText, page, pageCount}) => {
@@ -26,7 +26,11 @@ const TableContent: FC<TableContentType> = ({searchText, setSearchText, page, pa
   const loadingStatus = useTypedSelector(loading);
 
 
-  const onSearchInputHandler = (e: ChangeEvent<HTMLInputElement>): void => setSearchText(e.currentTarget.value);
+
+  const onSearchInputHandler = (e: ChangeEvent<HTMLInputElement>): void => {
+    setSearchText(e.currentTarget.value)
+  };
+
 
   const [showAddPackModal, setShowAddPackModal] = useState<boolean>(false);
 
@@ -52,7 +56,7 @@ const TableContent: FC<TableContentType> = ({searchText, setSearchText, page, pa
         <div className={style.tableBlock}>
           <div className={style.tableStyle}>
             <Table
-              rowKey={record => record._id}
+              rowKey={record => record._id + Math.random()}
               loading={loadingStatus === 'loading'}
               style={{minWidth: '900px'}}
               columns={PackColumns}
@@ -63,7 +67,7 @@ const TableContent: FC<TableContentType> = ({searchText, setSearchText, page, pa
           </div>
           <Pagination
             onChange={(paginatorPage, paginatorPageSize) => {
-              dispatch(setFilterAC({page: paginatorPage, pageCount:paginatorPageSize}))
+              dispatch(setFilterAC({page: paginatorPage, pageCount: paginatorPageSize}))
             }}
             current={page}
             showSizeChanger

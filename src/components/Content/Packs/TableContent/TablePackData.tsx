@@ -1,4 +1,4 @@
-import {ResponseCardType} from "api/packs";
+import { ResponseCardType } from "api/packs";
 import React from "react";
 import TableButtonActions from "components/Content/Packs/TableContent/TableActionsButtons/TableButtonActions";
 
@@ -30,12 +30,12 @@ export const PackColumns = [
         title: 'Actions',
         dataIndex: 'actions',
         key: '_id',
-        render: (value:string, record:ResponseCardType) =>
-            <TableButtonActions key={record._id}
-                                userId={record.user_id}
-                                packId={record._id}
-            packName={record.name}
-            />
+        render: (value: string, record: ResponseCardType) =>
+          <TableButtonActions key={record._id}
+                              userId={record.user_id}
+                              packId={record._id}
+                              packName={record.name}
+          />
 
     },
 

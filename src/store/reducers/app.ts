@@ -54,7 +54,6 @@ export const initializeAppTC = () => (dispatch: Dispatch<appReducerTypes>) => {
       dispatch(isLoggedInAC(true));
       const {email, name, _id} = resolve.data;
       dispatch(setProfileInfo(email, name, _id));
-      dispatch(fetchPacksTC(0, 10, 1, 5, '', 'all'));
     })
     .catch((error: AxiosError<ResponseError>) => {
       dispatch(

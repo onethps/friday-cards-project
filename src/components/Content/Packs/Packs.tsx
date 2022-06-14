@@ -9,6 +9,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import TableContent from "components/Content/Packs/TableContent/TableContent";
 import Settings from "components/Content/Packs/Settings/Settings";
 import qs from 'qs';
+import useDebounce from "hooks/debounceHook";
 
 
 const Packs = (): ReactElement => {
@@ -23,12 +24,30 @@ const Packs = (): ReactElement => {
   const minCardsCount = useTypedSelector(state => state.cardPacks.minCardsCount)
   const maxCardsCount = useTypedSelector(state => state.cardPacks.maxCardsCount)
 
+  const myID = useTypedSelector(state => state.profile.id)
+
 
   const [isSearch, setIsSearch] = useState(false)
   const [isMounted, setIsMounted] = useState(false)
 
   const [minMaxSlider, setMinMaxSlider] = useState([minCardsCount, maxCardsCount])
   const [searchText, setSearchText] = useState<string>('');
+
+  const debouncedSearch = useDebounce(searchText, 500);
+
+
+  const fetchData = async () => {
+    await dispatch(fetchPacksTC(
+        minMaxSlider[0],
+        minMaxSlider[1],
+        page,
+        pageCount,
+        searchText,
+        category === 'my' ? myID : ''
+      ),
+    );
+  }
+
 
   useEffect(() => {
     if (isMounted) {
@@ -57,31 +76,15 @@ const Packs = (): ReactElement => {
 
   }, [])
 
-  const getPacks = async (): Promise<void> => {
-    await dispatch(
-        fetchPacksTC(
-          minMaxSlider[0],
-          minMaxSlider[1],
-          page,
-          pageCount,
-          searchText,
-          category!,
-        ),
-      );
-
-  };
-
-
   useEffect(() => {
     if (!isSearch) {
-      const delayDebounceFn = setTimeout(() => {
-        return getPacks();
-      }, 1000);
-      return () => clearTimeout(delayDebounceFn);
+      fetchData()
+        .catch(console.error)
     }
 
     setIsSearch(false)
-  }, [minCardsCount, maxCardsCount, page, minMaxSlider, searchText]);
+  }, [minCardsCount, maxCardsCount, page, minMaxSlider, category, debouncedSearch]);
+
 
 
 
@@ -90,7 +93,6 @@ const Packs = (): ReactElement => {
       <nav>
         <Header/>
       </nav>
-
       <div className={l.settingsContainer}>
         <Settings minMaxSlider={minMaxSlider} setMinMaxSlider={setMinMaxSlider}/>
         <TableContent searchText={searchText}

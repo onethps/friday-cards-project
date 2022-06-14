@@ -78,11 +78,10 @@ export const setFilterAC = (filters: any) =>
   } as const)
 
 
-export const fetchPacksTC = (min: number, max: number, currentPage: number, pageCount: number, packName: string, category: string): AppThunk =>
+export const fetchPacksTC = (min: number, max: number, currentPage: number, pageCount: number, packName: string, userId:string): AppThunk =>
   async (dispatch, getState: () => AppRootStateType) => {
     dispatch(setLoadingPackAC('loading'))
     try {
-      const myId = getState().profile.id
       const res = await packs.getPacks(
         {
           min: min,
@@ -90,7 +89,7 @@ export const fetchPacksTC = (min: number, max: number, currentPage: number, page
           page: currentPage,
           pageCount: pageCount,
           packName: packName,
-          user_id: category === 'my' ? myId : ''
+          user_id: userId
         })
       dispatch(setCardPacksAC(res.data))
     } catch (e) {
