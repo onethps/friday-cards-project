@@ -8,6 +8,9 @@ export const card = {
   setNewCard(data: ResponseCardContent) {
     return instance.post<ResponseCardContent>('/cards/card', {card: data});
   },
+  editCard(data: ResponseCardContent) {
+    return instance.put<ResponseCardContent>('/cards/card', {card: data});
+  },
   deleteCard(cardId: string) {
     return instance.delete<ResponseCardContent>('/cards/card', {
       params: {

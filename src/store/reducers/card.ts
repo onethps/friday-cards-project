@@ -1,6 +1,7 @@
 import { Dispatch } from "redux";
 import { card, cardQueryParams } from "api/card";
 import { GetCardsResponse, ResponseCardContent } from "types";
+import { AppRootStateType } from "store/store";
 
 
 export enum CARD_ACTIONS_TYPE {
@@ -78,6 +79,18 @@ export const deleteCardTC = (cardId: string, cardPackId: string) => async (dispa
     dispatch(isLoading(true))
     try {
         await card.deleteCard(cardId)
+    } catch (e) {
+        throw new Error(e as any)
+    } finally {
+        dispatch(isLoading(false))
+        dispatch(fetchCardsTC({cardsPack_id: cardPackId}) as any)
+    }
+}
+
+export const saveEditCardTC = (data:any, cardPackId:string) => async (dispatch: Dispatch) => {
+    dispatch(isLoading(true))
+    try {
+        await card.editCard(data)
     } catch (e) {
         throw new Error(e as any)
     } finally {

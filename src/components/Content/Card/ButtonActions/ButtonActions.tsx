@@ -5,17 +5,25 @@ import CustomInput from "components/common/CustomInput/CustomInput";
 import style from "components/Content/Card/Card.module.scss";
 import { ResponseCardContent } from "types";
 import { useAppDispatch } from "store/store";
-import { deleteCardTC } from "store/reducers/card";
+import { deleteCardTC, saveEditCardTC } from "store/reducers/card";
+import { useParams } from "react-router-dom";
 
 const ButtonActions = ({record}: { record: ResponseCardContent }) => {
   const dispatch = useAppDispatch()
   const [showModal, setShowModal] = useState(false)
+  const {id} = useParams()
 
   const [question, setQuestion] = useState(record.question)
   const [answer, setAnswer] = useState(record.answer)
 
   const onSaveCardInfoHandle = () => {
-
+    if (id) {
+      dispatch(saveEditCardTC({
+        _id: record._id,
+        question,
+        comments: answer
+      }, id))
+    }
   }
 
   const onDeleteHandle = () => {
@@ -23,8 +31,6 @@ const ButtonActions = ({record}: { record: ResponseCardContent }) => {
       dispatch(deleteCardTC(record._id, record.cardsPack_id))
     }
     setShowModal(false)
-
-
   }
 
   return (
