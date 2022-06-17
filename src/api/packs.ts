@@ -2,8 +2,8 @@ import { instance } from 'services/api/config';
 
 export const packs = {
   // done
-  getPacks({ ...props }: cardPacksQueryParams) {
-    return instance.get<ResponseCardPackType>('/cards/pack', { params: { ...props } });
+  getPacks( data: cardPacksQueryParams) {
+    return instance.get<ResponseCardPackType>('/cards/pack', { params: data });
   },
 
   // done

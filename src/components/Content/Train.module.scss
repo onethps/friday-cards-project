@@ -1,0 +1,66 @@
+@import "src/styles/mixims";
+
+.root {
+  @include container();
+  width: 30%;
+  padding: 50px 30px;
+  margin: 25px auto;
+
+
+  .questionBlock {
+    padding: 20px 0;
+    text-align: left;
+
+    & h3 {
+      display: inline;
+      margin-right: 10px;
+    }
+
+  }
+
+  .buttonBlock {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 50px;
+  }
+
+  .cancelBtn {
+    @include secondaryBtn();
+  }
+
+  .submitBtn{
+    @include primaryBtn();
+  }
+
+  .answerBlock{
+    text-align: left;
+
+    & h3 {
+      display: inline;
+      margin-right: 10px;
+    }
+
+  }
+
+
+  .formBlock{
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+
+    .formRadioBlock{
+
+      & label {
+        display: flex;
+        gap: 10px;
+      }
+
+    }
+
+
+
+  }
+
+
+}

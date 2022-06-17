@@ -1,8 +1,8 @@
 import React from 'react';
 
 import closeIcon from 'assets/icons/close-modal-icon.svg';
-import Modal from 'components/common/ModalContainer/Modal';
-import s from 'components/common/ModalContainer/style/ModalContainer.module.scss';
+import Modal from 'common/ModalContainer/Modal';
+import s from 'common/ModalContainer/style/ModalContainer.module.scss';
 
 type ModalContainerType = {
   active: boolean;

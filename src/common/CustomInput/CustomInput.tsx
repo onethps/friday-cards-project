@@ -1,7 +1,7 @@
 import React, { DetailedHTMLProps, InputHTMLAttributes, useState } from 'react';
 
 import showPasswordIcon from 'assets/icons/eye.svg';
-import style from 'components/common/CustomInput/styles/CustomInput.module.scss';
+import style from 'common/CustomInput/styles/CustomInput.module.scss';
 
 type DefaultInputPropsType = DetailedHTMLProps<
   InputHTMLAttributes<HTMLInputElement>,

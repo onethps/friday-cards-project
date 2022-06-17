@@ -4,8 +4,8 @@ import { useFormik } from 'formik';
 import { Navigate } from 'react-router-dom';
 
 import l from 'components/Auth/Register/Register.module.scss';
-import CustomInput from 'components/common/CustomInput/CustomInput';
-import Preloader from 'components/common/Preloader/Preloader';
+import CustomInput from 'common/CustomInput/CustomInput';
+import Preloader from 'common/Preloader/Preloader';
 import { useTypedSelector } from 'hooks/useTypedSelector';
 import { registerTC } from 'store/reducers/register';
 import { useAppDispatch } from 'store/store';

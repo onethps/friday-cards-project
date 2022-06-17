@@ -4,8 +4,8 @@ import { useParams } from 'react-router-dom';
 
 import style from 'components/Auth/PasswordRecovery/NewPassword/NewPassword.module.scss';
 import SuccessPasswordChanged from 'components/Auth/PasswordRecovery/NewPassword/SuccessPasswordChanged/SuccessPasswordChanged';
-import CustomInput from 'components/common/CustomInput/CustomInput';
-import Preloader from 'components/common/Preloader/Preloader';
+import CustomInput from 'common/CustomInput/CustomInput';
+import Preloader from 'common/Preloader/Preloader';
 import { useTypedSelector } from 'hooks/useTypedSelector';
 import { senNewPasswordTC } from 'store/reducers/forgotPassword';
 import { useAppDispatch } from 'store/store';

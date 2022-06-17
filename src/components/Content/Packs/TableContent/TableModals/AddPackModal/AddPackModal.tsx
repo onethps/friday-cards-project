@@ -1,7 +1,7 @@
 import React, { memo, ReactElement, useState } from 'react';
 
-import CustomInput from 'components/common/CustomInput/CustomInput';
-import ModalContainer from 'components/common/ModalContainer/ModalContainer';
+import CustomInput from 'common/CustomInput/CustomInput';
+import ModalContainer from 'common/ModalContainer/ModalContainer';
 import s from 'components/Content/Packs/TableContent/TableModals/AddPackModal/AddPackModal.module.scss';
 import { addNewPackTC } from 'store/reducers/packs';
 import { useAppDispatch } from 'store/store';
@@ -38,6 +38,7 @@ const AddPackModal = memo(
               onChange={e => setValue(e.currentTarget.value)}
             />
           </div>
+
           <div className={s.buttonBlock}>
             <button className={s.buttonCancel} onClick={() => setShowAddModal(false)}>
               Cancel

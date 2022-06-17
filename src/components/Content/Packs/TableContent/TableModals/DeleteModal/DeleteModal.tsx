@@ -2,7 +2,7 @@ import React from 'react';
 import s from 'components/Content/Packs/TableContent/TableModals/DeleteModal/DeleteModal.module.scss'
 import { useAppDispatch } from "store/store";
 import { deletePackTC } from "store/reducers/packs";
-import ModalContainer from "components/common/ModalContainer/ModalContainer";
+import ModalContainer from "common/ModalContainer/ModalContainer";
 import { useParams } from "react-router-dom";
 
 type DeleteModal = {

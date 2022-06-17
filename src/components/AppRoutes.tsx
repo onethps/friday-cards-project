@@ -9,6 +9,7 @@ import { Register } from 'components/Auth/Register/Register';
 import Card from 'components/Content/Card/Card';
 import Packs from 'components/Content/Packs/Packs';
 import { Profile } from 'components/Content/Profile/Profile';
+import Train from "components/Content/Train";
 
 export const PATH = {
   LOGIN: '/login',
@@ -20,7 +21,7 @@ export const PATH = {
   // ERROR_404: '/404',
   // TEST: '/test',
   CARDS: '/packlist/cards/:id',
-  // TRAIN: '/train'
+  TRAIN: '/packlist/train/:id'
 };
 
 export const AppRoutes: FC = () => (
@@ -33,5 +34,6 @@ export const AppRoutes: FC = () => (
     <Route path={PATH.NEW_PASSWORD} element={<NewPassword />} />
     <Route path={PATH.PACKS} element={<Packs />} />
     <Route path={PATH.CARDS} element={<Card />} />
+    <Route path={PATH.TRAIN} element={<Train />} />
   </Routes>
 );

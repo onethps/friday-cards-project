@@ -1,9 +1,10 @@
 import { instance } from 'services/api/config';
 import { GetCardsResponse, ResponseCardContent } from "types";
+import { AxiosResponse } from "axios";
 
 export const card = {
-  getCard({...packParams}: cardQueryParams) {
-    return instance.get<GetCardsResponse>('/cards/card', {params: packParams});
+  getCard(data: cardQueryParams) {
+    return instance.get<GetCardsResponse>('/cards/card', {params: data});
   },
   setNewCard(data: ResponseCardContent) {
     return instance.post<ResponseCardContent>('/cards/card', {card: data});
@@ -18,6 +19,10 @@ export const card = {
       }
     });
   },
+  updateGrade(grade:number, cardId:string) {
+    return instance.put<{updatedGrade: updatedGrade}>('/cards/grade', {grade: grade, card_id: cardId})
+     }
+
 };
 
 export type cardQueryParams = {
@@ -30,3 +35,13 @@ export type cardQueryParams = {
   page?: number; // не обязательно
   pageCount?: number; // не обязательно
 };
+
+
+export type updatedGrade = {
+  _id: string
+  cardsPack_id: string
+  card_id: string
+  user_id: string
+  grade: number
+  shots: number
+}

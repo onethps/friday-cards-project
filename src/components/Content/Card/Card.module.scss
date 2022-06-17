@@ -1,4 +1,4 @@
-@import "../../common/styles/mixims";
+@import "../../../styles/mixims";
 
 
 .modalStyle {
@@ -56,6 +56,18 @@
           margin: 0 20px;
         }
 
+      }
+
+      & button {
+        width: 180px;
+        display: inline-block;
+        background-color: #21268F;
+        color: #ECECF9;
+        border: none;
+        outline: none;
+        border-radius: 40px;
+        font-size: 16px;
+        cursor: pointer;
       }
 
 

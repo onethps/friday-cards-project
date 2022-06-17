@@ -1,0 +1,46 @@
+@import "variables";
+
+@mixin container() {
+  margin-top: 25px;
+  margin-right: 136px;
+  margin-left: 136px;
+  min-width: 450px;
+  background: #F9F9FE;
+  border-radius: 8px;
+}
+
+@mixin authContainer() {
+  margin: 100px auto;
+  padding: 20px;
+  width: 450px;
+  background: #F9F9FE;
+  border-radius: 8px;
+}
+
+
+@mixin secondaryBtn() {
+  padding: 10px 30px;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  background-color: $cancelBtnBg;
+  color: $cancelBtnText;
+  line-height: 19px;
+  font-size: 16px;
+  letter-spacing: 0.01em;
+  font-weight: 500;
+  opacity: 0.8;
+  text-shadow: 0px 1px 1px rgba(0, 0, 0, 0.25);
+}
+
+@mixin primaryBtn() {
+  @include secondaryBtn();
+  background: $cancelBtnText;
+  padding: 10px 45px;
+  box-shadow: 0px 4px 18px rgba(33, 38, 143, 0.35), inset 0px 1px 0px rgba(255, 255, 255, 0.3);
+  color: $cancelBtnBg;
+  text-shadow: 0px 1px 1px rgba(0, 0, 0, 0.25);
+}
+
+
+

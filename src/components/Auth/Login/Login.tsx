@@ -5,8 +5,8 @@ import { Navigate, NavLink } from 'react-router-dom';
 
 import { PATH } from 'components/AppRoutes';
 import l from 'components/Auth/Login/Login.module.scss';
-import CustomInput from 'components/common/CustomInput/CustomInput';
-import Preloader from 'components/common/Preloader/Preloader';
+import CustomInput from 'common/CustomInput/CustomInput';
+import Preloader from 'common/Preloader/Preloader';
 import { useTypedSelector } from 'hooks/useTypedSelector';
 import { RequestStatusType } from 'store/reducers/app';
 import { loginTC } from 'store/reducers/login';

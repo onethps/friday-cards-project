@@ -2,7 +2,7 @@ import React, { ReactElement, useEffect } from 'react';
 
 import './App.scss';
 import { AppRoutes } from 'components/AppRoutes';
-import { Preloader } from 'components/common';
+import { Preloader } from 'common';
 import { useTypedSelector } from 'hooks/useTypedSelector';
 import { initializeAppTC } from 'store/reducers/app';
 import { useAppDispatch } from 'store/store';

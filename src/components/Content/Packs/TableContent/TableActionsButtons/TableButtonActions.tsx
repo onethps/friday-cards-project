@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { FC, useState } from 'react';
 
 import { Button, Row, Space } from 'antd';
 import { NavLink } from 'react-router-dom';
@@ -6,6 +6,7 @@ import { NavLink } from 'react-router-dom';
 import DeleteModal from 'components/Content/Packs/TableContent/TableModals/DeleteModal/DeleteModal';
 import EditPackNameModal from 'components/Content/Packs/TableContent/TableModals/EditPackNameModal/EditPackNameModal';
 import { useTypedSelector } from 'hooks/useTypedSelector';
+import TableContent from "components/Content/Packs/TableContent/TableContent";
 
 type TableType = {
   userId: string;
@@ -13,7 +14,7 @@ type TableType = {
   packName: string;
 };
 
-const TableButtonActions = ({ userId, packId, packName }: TableType) => {
+const TableButtonActions: FC<TableType> = ({ userId, packId, packName }) => {
   const { id } = useTypedSelector(state => state.profile);
 
   const [ModalDelete, setModalDelete] = useState(false);
@@ -45,12 +46,12 @@ const TableButtonActions = ({ userId, packId, packName }: TableType) => {
               <Button type="primary" onClick={() => setModalEdit(true)}>
                 Edit
               </Button>
-              <NavLink to={`/packlist/cards/${packId}`}>
+              <NavLink to={`/packlist/train/${packId}`}>
                 <Button type="primary">Learn</Button>
               </NavLink>
             </>
           ) : (
-            <NavLink to={`/packlist/cards/${packId}`}>
+            <NavLink to={`/packlist/train/${packId}`}>
               <Button type="primary">Learn</Button>
             </NavLink>
           )}

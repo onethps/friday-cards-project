@@ -93,7 +93,7 @@ export const fetchPacksTC = (min: number, max: number, currentPage: number, page
         })
       dispatch(setCardPacksAC(res.data))
     } catch (e) {
-      console.log(e)
+      throw new Error(e as any)
     } finally {
       dispatch(setLoadingPackAC('succeeded'))
     }
@@ -112,7 +112,7 @@ export const deletePackTC = (packId: string, category: string): AppThunk =>
       const fetchCategoryPacks = category === 'my' ? profileId : ''
       dispatch(fetchPacksTC(+minCardsCount, +maxCardsCount, page, pageCount, '', fetchCategoryPacks))
     } catch (e) {
-      console.log(e)
+      throw new Error (e as any)
     } finally {
       dispatch(setLoadingPackAC('succeeded'))
     }
@@ -125,7 +125,7 @@ export const addNewPackTC = (packName: string): AppThunk =>
     try {
       await packs.addCardPack(packName)
     } catch (e) {
-      console.log(e)
+      throw new Error (e as any)
     } finally {
       dispatch(setLoadingPackAC('succeeded'))
     }
@@ -142,7 +142,7 @@ export const editPackNameTC = (id: string, name: string, category: string): AppT
       const fetchCategoryPacks = category === 'my' ? profileId : ''
       dispatch(fetchPacksTC(+minCardsCount, +maxCardsCount, page, pageCount, '', fetchCategoryPacks))
     } catch (e) {
-      console.log(e)
+      throw new Error (e as any)
     } finally {
       dispatch(setLoadingPackAC('succeeded'))
     }

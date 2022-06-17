@@ -1,6 +1,7 @@
 import { ResponseCardType } from "api/packs";
 import React from "react";
 import TableButtonActions from "components/Content/Packs/TableContent/TableActionsButtons/TableButtonActions";
+import { NavLink } from "react-router-dom";
 
 
 export const PackColumns = [
@@ -8,6 +9,8 @@ export const PackColumns = [
         title: 'Created By',
         dataIndex: 'user_name',
         key: '_id',
+        render: (value:string, record:ResponseCardType) =>
+          <NavLink to={`/packlist/cards/${record._id}`}>{value}</NavLink>
     },
     {
         title: 'Name',

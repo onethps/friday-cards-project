@@ -37,7 +37,7 @@ export const changeProfileInfoTC = (name:string) => {
             dispatch(changeMessageStatusAC('Name successfully changed'))
         })
             .catch((e) => {
-                console.log(e)
+                throw new Error (e as any)
             })
             .finally(() => {
                 dispatch(setLoadingStatus('idle'))

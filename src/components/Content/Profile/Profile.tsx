@@ -4,8 +4,8 @@ import { useFormik } from 'formik';
 import { Navigate } from 'react-router-dom';
 
 import onLoadAvatarIcon from 'assets/icons/onLoadAvatar.svg';
-import CustomInput from 'components/common/CustomInput/CustomInput';
-import Preloader from 'components/common/Preloader/Preloader';
+import CustomInput from 'common/CustomInput/CustomInput';
+import Preloader from 'common/Preloader/Preloader';
 import { PATH } from 'components/AppRoutes';
 import Header from 'components/Header/Header';
 

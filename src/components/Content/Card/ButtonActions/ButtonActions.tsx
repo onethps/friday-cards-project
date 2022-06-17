@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Row, Space } from "antd";
-import ModalContainer from "components/common/ModalContainer/ModalContainer";
-import CustomInput from "components/common/CustomInput/CustomInput";
+import ModalContainer from "common/ModalContainer/ModalContainer";
+import CustomInput from "common/CustomInput/CustomInput";
 import style from "components/Content/Card/Card.module.scss";
 import { ResponseCardContent } from "types";
 import { useAppDispatch } from "store/store";
@@ -10,9 +10,13 @@ import { useParams } from "react-router-dom";
 
 const ButtonActions = ({record}: { record: ResponseCardContent }) => {
   const dispatch = useAppDispatch()
-  const [showModal, setShowModal] = useState(false)
   const {id} = useParams()
 
+  const [isCardOwner, setIsCardOwner] = useState(false)
+
+
+
+  const [showModal, setShowModal] = useState(false)
   const [question, setQuestion] = useState(record.question)
   const [answer, setAnswer] = useState(record.answer)
 
@@ -34,7 +38,7 @@ const ButtonActions = ({record}: { record: ResponseCardContent }) => {
   }
 
   return (
-    <div>
+    <>
       <ModalContainer
         title={"Card Info"}
         active={showModal}
@@ -55,7 +59,6 @@ const ButtonActions = ({record}: { record: ResponseCardContent }) => {
           <button className={style.buttonSubmit} onClick={onSaveCardInfoHandle}>Save</button>
         </div>
       </ModalContainer>
-
       <Row justify={"end"}>
         <Space size="middle">
           <Button type={'primary'} onClick={() => setShowModal(true)}>Edit</Button>
@@ -63,7 +66,7 @@ const ButtonActions = ({record}: { record: ResponseCardContent }) => {
                   style={{background: 'red', border: 'red', color: 'white'}}>Delete</Button>
         </Space>
       </Row>
-    </div>
+    </>
   );
 };
 

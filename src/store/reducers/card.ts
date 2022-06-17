@@ -49,20 +49,18 @@ export const Card = (state: InitialStateType = initialState, action: ActionsType
 }
 
 //thunk
-export const fetchCardsTC = (data: cardQueryParams) => (dispatch: Dispatch) => {
+export const fetchCardsTC = (data: cardQueryParams) => async (dispatch: Dispatch) => {
     dispatch(isLoading(true))
-    card.getCard(data).then((res) => {
+    try {
+        const res = await card.getCard(data)
         dispatch(setCardsAC(res.data))
-    }).catch((err) => {
-        console.log(err)
-    })
-      //stopping loading in any case
-      .finally(() => {
-          dispatch(isLoading(false))
-      })
+        dispatch(isLoading(false))
+    } catch (e) {
+        throw new Error(e as any)
+    }
 }
 
-export const setNewCardTC = (data: ResponseCardContent) => async (dispatch: Dispatch) => {
+export const setNewCardTC = (data: { cardsPack_id: string; question: string; answer: string; _id: string }) => async (dispatch: Dispatch) => {
     dispatch(isLoading(true))
     try {
         const res = await card.setNewCard(data)
@@ -82,12 +80,12 @@ export const deleteCardTC = (cardId: string, cardPackId: string) => async (dispa
     } catch (e) {
         throw new Error(e as any)
     } finally {
-        dispatch(isLoading(false))
         dispatch(fetchCardsTC({cardsPack_id: cardPackId}) as any)
+        dispatch(isLoading(false))
     }
 }
 
-export const saveEditCardTC = (data:any, cardPackId:string) => async (dispatch: Dispatch) => {
+export const saveEditCardTC = (data: any, cardPackId: string) => async (dispatch: Dispatch) => {
     dispatch(isLoading(true))
     try {
         await card.editCard(data)
@@ -96,6 +94,21 @@ export const saveEditCardTC = (data:any, cardPackId:string) => async (dispatch: 
     } finally {
         dispatch(isLoading(false))
         dispatch(fetchCardsTC({cardsPack_id: cardPackId}) as any)
+    }
+}
+
+
+export const updateGradeTC = (grade: string, cardId: string) => async (dispatch: Dispatch, getState: () => AppRootStateType) => {
+    dispatch(isLoading(true))
+    try {
+        if (grade) {
+            const {cardsTotalCount} = getState().card
+            const res = await card.updateGrade(Number(grade), cardId)
+            const {cardsPack_id} = res.data.updatedGrade
+            dispatch(fetchCardsTC({cardsPack_id, pageCount: cardsTotalCount}) as any)
+        }
+    } catch (e) {
+        throw new Error(e as any)
     }
 }
 

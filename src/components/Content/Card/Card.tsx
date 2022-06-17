@@ -8,10 +8,11 @@ import Header from 'components/Header/Header';
 import { useTypedSelector } from 'hooks/useTypedSelector';
 import { fetchCardsTC, isLoading, setNewCardTC } from 'store/reducers/card';
 import { useAppDispatch } from 'store/store';
-import ModalContainer from "components/common/ModalContainer/ModalContainer";
-import CustomInput from "components/common/CustomInput/CustomInput";
+import ModalContainer from "common/ModalContainer/ModalContainer";
+import CustomInput from "common/CustomInput/CustomInput";
 import { Input, Pagination, Table } from "antd";
-import { CardColumns } from "components/Content/Card/data";
+import { ResponseCardContent } from "types";
+import ButtonActions from "components/Content/Card/ButtonActions/ButtonActions";
 
 const Card = (): ReactElement => {
   const dispatch = useAppDispatch();
@@ -78,7 +79,7 @@ const Card = (): ReactElement => {
   const [answer, setAnswer] = useState('')
 
   const setNewCard = () => {
-    dispatch(setNewCardTC({question, answer, cardsPack_id: id!}))
+    dispatch(setNewCardTC({question, answer, cardsPack_id: id!, _id:''}))
     setShowModal(false)
   }
 
@@ -112,8 +113,10 @@ const Card = (): ReactElement => {
             <div className={style.textAndName}>
               <img onClick={onHandleBackButton} src={backButton}/>
               <h1>{currentCard?.name}</h1>
+
             </div>
-            {currentCardId === profileId && <button onClick={() => setShowModal(true)}>Add new Card</button>}
+            {currentCardId === profileId &&
+                <button onClick={() => setShowModal(true)}>Add new Card</button>}
           </div>
 
           <div className={style.inputBlock}>
@@ -129,14 +132,33 @@ const Card = (): ReactElement => {
             />
           </div>
           <div className={style.tableStyle}>
+            {/*<Table*/}
+            {/*  rowKey={record => record.cardsPack_id + Math.random()}*/}
+            {/*  loading={loading}*/}
+            {/*  style={{minWidth: '900px'}}*/}
+            {/*  pagination={false}*/}
+            {/*  columns={CardColumns}*/}
+            {/*  dataSource={Cards}*/}
+            {/*/>*/}
             <Table
               rowKey={record => record.cardsPack_id + Math.random()}
+              dataSource={Cards}
               loading={loading}
               style={{minWidth: '900px'}}
               pagination={false}
-              columns={CardColumns}
-              dataSource={Cards}
-            />
+            >
+              <Table.Column key="_id" title="Question" dataIndex="question" />
+              <Table.Column key="_id" title="Answer" dataIndex="answer" />
+              <Table.Column key="_id" title="Last Updated" dataIndex="updated" />
+              <Table.Column key="_id" title="Grade" dataIndex="grade" />
+
+               {currentCardId === profileId &&
+                   <Table.Column key="_id" title="Actions" dataIndex="actions"
+                             render={(value: string, record: ResponseCardContent) =>
+                               <ButtonActions key={record._id} record={record}/>}
+              />}
+
+            </Table>
           </div>
           <Pagination
             style={{margin: '50px 0'}}
