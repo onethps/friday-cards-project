@@ -15,25 +15,20 @@ type TableContentType = {
   setSearchText: (search: string) => void
   page: number
   pageCount: number
+  onPaginatorChange?: (page:any, pageCount:any) => void
 }
 
-const TableContent: FC<TableContentType> = ({searchText, setSearchText, page, pageCount}) => {
-
-  const dispatch = useAppDispatch();
+const TableContent: FC<TableContentType> = ({searchText, setSearchText, page, pageCount, onPaginatorChange}) => {
 
   const cardPacks = useTypedSelector(selectCardPacks);
-  const cardPacksTotal = useTypedSelector(cardPacksTotalCount);
+  const cardPacksTotal = useTypedSelector(state => state.cardPacks.cardPacksTotalCount);
   const loadingStatus = useTypedSelector(loading);
 
-
+  const [showAddPackModal, setShowAddPackModal] = useState<boolean>(false);
 
   const onSearchInputHandler = (e: ChangeEvent<HTMLInputElement>): void => {
     setSearchText(e.currentTarget.value)
   };
-
-
-  const [showAddPackModal, setShowAddPackModal] = useState<boolean>(false);
-
 
   return (
     <>
@@ -66,9 +61,7 @@ const TableContent: FC<TableContentType> = ({searchText, setSearchText, page, pa
             />
           </div>
           <Pagination
-            onChange={(paginatorPage, paginatorPageSize) => {
-              dispatch(setFilterAC({page: paginatorPage, pageCount: paginatorPageSize}))
-            }}
+            onChange={onPaginatorChange}
             current={page}
             showSizeChanger
             pageSizeOptions={[

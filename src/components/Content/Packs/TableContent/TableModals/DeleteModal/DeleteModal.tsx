@@ -18,7 +18,6 @@ const DeleteModal:FC<DeleteModal> = ({showModal, setShowModal, packName, packId,
   const dispatch = useAppDispatch()
 
   const onDeleteHandler = () => {
-    console.log('ondelete')
     if (category) {
       dispatch(deletePackTC(packId, category))
     }

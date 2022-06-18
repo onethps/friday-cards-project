@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react';
 import s from 'components/Content/Profile/Profile.module.scss'
 import { Slider } from "antd";
 import Header from "components/Header/Header";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { PATH } from "components/AppRoutes";
 import { useTypedSelector } from "hooks/useTypedSelector";
 import { useAppDispatch } from "store/store";
-import { fetchPacksTC } from "store/reducers/packs";
+import { fetchPacksTC, setFilterAC } from "store/reducers/packs";
 import TableContent from "components/Content/Packs/TableContent/TableContent";
 import useDebounce from "hooks/debounceHook";
 
@@ -17,7 +17,7 @@ const Profile = () => {
   const maxCardsCount = useTypedSelector(state => state.cardPacks.maxCardsCount)
   const page = useTypedSelector(state => state.cardPacks.page)
   const pageCount = useTypedSelector(state => state.cardPacks.pageCount)
-
+  const isLoggedIn = useTypedSelector(state => state.login.isLoggedIn)
 
 
   const [slider, setSlider] = useState([minCardsCount, maxCardsCount])
@@ -26,12 +26,19 @@ const Profile = () => {
   const debouncedSearch = useDebounce(searchText, 500);
   const debouncedSlider = useDebounce(slider, 500);
 
+  const onPaginatorChange = (page:number, pageCount:number) => {
+    dispatch(setFilterAC({page, pageCount}))
+  }
+
   useEffect(() => {
     const searchQuery = searchText ? searchText : ''
-    dispatch(fetchPacksTC(minCardsCount, maxCardsCount, page, pageCount, searchQuery, myProfileId))
-  }, [debouncedSearch, debouncedSlider])
+    dispatch(fetchPacksTC(slider[0], slider[1], page, pageCount, searchQuery, myProfileId))
+  }, [debouncedSearch, debouncedSlider, page, pageCount])
 
 
+  if (!isLoggedIn) {
+    return <Navigate to={PATH.LOGIN}/>;
+  }
 
 
   return (
@@ -64,7 +71,10 @@ const Profile = () => {
 
         </div>
         <div className={s.rightSide}>
-          <TableContent searchText={searchText} setSearchText={setSearchText} page={1} pageCount={10}/>
+          <TableContent onPaginatorChange={onPaginatorChange}
+                        searchText={searchText} setSearchText={setSearchText}
+                        page={page}
+                        pageCount={pageCount}/>
         </div>
       </div>
     </>

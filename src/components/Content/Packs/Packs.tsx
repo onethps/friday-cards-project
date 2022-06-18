@@ -5,11 +5,12 @@ import 'antd/dist/antd.min.css';
 import { useTypedSelector } from 'hooks/useTypedSelector';
 import { fetchPacksTC, setFilterAC } from 'store/reducers/packs';
 import { useAppDispatch } from 'store/store';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import TableContent from "components/Content/Packs/TableContent/TableContent";
 import Settings from "components/Content/Packs/Settings/Settings";
 import qs from 'qs';
 import useDebounce from "hooks/debounceHook";
+import { PATH } from "components/AppRoutes";
 
 
 const Packs = (): ReactElement => {
@@ -24,7 +25,7 @@ const Packs = (): ReactElement => {
   const minCardsCount = useTypedSelector(state => state.cardPacks.minCardsCount)
   const maxCardsCount = useTypedSelector(state => state.cardPacks.maxCardsCount)
   const myID = useTypedSelector(state => state.profile.id)
-
+  const isLoggedIn = useTypedSelector(state => state.login.isLoggedIn)
 
   const [isSearch, setIsSearch] = useState(false)
   const [isMounted, setIsMounted] = useState(false)
@@ -34,6 +35,10 @@ const Packs = (): ReactElement => {
 
   const debouncedSearch = useDebounce(searchText, 500);
   const debouncedSlider = useDebounce(minMaxSlider, 500);
+
+  const onPaginatorChange = (page:number, pageCount:number) => {
+    dispatch(setFilterAC({page, pageCount}))
+  }
 
   const fetchData = async () => {
     await dispatch(fetchPacksTC(
@@ -51,20 +56,21 @@ const Packs = (): ReactElement => {
   useEffect(() => {
     if (isMounted) {
       const queryString = qs.stringify({
-        minCardsCount,
-        maxCardsCount,
+        minCardsCount: minMaxSlider[0],
+        maxCardsCount: minMaxSlider[1],
         searchText,
         page
       })
       navigate(`?${queryString}`)
     }
     setIsMounted(true)
-  }, [page, searchText, debouncedSlider])
+  }, [page, pageCount, searchText,  debouncedSlider])
 
 
   useEffect(() => {
     if (window.location.search) {
       const params = qs.parse(window.location.search.substring(1))
+      // setMinMaxSlider([minCardsCount, maxCardsCount])
       dispatch(
         setFilterAC({
           ...params,
@@ -78,13 +84,15 @@ const Packs = (): ReactElement => {
   useEffect(() => {
     if (!isSearch) {
       fetchData()
-        .catch(console.error)
     }
 
     setIsSearch(false)
-  }, [page, category, debouncedSearch, debouncedSlider]);
+  }, [page, pageCount, category, debouncedSearch, debouncedSlider]);
 
 
+  if (!isLoggedIn) {
+    return <Navigate to={PATH.LOGIN}/>;
+  }
 
 
   return (
@@ -94,10 +102,12 @@ const Packs = (): ReactElement => {
       </nav>
       <div className={l.settingsContainer}>
         <Settings minMaxSlider={minMaxSlider} setMinMaxSlider={setMinMaxSlider}/>
-        <TableContent searchText={searchText}
-                      setSearchText={setSearchText}
-                      page={page}
-                      pageCount={pageCount}
+        <TableContent
+          onPaginatorChange={onPaginatorChange}
+          searchText={searchText}
+          setSearchText={setSearchText}
+          page={page}
+          pageCount={pageCount}
         />
       </div>
     </>

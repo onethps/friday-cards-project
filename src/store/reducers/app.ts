@@ -46,8 +46,7 @@ export const setAppErrorAC = (error: string) =>
 
 // thunk
 export const initializeAppTC = () => (dispatch: Dispatch<appReducerTypes>) => {
-  auth
-    .authMe()
+  auth.authMe()
     .then(resolve => {
       dispatch(setAppStatus('idle'));
       dispatch(isInitializedApp(true));
@@ -56,6 +55,7 @@ export const initializeAppTC = () => (dispatch: Dispatch<appReducerTypes>) => {
       dispatch(setProfileInfo(email, name, _id));
     })
     .catch((error: AxiosError<ResponseError>) => {
+      console.log(error)
       dispatch(
         setAppErrorAC(error.response?.data ? error.response.data.error : error.message),
       );

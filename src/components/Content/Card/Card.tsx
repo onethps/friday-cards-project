@@ -1,5 +1,5 @@
 import React, { ReactElement, useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Navigate, useNavigate, useParams } from 'react-router-dom';
 
 import backButton from 'assets/icons/back-button-img.svg';
 import { PATH } from 'components/AppRoutes';
@@ -34,7 +34,7 @@ const Card = (): ReactElement => {
 
   const totalCount = useTypedSelector(state => state.card.cardsTotalCount)
   const {loading} = useTypedSelector(state => state.card);
-
+  const isLoggedIn = useTypedSelector(state => state.login.isLoggedIn)
   const [currentPage, setCurrentPage] = useState(1);
 
 
@@ -83,6 +83,10 @@ const Card = (): ReactElement => {
     setShowModal(false)
     setQuestion('')
     setAnswer('')
+  }
+
+  if (!isLoggedIn) {
+    return <Navigate to={PATH.LOGIN}/>;
   }
 
 

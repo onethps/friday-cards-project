@@ -23,8 +23,7 @@ const Settings = ({
         <h3>Show packs cards</h3>
         <div className={style.buttonGroup}>
           <button onClick={() => navigate('/packlist/' + 'my')} className={styleButton}>My</button>
-          <button onClick={() => navigate('/packlist/' + 'all')} className={styleButtonAll}>All
-          </button>
+          <button onClick={() => navigate('/packlist/' + 'all')} className={styleButtonAll}>All</button>
         </div>
 
         <h3>Number of cards</h3>
@@ -38,7 +37,6 @@ const Settings = ({
               minMaxSlider[0],
               minMaxSlider[1]
             ]}
-            disabled={false}
           />
 
         </div>
