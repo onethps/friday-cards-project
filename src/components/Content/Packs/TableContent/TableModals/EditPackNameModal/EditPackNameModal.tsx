@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { FC, useState } from 'react';
 
 import CustomInput from 'common/CustomInput/CustomInput';
 import ModalContainer from 'common/ModalContainer/ModalContainer';
@@ -12,16 +12,17 @@ type EditPackNameModal = {
   setShowModal: (bool: boolean) => void;
   packId: string;
   packName: string;
+  category:string;
 };
 
-const EditPackNameModal = ({
-                             showModal,
-                             setShowModal,
-                             packId,
-                             packName,
-                           }: EditPackNameModal) => {
+const EditPackNameModal:FC<EditPackNameModal> = ({
+                                                   showModal,
+                                                   setShowModal,
+                                                   packId,
+                                                   packName,
+                                                   category,
+                                                 }) => {
   const dispatch = useAppDispatch();
-  const {category} = useParams();
 
   const [value, setValue] = useState(packName);
 
@@ -29,23 +30,24 @@ const EditPackNameModal = ({
     if (category) {
       dispatch(editPackNameTC(packId, value, category));
     }
-
     setShowModal(false);
   };
-
   return (
     <div>
-      <ModalContainer active={showModal} setActive={setShowModal} title="Edit Pack Name">
+      <ModalContainer active={showModal}
+                      setActive={setShowModal} title="Edit Pack Name">
         <CustomInput
           label="New Pack Name"
           value={value}
           onChange={e => setValue(e.currentTarget.value)}
         />
         <div className={s.buttonBlock}>
-          <button className={s.buttonCancel} onClick={() => setShowModal(false)}>
+          <button className={s.btnCancel}
+                  onClick={() => setShowModal(false)}>
             Cancel
           </button>
-          <button className={s.buttonSubmit} onClick={onEditPackNameHandler}>
+          <button className={s.btnSave}
+                  onClick={onEditPackNameHandler}>
             Save
           </button>
         </div>

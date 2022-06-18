@@ -13,11 +13,9 @@ const Settings = ({
   const navigate = useNavigate()
   const {category} = useParams()
 
-  const debouncedHandler = useCallback(debounceFn(setMinMaxSlider, 500), []);
 
   let styleButton = category === 'my' ? `${style.tabButton} ${style.active}` : `${style.tabButton}`
   let styleButtonAll = category === 'my' ? `${style.tabButton}` : `${style.tabButton} ${style.active}`
-
 
   return (
     <div className={style.leftSideContainer}>
@@ -34,7 +32,7 @@ const Settings = ({
 
           <Slider
             className={style.sliderStyle}
-            onChange={debouncedHandler}
+            onChange={setMinMaxSlider}
             range
             defaultValue={[
               minMaxSlider[0],

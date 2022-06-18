@@ -1,111 +1,74 @@
-import React, { FC, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import s from 'components/Content/Profile/Profile.module.scss'
+import { Slider } from "antd";
+import Header from "components/Header/Header";
+import { Link } from "react-router-dom";
+import { PATH } from "components/AppRoutes";
+import { useTypedSelector } from "hooks/useTypedSelector";
+import { useAppDispatch } from "store/store";
+import { fetchPacksTC } from "store/reducers/packs";
+import TableContent from "components/Content/Packs/TableContent/TableContent";
+import useDebounce from "hooks/debounceHook";
 
-import { useFormik } from 'formik';
-import { Navigate } from 'react-router-dom';
-
-import onLoadAvatarIcon from 'assets/icons/onLoadAvatar.svg';
-import CustomInput from 'common/CustomInput/CustomInput';
-import Preloader from 'common/Preloader/Preloader';
-import { PATH } from 'components/AppRoutes';
-import Header from 'components/Header/Header';
-
-import l from 'components/Content/Profile/Profile.module.scss';
-
-import { changeMessageStatusAC, changeProfileInfoTC, logoutTC, } from 'store/reducers/profile';
-import { useAppDispatch } from 'store/store';
-import { profileValidate } from 'utils/validators/validators';
-import { useTypedSelector } from 'hooks/useTypedSelector';
-
-export const Profile: FC = () => {
+const Profile = () => {
   const dispatch = useAppDispatch();
+  const myProfileId = useTypedSelector(state => state.profile.id)
+  const minCardsCount = useTypedSelector(state => state.cardPacks.minCardsCount)
+  const maxCardsCount = useTypedSelector(state => state.cardPacks.maxCardsCount)
+  const page = useTypedSelector(state => state.cardPacks.page)
+  const pageCount = useTypedSelector(state => state.cardPacks.pageCount)
 
-  const isLoggedIn = useTypedSelector(state => state.login.isLoggedIn);
-  const profileName = useTypedSelector(state => state.profile.name);
-  const profileEmail = useTypedSelector(state => state.profile.email);
-  const loadingStatus = useTypedSelector(state => state.profile.status);
-  const changeMessageStatus = useTypedSelector(
-    state => state.profile.changeMessageStatus,
-  );
-  // takes name from email
-  const getEmailName = profileName!.includes('@')
-    ? profileName!.split('@')[0]
-    : profileName;
 
-  const formik = useFormik({
-    initialValues: {
-      email: profileEmail,
-      name: getEmailName,
-    },
-    validate: profileValidate,
-    onSubmit: values => {
-      dispatch(changeProfileInfoTC(values.name));
-    },
-  });
 
-  const onLogoutHandler = (): void => {
-    dispatch(logoutTC());
-  };
+  const [slider, setSlider] = useState([minCardsCount, maxCardsCount])
+  const [searchText, setSearchText] = useState<string>('');
+
+  const debouncedSearch = useDebounce(searchText, 500);
+  const debouncedSlider = useDebounce(slider, 500);
 
   useEffect(() => {
+    const searchQuery = searchText ? searchText : ''
+    dispatch(fetchPacksTC(minCardsCount, maxCardsCount, page, pageCount, searchQuery, myProfileId))
+  }, [debouncedSearch, debouncedSlider])
 
-    const delayDebounceFn = setTimeout(() => {
-      dispatch(changeMessageStatusAC(''));
-    }, 2000);
 
-    return () => clearTimeout(delayDebounceFn)
 
-  }, [changeMessageStatus]);
-
-  if (!isLoggedIn) {
-    return <Navigate to={PATH.LOGIN}/>;
-  }
 
   return (
     <>
-      <Header/>
-
-      <div className={l.loginBox}>
-        <h2> Personal information</h2>
-        <div className={l.avatarBlock}>
-          <img
-            className={l.avatar}
-            src="https://i.pinimg.com/originals/ff/a0/9a/ffa09aec412db3f54deadf1b3781de2a.png"
-          />
-          <img className={l.loadAvatar} alt="loadAvatarIcon" src={onLoadAvatarIcon}/>
-        </div>
-
-        {loadingStatus === 'loading' ? (
-          <div style={{marginTop: '45%'}}>
-            <Preloader/>
+      <nav>
+        <Header/>
+      </nav>
+      <div className={s.root}>
+        <div className={s.leftSide}>
+          <div className={s.profileInfoBox}>
+            <img src={'https://i.pinimg.com/originals/ff/a0/9a/ffa09aec412db3f54deadf1b3781de2a.png'} alt={'ava'}/>
+            <h3>Ivan Ivanov</h3>
+            <span>Front-end developer</span>
+            <button><Link to={`${PATH.PROFILE}/${myProfileId}`}>Edit profile</Link></button>
           </div>
-        ) : (
-          <form onSubmit={formik.handleSubmit}>
-            <CustomInput
-              label="Name"
-              {...formik.getFieldProps('name')}
-              error={formik.touched.name && formik.errors.name ? formik.errors.name : ''}
+          <div className={s.profileNumberBox}>
+            <h3>Number of cards</h3>
+            <Slider
+              className={s.sliderStyle}
+              onChange={setSlider}
+              range
+              defaultValue={[
+                slider[0],
+                slider[1]
+              ]}
+              disabled={false}
             />
-            <CustomInput
-              label="Email"
-              {...formik.getFieldProps('email')}
-              error={
-                formik.touched.email && formik.errors.email ? formik.errors.email : ''
-              }
-            />
-            <div style={{height: '50px'}}>
-              <h3 style={{color: 'green'}}>{changeMessageStatus}</h3>
-            </div>
-            <div className={l.buttonBlock}>
-              <a onClick={onLogoutHandler} className={l.backToLoginLink}>
-                Log Out
-              </a>
-              <button className={l.submitButton} type="submit">
-                Save
-              </button>
-            </div>
-          </form>
-        )}
+
+          </div>
+
+        </div>
+        <div className={s.rightSide}>
+          <TableContent searchText={searchText} setSearchText={setSearchText} page={1} pageCount={10}/>
+        </div>
       </div>
     </>
   );
 };
+
+export default Profile;

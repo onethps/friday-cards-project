@@ -23,6 +23,7 @@ const App = (): ReactElement => {
     );
   }
 
+
   return (
     <div className="App">
       <AppRoutes />

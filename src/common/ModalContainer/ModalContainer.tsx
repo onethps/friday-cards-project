@@ -12,11 +12,11 @@ type ModalContainerType = {
 };
 
 const ModalContainer: React.FC<ModalContainerType> = ({
-  title,
-  active,
-  setActive,
-  children,
-}) => (
+                                                        title,
+                                                        active,
+                                                        setActive,
+                                                        children,
+                                                      }) => (
   <>
     <Modal
       width={400}
@@ -31,7 +31,6 @@ const ModalContainer: React.FC<ModalContainerType> = ({
           <img src={closeIcon} onClick={() => setActive(false)} />
         </div>
         <div className={s.border} />
-
         <div className={s.modalContent}>{children}</div>
       </div>
     </Modal>

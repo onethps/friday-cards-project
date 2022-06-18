@@ -5,8 +5,8 @@ import { fetchCardsTC } from "store/reducers/card";
 import { useTypedSelector } from "hooks/useTypedSelector";
 import { ResponseCardContent } from "types";
 import Header from "components/Header/Header";
-import s from './Train.module.scss'
-import TrainContent from "components/TrainContent";
+import s from 'components/Content/Train/Train.module.scss'
+import TrainContent from "components/Content/Train/TrainContent";
 
 const Train = () => {
   const dispatch = useAppDispatch();
@@ -14,7 +14,7 @@ const Train = () => {
 
   const [mount, setMount] = useState(false)
   const cardItems = useTypedSelector(state => state.card.cards)
-  const [showAnswer, setShowAnswer] = useState(false)
+  const loading = useTypedSelector(state => state.card.loading)
 
   const currentCard = useTypedSelector(state =>
     state.cardPacks.cardPacks.find(f => f._id === id && f),
@@ -47,6 +47,10 @@ const Train = () => {
       , {sum: 0, id: -1});
 
     return cards[res.id + 1];
+  }
+
+  if (loading) {
+    return <div>loading</div>
   }
 
 

@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
 
-import { NavLink, useLocation, useParams } from 'react-router-dom';
+import { Link, NavLink, useLocation, useParams } from 'react-router-dom';
 
 import packListIcon from 'assets/icons/headerIconsTabs/packListIcon.svg';
 import profileIcon from 'assets/icons/headerIconsTabs/profileIcon.svg';
@@ -15,7 +15,7 @@ const Header = (): ReactElement => {
   return(
     <header className={l.headerBox}>
       <div>
-        <h2 className={l.logo}>It Incubator</h2>
+        <h2 className={l.logo}><Link to={'/packlist/all'}>It Incubator</Link></h2>
       </div>
 
       <nav className={l.nav}>

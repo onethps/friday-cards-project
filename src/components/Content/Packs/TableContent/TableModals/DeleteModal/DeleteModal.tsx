@@ -1,24 +1,24 @@
-import React from 'react';
+import React, { FC } from 'react';
 import s from 'components/Content/Packs/TableContent/TableModals/DeleteModal/DeleteModal.module.scss'
 import { useAppDispatch } from "store/store";
 import { deletePackTC } from "store/reducers/packs";
 import ModalContainer from "common/ModalContainer/ModalContainer";
-import { useParams } from "react-router-dom";
 
 type DeleteModal = {
   showModal: boolean
   setShowModal: (bool: boolean) => void
   packName: string
   packId: string
+  category:string
 }
 
 
-const DeleteModal = ({showModal, setShowModal, packName, packId}: DeleteModal) => {
+const DeleteModal:FC<DeleteModal> = ({showModal, setShowModal, packName, packId, category}) => {
 
   const dispatch = useAppDispatch()
-  const {category} = useParams()
 
   const onDeleteHandler = () => {
+    console.log('ondelete')
     if (category) {
       dispatch(deletePackTC(packId, category))
     }
@@ -39,8 +39,8 @@ const DeleteModal = ({showModal, setShowModal, packName, packId}: DeleteModal) =
           All cards will be excluded from this course.
         </p>
         <div className={s.buttonBlock}>
-          <button className={s.buttonCancel} onClick={() => setShowModal(false)}>Cancel</button>
-          <button className={s.buttonSubmit} onClick={onDeleteHandler}>Delete</button>
+          <button className={s.btnCancel} onClick={() => setShowModal(false)}>Cancel</button>
+          <button className={s.btnDel} onClick={onDeleteHandler}>Delete</button>
         </div>
       </ModalContainer>
     </div>

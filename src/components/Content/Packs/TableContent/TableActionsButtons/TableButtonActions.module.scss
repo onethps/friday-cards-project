@@ -1,15 +1,20 @@
-.redButtonStyle {
-  color: white;
-  background-color: red;
-};
+@import "src/styles/variables";
+@import "src/styles/mixims";
 
-.redButtonHiddenStyle {
-  display: none;
-};
 
-.blueButton{
-  color: white;
-  background-color: #7ec1ff;
+.learnBtn{
+  @include secondaryBtn();
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+.delBtn {
+  @include dangerBtn();
+font-size: 12px;
+
+  &:hover{
+    background-color: red;
+  }
 }
 
 

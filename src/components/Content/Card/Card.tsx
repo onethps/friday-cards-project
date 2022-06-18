@@ -81,6 +81,8 @@ const Card = (): ReactElement => {
   const setNewCard = () => {
     dispatch(setNewCardTC({question, answer, cardsPack_id: id!, _id:''}))
     setShowModal(false)
+    setQuestion('')
+    setAnswer('')
   }
 
 
@@ -152,11 +154,11 @@ const Card = (): ReactElement => {
               <Table.Column key="_id" title="Last Updated" dataIndex="updated" />
               <Table.Column key="_id" title="Grade" dataIndex="grade" />
 
-               {currentCardId === profileId &&
-                   <Table.Column key="_id" title="Actions" dataIndex="actions"
-                             render={(value: string, record: ResponseCardContent) =>
-                               <ButtonActions key={record._id} record={record}/>}
-              />}
+              {currentCardId === profileId &&
+                  <Table.Column key="_id" title="Actions" dataIndex="actions"
+                                render={(value: string, record: ResponseCardContent) =>
+                                  <ButtonActions key={record._id} record={record}/>}
+                  />}
 
             </Table>
           </div>

@@ -1,19 +1,18 @@
+@import "src/styles/mixims";
+
 .buttonBlock {
   display: flex;
-  justify-content: space-between;
+  gap: 50px;
+  padding: 30px 0;
 
-  .buttonCancel, .buttonSubmit {
-    padding: 10px 37px;
-    border: none;
-    border-radius: 20px;
-    cursor: pointer;
-    background-color: #9890C7;
-    color: white;
-    width: 150px;
+  .btnCancel, .btnDel {
+    @include secondaryBtn();
+    width: 100%;
   }
 
-  .buttonSubmit {
+  .btnDel {
     background-color: red;
+    color: white;
   }
 
 }

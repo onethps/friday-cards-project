@@ -1,3 +1,4 @@
+@import "src/styles/variables";
 .headerBox {
   background-color: #EBE0E9;
   height: 60px;
@@ -7,6 +8,17 @@
   & h2 {
     font-weight: 600;
     margin-left: 136px;
+    cursor: pointer;
+
+    & a {
+      text-decoration: none;
+      color: black;
+    }
+
+    & :hover {
+      color: $cancelBtnText;
+    }
+
   }
 
   & nav {

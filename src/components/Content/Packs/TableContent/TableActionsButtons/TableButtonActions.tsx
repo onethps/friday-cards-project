@@ -1,12 +1,12 @@
 import React, { FC, useState } from 'react';
 
-import { Button, Row, Space } from 'antd';
-import { NavLink } from 'react-router-dom';
+import { Row, Space } from 'antd';
+import { NavLink, useParams } from 'react-router-dom';
 
 import DeleteModal from 'components/Content/Packs/TableContent/TableModals/DeleteModal/DeleteModal';
 import EditPackNameModal from 'components/Content/Packs/TableContent/TableModals/EditPackNameModal/EditPackNameModal';
 import { useTypedSelector } from 'hooks/useTypedSelector';
-import TableContent from "components/Content/Packs/TableContent/TableContent";
+import s from './TableButtonActions.module.scss'
 
 type TableType = {
   userId: string;
@@ -15,21 +15,28 @@ type TableType = {
 };
 
 const TableButtonActions: FC<TableType> = ({ userId, packId, packName }) => {
+
+  const {category} = useParams();
   const { id } = useTypedSelector(state => state.profile);
 
   const [ModalDelete, setModalDelete] = useState(false);
   const [ModalEdit, setModalEdit] = useState(false);
 
+
+
   return (
     <div key={packId}>
       <DeleteModal
+        category={category ? category : 'my'}
         showModal={ModalDelete}
         setShowModal={setModalDelete}
         packName={packName}
         packId={packId}
       />
 
+
       <EditPackNameModal
+        category={category ? category : 'my'}
         showModal={ModalEdit}
         setShowModal={setModalEdit}
         packId={packId}
@@ -40,19 +47,19 @@ const TableButtonActions: FC<TableType> = ({ userId, packId, packName }) => {
         <Space size="middle">
           {userId === id ? (
             <>
-              <Button type="primary" danger onClick={() => setModalDelete(true)}>
+              <button className={s.delBtn} onClick={() => setModalDelete(true)}>
                 Delete
-              </Button>
-              <Button type="primary" onClick={() => setModalEdit(true)}>
+              </button>
+              <button className={s.learnBtn}  onClick={() => setModalEdit(true)}>
                 Edit
-              </Button>
+              </button>
               <NavLink to={`/packlist/train/${packId}`}>
-                <Button type="primary">Learn</Button>
+                <button className={s.learnBtn}>Learn</button>
               </NavLink>
             </>
           ) : (
             <NavLink to={`/packlist/train/${packId}`}>
-              <Button type="primary">Learn</Button>
+              <button className={s.learnBtn}>Learn</button>
             </NavLink>
           )}
         </Space>

@@ -1,11 +1,12 @@
 import React, { FC, useState } from 'react';
-import s from "components/Content/Train.module.scss";
+import s from "components/Content/Train/Train.module.scss";
 import { Field, Form, Formik } from "formik";
 import { ResponseCardType } from "api/packs";
 import { ResponseCardContent } from "types";
 import { useAppDispatch } from "store/store";
 import { fetchCardsTC, updateGradeTC } from "store/reducers/card";
 import { useTypedSelector } from "hooks/useTypedSelector";
+import { useNavigate } from "react-router-dom";
 
 type TrainContentType = {
   currentCard: ResponseCardType | undefined
@@ -15,7 +16,8 @@ type TrainContentType = {
 
 const TrainContent: FC<TrainContentType> = ({currentCard, randomResult}) => {
   const dispatch = useAppDispatch();
-  const [showAnswer, setShowAnswer] = useState(false)
+  const [showAnswer, setShowAnswer] = useState(true)
+  const navigate = useNavigate()
 
   const {cardsTotalCount} = useTypedSelector(state => state.card)
   const loading = useTypedSelector(state => state.card.loading)
@@ -33,7 +35,10 @@ const TrainContent: FC<TrainContentType> = ({currentCard, randomResult}) => {
     if (!picked) {
       dispatch(fetchCardsTC({cardsPack_id: randomResult.cardsPack_id, pageCount: cardsTotalCount}))
     }
+    setShowAnswer(true)
   }
+
+  const onCancelBtnHandler = () => navigate('/packlist/all')
 
   if (loading){
     return <div>loading</div>
@@ -53,7 +58,7 @@ const TrainContent: FC<TrainContentType> = ({currentCard, randomResult}) => {
       { showAnswer ?
         <div>
           <div className={s.buttonBlock}>
-            <button className={s.cancelBtn}>Cancel</button>
+            <button className={s.cancelBtn} onClick={onCancelBtnHandler}>Cancel</button>
             <button className={s.submitBtn} onClick={() => setShowAnswer(false)}>Show Answer</button>
           </div>
         </div>
@@ -77,7 +82,7 @@ const TrainContent: FC<TrainContentType> = ({currentCard, randomResult}) => {
                   )}
                 </div>
                 <div className={s.buttonBlock}>
-                  <button className={s.cancelBtn}>Cancel</button>
+                  <button className={s.cancelBtn}  onClick={onCancelBtnHandler}>Cancel</button>
                   <input type={'submit'} className={s.submitBtn} title={'next'}/>
                 </div>
               </Form>

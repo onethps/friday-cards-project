@@ -23,7 +23,6 @@ const Packs = (): ReactElement => {
   const pageCount = useTypedSelector(state => state.cardPacks.pageCount);
   const minCardsCount = useTypedSelector(state => state.cardPacks.minCardsCount)
   const maxCardsCount = useTypedSelector(state => state.cardPacks.maxCardsCount)
-
   const myID = useTypedSelector(state => state.profile.id)
 
 
@@ -34,7 +33,7 @@ const Packs = (): ReactElement => {
   const [searchText, setSearchText] = useState<string>('');
 
   const debouncedSearch = useDebounce(searchText, 500);
-
+  const debouncedSlider = useDebounce(minMaxSlider, 500);
 
   const fetchData = async () => {
     await dispatch(fetchPacksTC(
@@ -60,7 +59,7 @@ const Packs = (): ReactElement => {
       navigate(`?${queryString}`)
     }
     setIsMounted(true)
-  }, [page, minMaxSlider, searchText])
+  }, [page, searchText, debouncedSlider])
 
 
   useEffect(() => {
@@ -83,7 +82,7 @@ const Packs = (): ReactElement => {
     }
 
     setIsSearch(false)
-  }, [minCardsCount, maxCardsCount, page, minMaxSlider, category, debouncedSearch]);
+  }, [page, category, debouncedSearch, debouncedSlider]);
 
 
 
