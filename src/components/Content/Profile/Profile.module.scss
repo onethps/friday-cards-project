@@ -89,7 +89,6 @@
     }
 
     & input {
-      width: 100%;
       background-color: $bgSecondProfile;
       opacity: 0.5;
       border: 1px solid #635D80;
@@ -97,6 +96,7 @@
       padding: 10px 20px;
       outline: none;
       color: black;
+      width: 95%!important;
     }
 
     .tableStyle{

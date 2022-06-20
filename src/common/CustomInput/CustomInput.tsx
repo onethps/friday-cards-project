@@ -34,11 +34,11 @@ const CustomInput: React.FC<SuperInputTextPropsType> = ({
 
   return (
     <div className={style.inputBox}>
-      <input required type={password ? showPassword : ''} {...restProps} />
+      <input required type={password ? showPassword : ''} {...restProps} className={style.inputBoxInput} />
       {password && (
-        <img alt="showPasswordIcon" onClick={onShowPassword} src={showPasswordIcon} />
+        <img className={style.inputBoxImg} alt="showPasswordIcon" onClick={onShowPassword} src={showPasswordIcon} />
       )}
-      <label>{label || 'Input'}</label>
+      <label className={style.inputBoxLabel}>{label || 'Input'}</label>
       {error && <div className={style.errorMessage}>{error}</div>}
     </div>
   );

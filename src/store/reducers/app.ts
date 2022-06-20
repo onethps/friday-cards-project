@@ -51,8 +51,8 @@ export const initializeAppTC = () => (dispatch: Dispatch<appReducerTypes>) => {
       dispatch(setAppStatus('idle'));
       dispatch(isInitializedApp(true));
       dispatch(isLoggedInAC(true));
-      const {email, name, _id} = resolve.data;
-      dispatch(setProfileInfo(email, name, _id));
+      const {email, name, _id, avatar} = resolve.data;
+      dispatch(setProfileInfo(email, name, _id, avatar!));
     })
     .catch((error: AxiosError<ResponseError>) => {
       console.log(error)

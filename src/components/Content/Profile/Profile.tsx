@@ -13,6 +13,8 @@ import useDebounce from "hooks/debounceHook";
 const Profile = () => {
   const dispatch = useAppDispatch();
   const myProfileId = useTypedSelector(state => state.profile.id)
+  const myProfileName = useTypedSelector(state => state.profile.name)
+  const myProfileAvatar = useTypedSelector(state => state.profile.avatar)
   const minCardsCount = useTypedSelector(state => state.cardPacks.minCardsCount)
   const maxCardsCount = useTypedSelector(state => state.cardPacks.maxCardsCount)
   const page = useTypedSelector(state => state.cardPacks.page)
@@ -49,8 +51,8 @@ const Profile = () => {
       <div className={s.root}>
         <div className={s.leftSide}>
           <div className={s.profileInfoBox}>
-            <img src={'https://i.pinimg.com/originals/ff/a0/9a/ffa09aec412db3f54deadf1b3781de2a.png'} alt={'ava'}/>
-            <h3>Ivan Ivanov</h3>
+            <img src={myProfileAvatar ? myProfileAvatar: 'https://i.pinimg.com/originals/ff/a0/9a/ffa09aec412db3f54deadf1b3781de2a.png'} alt={'ava'}/>
+            <h3>{myProfileName}</h3>
             <span>Front-end developer</span>
             <button><Link to={`${PATH.PROFILE}/${myProfileId}`}>Edit profile</Link></button>
           </div>
@@ -74,6 +76,7 @@ const Profile = () => {
           <TableContent onPaginatorChange={onPaginatorChange}
                         searchText={searchText} setSearchText={setSearchText}
                         page={page}
+                        showAddNewPackButton={false}
                         pageCount={pageCount}/>
         </div>
       </div>

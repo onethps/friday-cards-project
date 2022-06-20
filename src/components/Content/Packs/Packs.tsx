@@ -108,6 +108,7 @@ const Packs = (): ReactElement => {
           setSearchText={setSearchText}
           page={page}
           pageCount={pageCount}
+          showAddNewPackButton={true}
         />
       </div>
     </>

@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from 'react';
+import React, { ChangeEvent, FC, useEffect, useRef, useState } from 'react';
 
 import { useFormik } from 'formik';
 import { Navigate } from 'react-router-dom';
@@ -19,14 +19,33 @@ import { useTypedSelector } from 'hooks/useTypedSelector';
 export const EditProfile: FC = () => {
   const dispatch = useAppDispatch();
 
+  ///avatar loading
+  const inRef = useRef<HTMLInputElement>(null)
+  const [file64, setFile64] = useState<string | ArrayBuffer | null>();
+
+
+  const upload = (e: ChangeEvent<HTMLInputElement>) => {
+
+    const reader = new FileReader();
+
+    const newFile = e.target.files && e.target.files[0] as any;
+    reader.readAsDataURL(newFile);
+
+    reader.onloadend = () => {
+      setFile64(reader.result);
+    }
+
+  }
+
+
   const isLoggedIn = useTypedSelector(state => state.login.isLoggedIn);
   const profileName = useTypedSelector(state => state.profile.name);
   const profileEmail = useTypedSelector(state => state.profile.email);
   const loadingStatus = useTypedSelector(state => state.profile.status);
-  const changeMessageStatus = useTypedSelector(
-    state => state.profile.changeMessageStatus,
-  );
-  // takes name from email
+  const changeMessageStatus = useTypedSelector(state => state.profile.changeMessageStatus,);
+  const avatar = useTypedSelector(state => state.profile.avatar);
+
+// takes name from email
   const getEmailName = profileName!.includes('@')
     ? profileName!.split('@')[0]
     : profileName;
@@ -38,7 +57,7 @@ export const EditProfile: FC = () => {
     },
     validate: profileValidate,
     onSubmit: values => {
-      dispatch(changeProfileInfoTC(values.name));
+      dispatch(changeProfileInfoTC(values.name, ''));
     },
   });
 
@@ -56,6 +75,13 @@ export const EditProfile: FC = () => {
 
   }, [changeMessageStatus]);
 
+  useEffect(() => {
+    if (file64) {
+      dispatch(changeProfileInfoTC(profileName, file64))
+    }
+  }, [file64])
+
+
   if (!isLoggedIn) {
     return <Navigate to={PATH.LOGIN}/>;
   }
@@ -69,9 +95,11 @@ export const EditProfile: FC = () => {
         <div className={l.avatarBlock}>
           <img
             className={l.avatar}
-            src="https://i.pinimg.com/originals/ff/a0/9a/ffa09aec412db3f54deadf1b3781de2a.png"
+            src={avatar ? avatar : "https://i.pinimg.com/originals/ff/a0/9a/ffa09aec412db3f54deadf1b3781de2a.png"}
           />
-          <img className={l.loadAvatar} alt="loadAvatarIcon" src={onLoadAvatarIcon}/>
+          <img onClick={() => inRef && inRef.current && inRef.current.click()}
+               className={l.loadAvatar} alt="loadAvatarIcon" src={onLoadAvatarIcon}/>
+          <input ref={inRef} type={'file'} style={{display: 'none'}} onChange={upload}/>
         </div>
 
         {loadingStatus === 'loading' ? (
@@ -108,4 +136,4 @@ export const EditProfile: FC = () => {
       </div>
     </>
   );
-};
+}

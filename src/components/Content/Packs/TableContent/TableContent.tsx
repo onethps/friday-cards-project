@@ -16,9 +16,10 @@ type TableContentType = {
   page: number
   pageCount: number
   onPaginatorChange?: (page:any, pageCount:any) => void
+  showAddNewPackButton?: boolean
 }
 
-const TableContent: FC<TableContentType> = ({searchText, setSearchText, page, pageCount, onPaginatorChange}) => {
+const TableContent: FC<TableContentType> = ({searchText, setSearchText, page, pageCount, onPaginatorChange, showAddNewPackButton}) => {
 
   const cardPacks = useTypedSelector(selectCardPacks);
   const cardPacksTotal = useTypedSelector(state => state.cardPacks.cardPacksTotalCount);
@@ -46,7 +47,7 @@ const TableContent: FC<TableContentType> = ({searchText, setSearchText, page, pa
             placeholder="Search by Name..."
             className={style.inputSearch}
           />
-          <button onClick={() => setShowAddPackModal(true)}>Add new pack</button>
+          { showAddNewPackButton && <button onClick={() => setShowAddPackModal(true)}>Add new pack</button>}
         </div>
         <div className={style.tableBlock}>
           <div className={style.tableStyle}>

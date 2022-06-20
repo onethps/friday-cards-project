@@ -6,22 +6,18 @@ import { instance } from 'services/api/config';
 // d1-api
 export const auth = {
   register(email: string, password: string) {
-    return instance.post<AxiosResponse>('/auth/register', { email, password });
+    return instance.post<AxiosResponse>('/auth/register', {email, password});
   },
 
   login(loginData: LoginParamsType) {
-    return instance.post<LoginParamsType, AxiosResponse<ResponseType>>(
-      '/auth/login',
-      loginData,
-    );
+    return instance.post<LoginParamsType, AxiosResponse<ResponseType>>('/auth/login', loginData,);
   },
-  // check auth on initialization app
   authMe() {
     return instance.post<ResponseType>('/auth/me', {});
   },
-  // change name in profile
-  changeProfileInfo(name: string) {
-    return instance.put<ResponseType>('/auth/me', { name });
+
+  changeProfileInfo(name: string, avatar:any) {
+    return instance.put<ResponseType>('/auth/me', {name, avatar});
   },
   logout() {
     return instance.delete('/auth/me', {});
@@ -40,11 +36,10 @@ export const auth = {
     return instance.post(`/auth/forgot`, data);
   },
   setNewPassword(password: string, resetPasswordToken: string) {
-    return instance.post<{ info: string }>('/auth/set-new-password', {
-      password,
-      resetPasswordToken,
-    });
+    return instance.post<{ info: string }>('/auth/set-new-password', {password, resetPasswordToken,});
   },
+
+
 };
 
 export enum AUTH_RESPONSE_TYPE {

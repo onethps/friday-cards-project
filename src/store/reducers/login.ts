@@ -58,8 +58,8 @@ export const loginTC =
       .login(loginData)
       .then(res => {
         dispatch(isLoggedInAC(true));
-        const { email, name, _id } = res.data;
-        dispatch(setProfileInfo(email, name, _id));
+        const { email, name, _id, avatar } = res.data;
+        dispatch(setProfileInfo(email, name, _id, avatar!));
       })
       .catch((error: AxiosError<ResponseError>) => {
         dispatch(
