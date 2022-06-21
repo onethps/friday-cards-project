@@ -10,8 +10,8 @@ import Preloader from 'common/Preloader/Preloader';
 import { useTypedSelector } from 'hooks/useTypedSelector';
 import { useAppDispatch } from 'store/store';
 import { loginValidation } from 'utils/validators/validators';
-import { errorLogin, isLoggedInStatus, loadingLoginStatus } from "store/selectors/login";
 import { loginTC } from "store/middlewares/auth";
+import { errorLogin, isLoggedInStatus, loadingLoginStatus } from "store/selectors";
 
 export const Login = (): ReactElement => {
   const dispatch = useAppDispatch();

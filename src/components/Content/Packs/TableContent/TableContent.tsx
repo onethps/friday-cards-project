@@ -9,8 +9,7 @@ import {
 import AddPackModal from "components/Content/Packs/TableContent/TableModals/AddPackModal/AddPackModal";
 import { useTypedSelector } from "hooks/useTypedSelector";
 import { PAGE_SIZES_OPTIONS } from "components/Content/Packs/enums";
-import { cardPacksTotalCount, loadingPackStatus, selectCardPacks } from "store/selectors/packs";
-
+import { cardPacksTotalCount, loadingPackStatus, selectCardPacks } from "store/selectors";
 
 type TableContentType = {
   searchText: string
