@@ -5,16 +5,12 @@ import CustomInput from "common/CustomInput/CustomInput";
 import style from "components/Content/Card/Card.module.scss";
 import { ResponseCardContent } from "types";
 import { useAppDispatch } from "store/store";
-import { deleteCardTC, saveEditCardTC } from "store/reducers/card";
 import { useParams } from "react-router-dom";
+import { deleteCardTC, saveEditCardTC } from "store/middlewares/cardFlow";
 
 const ButtonActions = ({record}: { record: ResponseCardContent }) => {
   const dispatch = useAppDispatch()
   const {id} = useParams()
-
-  const [isCardOwner, setIsCardOwner] = useState(false)
-
-
 
   const [showModal, setShowModal] = useState(false)
   const [question, setQuestion] = useState(record.question)

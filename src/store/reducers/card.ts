@@ -1,15 +1,6 @@
-import { Dispatch } from "redux";
-import { card, cardQueryParams } from "api/card";
-import { GetCardsResponse, ResponseCardContent } from "types";
-import { AppRootStateType } from "store/store";
-
-
-export enum CARD_ACTIONS_TYPE {
-    SET_CARDS = 'card/SET-CARDS',
-    SET_CARD_STATUS = 'card/SET-CARD-STATUS',
-    SET_NEW_CARD = 'card/SET-NEW-CARD'
-}
-
+import { ResponseCardContent } from "types";
+import { GlobalCardTypes } from "store/actions/types/types";
+import { CARD_ACTIONS_CONST } from "store/actions/constants";
 
 const initialState = {
     cards: [],
@@ -24,7 +15,6 @@ const initialState = {
 
 type InitialStateType = {
     cards: ResponseCardContent[]
-    // количество колод
     cardsTotalCount: number
     maxGrade: number
     minGrade: number
@@ -35,104 +25,15 @@ type InitialStateType = {
 
 }
 
-export const Card = (state: InitialStateType = initialState, action: ActionsTypes): InitialStateType => {
+export const Card = (state: InitialStateType = initialState, action: GlobalCardTypes): InitialStateType => {
     switch (action.type) {
-        case CARD_ACTIONS_TYPE.SET_CARDS:
+        case CARD_ACTIONS_CONST.SET_CARDS:
             return {...state, ...action.cards}
-        case CARD_ACTIONS_TYPE.SET_CARD_STATUS:
+        case CARD_ACTIONS_CONST.SET_CARD_STATUS:
             return {...state, loading: action.isLoading}
-        case CARD_ACTIONS_TYPE.SET_NEW_CARD:
+        case CARD_ACTIONS_CONST.SET_NEW_CARD:
             return {...state, cards: [...action.newCard, ...state.cards]}
         default:
             return state
     }
 }
-
-//thunk
-export const fetchCardsTC = (data: cardQueryParams) => async (dispatch: Dispatch) => {
-    dispatch(isLoading(true))
-    try {
-        const res = await card.getCard(data)
-        dispatch(setCardsAC(res.data))
-        dispatch(isLoading(false))
-    } catch (e) {
-        throw new Error(e as any)
-    }
-}
-
-export const setNewCardTC = (data: { cardsPack_id: string; question: string; answer: string; _id: string }) => async (dispatch: Dispatch) => {
-    dispatch(isLoading(true))
-    try {
-        const res = await card.setNewCard(data)
-        dispatch(setNewCardAC(res.data))
-    } catch (e) {
-        throw new Error(e as any)
-    } finally {
-        dispatch(isLoading(false))
-        dispatch(fetchCardsTC({cardsPack_id: data.cardsPack_id}) as any)
-    }
-}
-
-export const deleteCardTC = (cardId: string, cardPackId: string) => async (dispatch: Dispatch) => {
-    dispatch(isLoading(true))
-    try {
-        await card.deleteCard(cardId)
-    } catch (e) {
-        throw new Error(e as any)
-    } finally {
-        dispatch(fetchCardsTC({cardsPack_id: cardPackId}) as any)
-        dispatch(isLoading(false))
-    }
-}
-
-export const saveEditCardTC = (data: any, cardPackId: string) => async (dispatch: Dispatch) => {
-    dispatch(isLoading(true))
-    try {
-        await card.editCard(data)
-    } catch (e) {
-        throw new Error(e as any)
-    } finally {
-        dispatch(isLoading(false))
-        dispatch(fetchCardsTC({cardsPack_id: cardPackId}) as any)
-    }
-}
-
-
-export const updateGradeTC = (grade: string, cardId: string) => async (dispatch: Dispatch, getState: () => AppRootStateType) => {
-    dispatch(isLoading(true))
-    try {
-        if (grade) {
-            const {cardsTotalCount} = getState().card
-            const res = await card.updateGrade(Number(grade), cardId)
-            const {cardsPack_id} = res.data.updatedGrade
-            dispatch(fetchCardsTC({cardsPack_id, pageCount: cardsTotalCount}) as any)
-        }
-    } catch (e) {
-        throw new Error(e as any)
-    }
-}
-
-
-//actions
-export const setCardsAC = (cards: GetCardsResponse) => {
-    return {type: CARD_ACTIONS_TYPE.SET_CARDS, cards} as const
-}
-export const isLoading = (isLoading: boolean) => {
-    return {type: CARD_ACTIONS_TYPE.SET_CARD_STATUS, isLoading} as const
-}
-
-export const setNewCardAC = (newCard: ResponseCardContent) => {
-    return {
-        type: CARD_ACTIONS_TYPE.SET_NEW_CARD,
-        newCard
-    } as const
-}
-
-
-//types
-type ActionsTypes = ReturnType<typeof setCardsAC>
-  | ReturnType<typeof isLoading>
-  | ReturnType<typeof setNewCardAC>
-  | any
-
-

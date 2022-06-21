@@ -3,18 +3,20 @@ import React, { ReactElement, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import style from 'components/Auth/PasswordRecovery/NewPassword/NewPassword.module.scss';
-import SuccessPasswordChanged from 'components/Auth/PasswordRecovery/NewPassword/SuccessPasswordChanged/SuccessPasswordChanged';
+import SuccessPasswordChanged
+  from 'components/Auth/PasswordRecovery/NewPassword/SuccessPasswordChanged/SuccessPasswordChanged';
 import CustomInput from 'common/CustomInput/CustomInput';
 import Preloader from 'common/Preloader/Preloader';
 import { useTypedSelector } from 'hooks/useTypedSelector';
-import { senNewPasswordTC } from 'store/reducers/forgotPassword';
 import { useAppDispatch } from 'store/store';
+import { isLoadingForgotPassword } from "store/selectors/password";
+import { setNewPasswordTC } from "store/middlewares/recoverPassword";
 
 const NewPassword = (): ReactElement => {
   const { token } = useParams();
   const dispatch = useAppDispatch();
 
-  const isLoading = useTypedSelector(state => state.forgotPassword.isLoading);
+  const isLoading = useTypedSelector(isLoadingForgotPassword);
   const newPasswordStatus = useTypedSelector(
     state => state.forgotPassword.newPasswordStatus,
   );
@@ -27,7 +29,7 @@ const NewPassword = (): ReactElement => {
       setError('Password must be over 8 characters');
       return;
     }
-    if (token) dispatch(senNewPasswordTC(password, token));
+    if (token) dispatch(setNewPasswordTC(password, token));
   };
 
   if (newPasswordStatus) {

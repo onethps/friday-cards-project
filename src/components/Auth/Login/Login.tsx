@@ -8,19 +8,17 @@ import l from 'components/Auth/Login/Login.module.scss';
 import CustomInput from 'common/CustomInput/CustomInput';
 import Preloader from 'common/Preloader/Preloader';
 import { useTypedSelector } from 'hooks/useTypedSelector';
-import { RequestStatusType } from 'store/reducers/app';
-import { loginTC } from 'store/reducers/login';
 import { useAppDispatch } from 'store/store';
 import { loginValidation } from 'utils/validators/validators';
+import { errorLogin, isLoggedInStatus, loadingLoginStatus } from "store/selectors/login";
+import { loginTC } from "store/middlewares/auth";
 
 export const Login = (): ReactElement => {
-  const isLoggedIn = useTypedSelector(state => state.login.isLoggedIn);
-  const errorMessage = useTypedSelector(state => state.login.error);
-  const loadingStatus = useTypedSelector<RequestStatusType>(
-    state => state.login.loadingStatus,
-  );
-
   const dispatch = useAppDispatch();
+
+  const isLoggedIn = useTypedSelector(isLoggedInStatus);
+  const errorMessage = useTypedSelector(errorLogin);
+  const loadingStatus = useTypedSelector(loadingLoginStatus );
 
   const formik = useFormik({
     initialValues: {

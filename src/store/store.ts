@@ -23,6 +23,7 @@ const rootReducer = combineReducers({
 export type AppRootStateType = ReturnType<typeof rootReducer>;
 
 export type AppDispatch = typeof store.dispatch;
+
 export type RootState = ReturnType<typeof store.getState>;
 
 export type AppThunk<ReturnType = void> = ThunkAction<

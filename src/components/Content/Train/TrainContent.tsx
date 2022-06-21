@@ -4,9 +4,9 @@ import { Field, Form, Formik } from "formik";
 import { ResponseCardType } from "api/packs";
 import { ResponseCardContent } from "types";
 import { useAppDispatch } from "store/store";
-import { fetchCardsTC, updateGradeTC } from "store/reducers/card";
 import { useTypedSelector } from "hooks/useTypedSelector";
 import { useNavigate } from "react-router-dom";
+import { fetchCardsTC, updateGradeTC } from "store/middlewares/cardFlow";
 
 type TrainContentType = {
   currentCard: ResponseCardType | undefined

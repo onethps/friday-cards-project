@@ -4,8 +4,8 @@ import './App.scss';
 import { AppRoutes } from 'components/AppRoutes';
 import { Preloader } from 'common';
 import { useTypedSelector } from 'hooks/useTypedSelector';
-import { initializeAppTC } from 'store/reducers/app';
 import { useAppDispatch } from 'store/store';
+import { initializeAppTC } from "store/middlewares/initialaizeApp";
 
 const App = (): ReactElement => {
   const dispatch = useAppDispatch();

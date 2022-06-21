@@ -6,9 +6,10 @@ import { Link, Navigate } from "react-router-dom";
 import { PATH } from "components/AppRoutes";
 import { useTypedSelector } from "hooks/useTypedSelector";
 import { useAppDispatch } from "store/store";
-import { fetchPacksTC, setFilterAC } from "store/reducers/packs";
 import TableContent from "components/Content/Packs/TableContent/TableContent";
 import useDebounce from "hooks/debounceHook";
+import { setFilterAC } from "store/actions/packs";
+import { fetchPacksTC } from "store/middlewares/packFlow";
 
 const Profile = () => {
   const dispatch = useAppDispatch();

@@ -6,13 +6,14 @@ import { PATH } from 'components/AppRoutes';
 import style from 'components/Content/Card/Card.module.scss';
 import Header from 'components/Header/Header';
 import { useTypedSelector } from 'hooks/useTypedSelector';
-import { fetchCardsTC, isLoading, setNewCardTC } from 'store/reducers/card';
 import { useAppDispatch } from 'store/store';
 import ModalContainer from "common/ModalContainer/ModalContainer";
 import CustomInput from "common/CustomInput/CustomInput";
 import { Input, Pagination, Table } from "antd";
 import { ResponseCardContent } from "types";
 import ButtonActions from "components/Content/Card/ButtonActions/ButtonActions";
+import { isLoadingCard } from "store/actions/card";
+import { fetchCardsTC, setNewCardTC } from "store/middlewares/cardFlow";
 
 const Card = (): ReactElement => {
   const dispatch = useAppDispatch();
@@ -46,7 +47,7 @@ const Card = (): ReactElement => {
   const [searchByAnswer, setSearchByAnswer] = useState('');
 
   useEffect(() => {
-    dispatch(isLoading(true));
+    dispatch(isLoadingCard(true));
     const dataObj = {
       cardsPack_id: id,
       pageCount: currentCard?.cardsCount,
@@ -69,7 +70,7 @@ const Card = (): ReactElement => {
       findSearchResults();
     }, 1000);
     // stopping loader
-    dispatch(isLoading(false));
+    dispatch(isLoadingCard(false));
     return () => clearTimeout(delayDebounceFn);
   }, [searchByQuestion, searchByAnswer]);
 

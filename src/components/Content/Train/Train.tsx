@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { Navigate, useParams } from "react-router-dom";
 import { useAppDispatch } from "store/store";
-import { fetchCardsTC } from "store/reducers/card";
 import { useTypedSelector } from "hooks/useTypedSelector";
 import { ResponseCardContent } from "types";
 import Header from "components/Header/Header";
 import s from 'components/Content/Train/Train.module.scss'
 import TrainContent from "components/Content/Train/TrainContent";
 import { PATH } from "components/AppRoutes";
+import { fetchCardsTC } from "store/middlewares/cardFlow";
 
 const Train = () => {
   const dispatch = useAppDispatch();

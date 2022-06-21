@@ -1,10 +1,6 @@
-import { AxiosError } from 'axios';
-import { Dispatch } from 'redux';
+import { GlobalAppTypes } from "store/actions/types/types";
+import { APP_ACTIONS_CONST } from "store/actions/constants";
 
-import { auth, ResponseError } from 'api/auth';
-import { isLoggedInAC } from 'store/reducers/login';
-import { setProfileInfo } from 'store/reducers/profile';
-import { fetchPacksTC } from "store/reducers/packs";
 
 const initialState = {
   isInitializedApp: false,
@@ -20,58 +16,18 @@ type InitialStateType = {
 
 export const app = (
   state: InitialStateType = initialState,
-  action: appReducerTypes,
+  action: GlobalAppTypes,
 ): InitialStateType => {
   switch (action.type) {
-    case 'app/SET-APP-STATUS':
-      return {...state, status: action.status};
-    case 'app/IS-INITIALIZED-APP':
+    case APP_ACTIONS_CONST.INITIALIZE_APP:
       return {...state, isInitializedApp: action.isInitialized};
-    case 'app/SET-ERROR':
+    case APP_ACTIONS_CONST.SET_APP_STATUS:
+      return {...state, status: action.status};
+    case APP_ACTIONS_CONST.SET_ERROR:
       return {...state, error: action.error};
     default:
       return state;
   }
 };
 
-// actions
 
-export const setAppStatus = (status: RequestStatusType) =>
-  ({type: 'app/SET-APP-STATUS', status} as const);
-export const isInitializedApp = (isInitialized: boolean) =>
-  ({type: 'app/IS-INITIALIZED-APP', isInitialized} as const);
-
-export const setAppErrorAC = (error: string) =>
-  ({type: 'app/SET-ERROR', error} as const);
-
-// thunk
-export const initializeAppTC = () => (dispatch: Dispatch<appReducerTypes>) => {
-  auth.authMe()
-    .then(resolve => {
-      dispatch(setAppStatus('idle'));
-      dispatch(isInitializedApp(true));
-      dispatch(isLoggedInAC(true));
-      const {email, name, _id, avatar} = resolve.data;
-      dispatch(setProfileInfo(email, name, _id, avatar!));
-    })
-    .catch((error: AxiosError<ResponseError>) => {
-      console.log(error)
-      dispatch(
-        setAppErrorAC(error.response?.data ? error.response.data.error : error.message),
-      );
-    })
-    .finally(() => {
-      dispatch(setAppStatus('succeeded'));
-    });
-};
-
-// types
-export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed';
-
-export type appReducerTypes =
-  | ReturnType<typeof setAppStatus>
-  | ReturnType<typeof setAppErrorAC>
-  | ReturnType<typeof isInitializedApp>
-  | any;
-
-// type ThunkType = ThunkAction<void, AppRootStateType, Dispatch<appReducerTypes>, appReducerTypes>

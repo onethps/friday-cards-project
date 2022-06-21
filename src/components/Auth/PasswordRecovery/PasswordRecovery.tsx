@@ -9,9 +9,9 @@ import SuccessMessage from 'components/Auth/PasswordRecovery/SuccessMessage/Succ
 import CustomInput from 'common/CustomInput/CustomInput';
 import Preloader from 'common/Preloader/Preloader';
 import { useTypedSelector } from 'hooks/useTypedSelector';
-import { forgotPasswordTC } from 'store/reducers/forgotPassword';
 import { useAppDispatch } from 'store/store';
 import { forgotPageValidation } from 'utils/validators/validators';
+import { forgotPasswordTC } from "store/middlewares/recoverPassword";
 
 const PasswordRecovery = (): ReactElement => {
   const dispatch = useAppDispatch();

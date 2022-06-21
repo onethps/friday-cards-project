@@ -1,8 +1,8 @@
 import React, { FC } from 'react';
 import s from 'components/Content/Packs/TableContent/TableModals/DeleteModal/DeleteModal.module.scss'
 import { useAppDispatch } from "store/store";
-import { deletePackTC } from "store/reducers/packs";
 import ModalContainer from "common/ModalContainer/ModalContainer";
+import { deletePackTC } from "store/middlewares/packFlow";
 
 type DeleteModal = {
   showModal: boolean
@@ -22,7 +22,6 @@ const DeleteModal:FC<DeleteModal> = ({showModal, setShowModal, packName, packId,
       dispatch(deletePackTC(packId, category))
     }
     setShowModal(false)
-
   }
 
   return (

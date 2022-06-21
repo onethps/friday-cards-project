@@ -11,32 +11,18 @@ import Header from 'components/Header/Header';
 
 import l from 'components/Content/Profile/EditProfile/EditProfile.module.scss';
 
-import { changeMessageStatusAC, changeProfileInfoTC, logoutTC, } from 'store/reducers/profile';
 import { useAppDispatch } from 'store/store';
 import { profileValidate } from 'utils/validators/validators';
 import { useTypedSelector } from 'hooks/useTypedSelector';
+import { logoutTC } from "store/middlewares/auth";
+import { changeProfileInfoTC } from "store/middlewares/changeProfile";
+import { changeMessageStatusAC } from "store/actions/profile";
+
+
+const DEBOUNCE_DELAY = 2000;
 
 export const EditProfile: FC = () => {
   const dispatch = useAppDispatch();
-
-  ///avatar loading
-  const inRef = useRef<HTMLInputElement>(null)
-  const [file64, setFile64] = useState<string | ArrayBuffer | null>();
-
-
-  const upload = (e: ChangeEvent<HTMLInputElement>) => {
-
-    const reader = new FileReader();
-
-    const newFile = e.target.files && e.target.files[0] as any;
-    reader.readAsDataURL(newFile);
-
-    reader.onloadend = () => {
-      setFile64(reader.result);
-    }
-
-  }
-
 
   const isLoggedIn = useTypedSelector(state => state.login.isLoggedIn);
   const profileName = useTypedSelector(state => state.profile.name);
@@ -45,7 +31,34 @@ export const EditProfile: FC = () => {
   const changeMessageStatus = useTypedSelector(state => state.profile.changeMessageStatus,);
   const avatar = useTypedSelector(state => state.profile.avatar);
 
-// takes name from email
+  const inRef = useRef<HTMLInputElement>(null)
+  const [file64, setFile64] = useState<string | ArrayBuffer | null>();
+
+
+  useEffect(() => {
+    const delayDebounceFn = setTimeout(() => {
+      dispatch(changeMessageStatusAC(''));
+    }, DEBOUNCE_DELAY);
+    return () => clearTimeout(delayDebounceFn)
+  }, [changeMessageStatus]);
+
+  useEffect(() => {
+    if (file64) {
+      dispatch(changeProfileInfoTC(profileName, file64))
+    }
+  }, [file64])
+
+
+  const upload = (e: ChangeEvent<HTMLInputElement>) => {
+    const reader = new FileReader();
+    const newFile = e.target.files && e.target.files[0] as any;
+    reader.readAsDataURL(newFile);
+    reader.onloadend = () => {
+      setFile64(reader.result);
+    }
+  }
+
+
   const getEmailName = profileName!.includes('@')
     ? profileName!.split('@')[0]
     : profileName;
@@ -64,23 +77,6 @@ export const EditProfile: FC = () => {
   const onLogoutHandler = (): void => {
     dispatch(logoutTC());
   };
-
-  useEffect(() => {
-
-    const delayDebounceFn = setTimeout(() => {
-      dispatch(changeMessageStatusAC(''));
-    }, 2000);
-
-    return () => clearTimeout(delayDebounceFn)
-
-  }, [changeMessageStatus]);
-
-  useEffect(() => {
-    if (file64) {
-      dispatch(changeProfileInfoTC(profileName, file64))
-    }
-  }, [file64])
-
 
   if (!isLoggedIn) {
     return <Navigate to={PATH.LOGIN}/>;

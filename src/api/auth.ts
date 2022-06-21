@@ -1,7 +1,6 @@
 import { AxiosResponse } from 'axios';
-
-import { LoginParamsType } from 'store/reducers/login';
 import { instance } from 'services/api/config';
+import { LoginParamsType } from "store/actions/types/types";
 
 // d1-api
 export const auth = {

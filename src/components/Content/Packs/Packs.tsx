@@ -3,7 +3,6 @@ import Header from 'components/Header/Header';
 import l from 'components/Content/Packs/Pack.module.scss';
 import 'antd/dist/antd.min.css';
 import { useTypedSelector } from 'hooks/useTypedSelector';
-import { fetchPacksTC, setFilterAC } from 'store/reducers/packs';
 import { useAppDispatch } from 'store/store';
 import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import TableContent from "components/Content/Packs/TableContent/TableContent";
@@ -11,7 +10,13 @@ import Settings from "components/Content/Packs/Settings/Settings";
 import qs from 'qs';
 import useDebounce from "hooks/debounceHook";
 import { PATH } from "components/AppRoutes";
+import { setFilterAC } from "store/actions/packs";
+import { fetchPacksTC } from "store/middlewares/packFlow";
 
+
+const DEBOUNCE_DELAY = 500;
+const FIRST_INDEX = 0;
+const SECOND_INDEX = 1;
 
 const Packs = (): ReactElement => {
 
@@ -33,8 +38,8 @@ const Packs = (): ReactElement => {
   const [minMaxSlider, setMinMaxSlider] = useState([minCardsCount, maxCardsCount])
   const [searchText, setSearchText] = useState<string>('');
 
-  const debouncedSearch = useDebounce(searchText, 500);
-  const debouncedSlider = useDebounce(minMaxSlider, 500);
+  const debouncedSearch = useDebounce(searchText, DEBOUNCE_DELAY);
+  const debouncedSlider = useDebounce(minMaxSlider, DEBOUNCE_DELAY);
 
   const onPaginatorChange = (page:number, pageCount:number) => {
     dispatch(setFilterAC({page, pageCount}))
@@ -42,8 +47,8 @@ const Packs = (): ReactElement => {
 
   const fetchData = async () => {
     await dispatch(fetchPacksTC(
-        minMaxSlider[0],
-        minMaxSlider[1],
+        minMaxSlider[FIRST_INDEX],
+        minMaxSlider[SECOND_INDEX],
         page,
         pageCount,
         searchText,

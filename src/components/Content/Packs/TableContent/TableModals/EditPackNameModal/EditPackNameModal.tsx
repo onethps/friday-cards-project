@@ -3,9 +3,8 @@ import React, { FC, useState } from 'react';
 import CustomInput from 'common/CustomInput/CustomInput';
 import ModalContainer from 'common/ModalContainer/ModalContainer';
 import s from 'components/Content/Packs/TableContent/TableModals/EditPackNameModal/EditPackNameModal.module.scss';
-import { editPackNameTC } from 'store/reducers/packs';
 import { useAppDispatch } from 'store/store';
-import { useParams } from "react-router-dom";
+import { editPackNameTC } from "store/middlewares/packFlow";
 
 type EditPackNameModal = {
   showModal: boolean;

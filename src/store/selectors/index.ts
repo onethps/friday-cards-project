@@ -1,5 +1,3 @@
 export {
-  selectCardPacks,
-  loading,
-  cardPacksTotalCount,
+ FormattedCardPackData,
 } from 'store/selectors/selectCardPacks';

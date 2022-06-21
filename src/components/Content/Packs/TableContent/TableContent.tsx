@@ -2,12 +2,14 @@ import React, { ChangeEvent, FC, useState } from 'react';
 import style from "./TableContent.module.scss";
 import { Input, Pagination, Table } from "antd";
 import { PackColumns } from "components/Content/Packs/TableContent/TablePackData";
-import { cardPacksTotalCount, FormatedCardPackData, loading, selectCardPacks } from "store/selectors/selectCardPacks";
+import {
+  FormattedCardPackData
+
+} from "store/selectors/selectCardPacks";
 import AddPackModal from "components/Content/Packs/TableContent/TableModals/AddPackModal/AddPackModal";
 import { useTypedSelector } from "hooks/useTypedSelector";
-import { useAppDispatch } from "store/store";
 import { PAGE_SIZES_OPTIONS } from "components/Content/Packs/enums";
-import { setFilterAC } from "store/reducers/packs";
+import { cardPacksTotalCount, loadingPackStatus, selectCardPacks } from "store/selectors/packs";
 
 
 type TableContentType = {
@@ -22,8 +24,8 @@ type TableContentType = {
 const TableContent: FC<TableContentType> = ({searchText, setSearchText, page, pageCount, onPaginatorChange, showAddNewPackButton}) => {
 
   const cardPacks = useTypedSelector(selectCardPacks);
-  const cardPacksTotal = useTypedSelector(state => state.cardPacks.cardPacksTotalCount);
-  const loadingStatus = useTypedSelector(loading);
+  const cardPacksTotal = useTypedSelector(cardPacksTotalCount);
+  const loadingStatus = useTypedSelector(loadingPackStatus);
 
   const [showAddPackModal, setShowAddPackModal] = useState<boolean>(false);
 
@@ -57,7 +59,7 @@ const TableContent: FC<TableContentType> = ({searchText, setSearchText, page, pa
               style={{minWidth: '900px'}}
               columns={PackColumns}
               className={style.booking_information_table}
-              dataSource={FormatedCardPackData(cardPacks)}
+              dataSource={FormattedCardPackData(cardPacks)}
               pagination={false}
             />
           </div>

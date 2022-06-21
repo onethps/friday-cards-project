@@ -1,7 +1,5 @@
-import { Dispatch } from "redux";
-import { auth } from "api/auth";
-import { isLoggedInAC } from "store/reducers/login";
-import { initializeAppTC } from "store/reducers/app";
+import { GlobalProfileTypes } from "store/actions/types/types";
+import { PROFILE_ACTION_CONST } from "store/actions/constants";
 
 const initialState = {
     id:'',
@@ -15,13 +13,13 @@ const initialState = {
 
 type InitialStateType = typeof initialState
 
-export const profile = (state: InitialStateType = initialState, action:actionTypeProfileReducer) => {
+export const profile = (state: InitialStateType = initialState, action:GlobalProfileTypes) => {
     switch (action.type) {
-        case "profile/SET-PROFILE-INFO":
+        case PROFILE_ACTION_CONST.SET_PROFILE_INFO:
             return {...state, name: action.name, email: action.email, id: action.id, avatar: action.avatar}
-        case "profile/SET-LOADING-STATUS":
+        case PROFILE_ACTION_CONST.SET_LOADING_STATUS:
             return {...state, status: action.status}
-        case "profile/SET-CHANGE-MESSAGE-STATUS":
+        case PROFILE_ACTION_CONST.SET_MSG_STATUS:
             return {...state, changeMessageStatus: action.status}
         default:
             return state
@@ -30,40 +28,3 @@ export const profile = (state: InitialStateType = initialState, action:actionTyp
 }
 
 
-//thunk
-export const changeProfileInfoTC = (name:string, avatar:any) => {
-    return (dispatch: Dispatch) => {
-        dispatch(setLoadingStatus('loading'))
-        auth.changeProfileInfo(name, avatar)
-          .then(() => {
-              dispatch(initializeAppTC() as any)
-              dispatch(changeMessageStatusAC('Info successfully changed'))
-              dispatch(setLoadingStatus('idle'))
-          })
-          .catch((e) => {
-              throw new Error (e as any)
-          })
-    }
-}
-
-export const logoutTC = () => {
-    return (dispatch: Dispatch) => {
-        auth.logout().then(() => {
-            dispatch(setProfileInfo( '', '', '', ''))
-            dispatch(isLoggedInAC(false))
-        })
-    }
-}
-
-
-//actions
-export const setProfileInfo = (email:string, name:string, id:string, avatar:string) => ({type: 'profile/SET-PROFILE-INFO', email, name, id, avatar} as const)
-
-export const setLoadingStatus = (status:string) => ({type: 'profile/SET-LOADING-STATUS', status} as const)
-
-export const changeMessageStatusAC = (status:string) => ({type: 'profile/SET-CHANGE-MESSAGE-STATUS', status} as const)
-
-//types
-export type actionTypeProfileReducer = ReturnType<typeof setProfileInfo>
-  | ReturnType<typeof setLoadingStatus>
-  | ReturnType<typeof changeMessageStatusAC>

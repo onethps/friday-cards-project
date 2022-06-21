@@ -1,5 +1,5 @@
-import {auth} from "api/auth";
-import {Dispatch} from "redux";
+import { RECOVER_PASS_ACTIONS_CONST } from "store/actions/constants";
+import { GlobalRecoverPassTypes } from "store/actions/types/types";
 
 const initState = {
     email:'',
@@ -11,15 +11,15 @@ const initState = {
 
 type initStateType = typeof initState
 
-export const ForgotPassword = (state = initState, action:forgotPasswordReducerTypes):initStateType => {
+export const ForgotPassword = (state = initState, action:GlobalRecoverPassTypes):initStateType => {
     switch (action.type) {
-        case "forgotReducer/isLoading":
+        case RECOVER_PASS_ACTIONS_CONST.SET_LOADING:
             return  {...state, isLoading: action.loading}
-        case "forgotReducer/isSendMessage":
+        case RECOVER_PASS_ACTIONS_CONST.IS_SEND_RECOVER_MAIL:
             return {...state, isSendMessage: action.isSend, email: action.email}
-        case "forgotReducer/ErrorMessage":
+        case RECOVER_PASS_ACTIONS_CONST.SET_ERROR:
             return{...state, error:action.msg}
-        case "forgotReducer/newPasswordStatus":
+        case RECOVER_PASS_ACTIONS_CONST.SHOW_RECOVER_STATUS:
             return  {...state, newPasswordStatus: action.msg}
 
         default:
@@ -29,48 +29,3 @@ export const ForgotPassword = (state = initState, action:forgotPasswordReducerTy
 
 }
 
-
-
-export const forgotPasswordTC = (email:string) => (dispatch:Dispatch) => {
-    dispatch(isLoadingAC(true))
-    auth.forgotPassword(email).then(()=> {
-        dispatch(isSendMessageAC(email ,true))
-    }).catch((error) => {
-        let err = error.response.data.error
-        dispatch(ErrorDMessageAC(''))
-        dispatch(ErrorDMessageAC(err))
-    }).finally(() => {
-        dispatch(isLoadingAC(false))
-    })
-}
-
-
-
-//thunk
-export const senNewPasswordTC = (pas:string, token:string) => (dispatch:Dispatch) => {
-    dispatch(isLoadingAC(true))
-    auth.setNewPassword(pas, token)
-        .then((res) => {
-            dispatch(SetNewPasswordStatusAC(res.data.info))
-        })
-        .catch((e) => e.response.data.error ? console.log(e.response.data.error) : console.log(e))
-        .finally(() => {
-            dispatch(isLoadingAC(false))
-        })
-}
-
-
-//actions
-const ErrorDMessageAC = (msg:string) => ({type: 'forgotReducer/ErrorMessage', msg} as const)
-
-const isLoadingAC = (loading:boolean) => ({type: 'forgotReducer/isLoading', loading} as const)
-
-const isSendMessageAC = (email:string,isSend:boolean) =>
-    ({type: 'forgotReducer/isSendMessage', email, isSend} as const)
-
-const SetNewPasswordStatusAC = (msg:string) => ({type: 'forgotReducer/newPasswordStatus',msg} as const)
-
-type forgotPasswordReducerTypes = ReturnType<typeof ErrorDMessageAC>
-    | ReturnType<typeof isLoadingAC>
-    | ReturnType<typeof isSendMessageAC>
-    | ReturnType<typeof SetNewPasswordStatusAC>
