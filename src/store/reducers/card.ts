@@ -25,7 +25,7 @@ type InitialStateType = {
 
 }
 
-export const Card = (state: InitialStateType = initialState, action: GlobalCardTypes): InitialStateType => {
+export const card = (state: InitialStateType = initialState, action: GlobalCardTypes): InitialStateType => {
     switch (action.type) {
         case CARD_ACTIONS_CONST.SET_CARDS:
             return {...state, ...action.cards}

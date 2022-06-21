@@ -11,7 +11,7 @@ const initState = {
 
 type initStateType = typeof initState
 
-export const ForgotPassword = (state = initState, action:GlobalRecoverPassTypes):initStateType => {
+export const recoverPassword = (state = initState, action:GlobalRecoverPassTypes):initStateType => {
     switch (action.type) {
         case RECOVER_PASS_ACTIONS_CONST.SET_LOADING:
             return  {...state, isLoading: action.loading}

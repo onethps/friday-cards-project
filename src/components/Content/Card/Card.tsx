@@ -27,7 +27,7 @@ const Card = (): ReactElement => {
 
 
   const currentCard = useTypedSelector(state =>
-    state.cardPacks.cardPacks.find(f => f._id === id && f),
+    state.packs.cardPacks.find(f => f._id === id && f),
   );
 
   const currentCardId = useTypedSelector(state => state.card.packUserId)

@@ -24,7 +24,7 @@ type initStateType = {
 
 }
 
-export const CardsPackReducer = (state: initStateType = initState, action: GlobalPackTypes): initStateType => {
+export const packs = (state: initStateType = initState, action: GlobalPackTypes): initStateType => {
   switch (action.type) {
     case PACK_ACTIONS_CONST.SET_PACK:
       return {...state, ...action.payload}

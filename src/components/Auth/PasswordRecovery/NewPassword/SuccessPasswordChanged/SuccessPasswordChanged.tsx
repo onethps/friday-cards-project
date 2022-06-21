@@ -7,7 +7,7 @@ import l from 'components/Auth/PasswordRecovery/PasswordRecovery.module.scss';
 import { useTypedSelector } from 'hooks/useTypedSelector';
 
 const SuccessPasswordChanged = (): ReactElement => {
-  const message = useTypedSelector(state => state.forgotPassword.newPasswordStatus);
+  const message = useTypedSelector(state => state.recoverPassword.newPasswordStatus);
 
   return (
     <div className={l.loginBox}>

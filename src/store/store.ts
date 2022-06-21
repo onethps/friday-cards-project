@@ -3,10 +3,10 @@ import { Action, applyMiddleware, combineReducers, createStore } from 'redux';
 import thunkMiddleware, { ThunkAction } from 'redux-thunk';
 
 import { app } from 'store/reducers/app';
-import { Card } from 'store/reducers/card';
-import { ForgotPassword } from 'store/reducers/forgotPassword';
+import { card } from 'store/reducers/card';
+import { recoverPassword } from 'store/reducers/recoverPassword';
 import { login } from 'store/reducers/login';
-import { CardsPackReducer } from 'store/reducers/packs';
+import { packs } from 'store/reducers/packs';
 import { profile } from 'store/reducers/profile';
 import { register } from 'store/reducers/register';
 
@@ -15,9 +15,9 @@ const rootReducer = combineReducers({
   register,
   login,
   profile,
-  forgotPassword: ForgotPassword,
-  cardPacks: CardsPackReducer,
-  card: Card,
+  recoverPassword,
+  packs,
+  card,
 });
 
 export type AppRootStateType = ReturnType<typeof rootReducer>;

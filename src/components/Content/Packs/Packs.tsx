@@ -25,10 +25,10 @@ const Packs = (): ReactElement => {
   const {category} = useParams()
 
 
-  const page = useTypedSelector(state => state.cardPacks.page);
-  const pageCount = useTypedSelector(state => state.cardPacks.pageCount);
-  const minCardsCount = useTypedSelector(state => state.cardPacks.minCardsCount)
-  const maxCardsCount = useTypedSelector(state => state.cardPacks.maxCardsCount)
+  const page = useTypedSelector(state => state.packs.page);
+  const pageCount = useTypedSelector(state => state.packs.pageCount);
+  const minCardsCount = useTypedSelector(state => state.packs.minCardsCount)
+  const maxCardsCount = useTypedSelector(state => state.packs.maxCardsCount)
   const myID = useTypedSelector(state => state.profile.id)
   const isLoggedIn = useTypedSelector(state => state.login.isLoggedIn)
 

@@ -16,10 +16,10 @@ const Profile = () => {
   const myProfileId = useTypedSelector(state => state.profile.id)
   const myProfileName = useTypedSelector(state => state.profile.name)
   const myProfileAvatar = useTypedSelector(state => state.profile.avatar)
-  const minCardsCount = useTypedSelector(state => state.cardPacks.minCardsCount)
-  const maxCardsCount = useTypedSelector(state => state.cardPacks.maxCardsCount)
-  const page = useTypedSelector(state => state.cardPacks.page)
-  const pageCount = useTypedSelector(state => state.cardPacks.pageCount)
+  const minCardsCount = useTypedSelector(state => state.packs.minCardsCount)
+  const maxCardsCount = useTypedSelector(state => state.packs.maxCardsCount)
+  const page = useTypedSelector(state => state.packs.page)
+  const pageCount = useTypedSelector(state => state.packs.pageCount)
   const isLoggedIn = useTypedSelector(state => state.login.isLoggedIn)
 
 

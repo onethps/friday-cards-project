@@ -18,7 +18,7 @@ const NewPassword = (): ReactElement => {
 
   const isLoading = useTypedSelector(isLoadingForgotPassword);
   const newPasswordStatus = useTypedSelector(
-    state => state.forgotPassword.newPasswordStatus,
+    state => state.recoverPassword.newPasswordStatus,
   );
 
   const [password, setPassword] = useState('');

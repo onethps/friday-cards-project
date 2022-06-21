@@ -9,7 +9,7 @@ import Preloader from 'common/Preloader/Preloader';
 import { PATH } from 'components/AppRoutes';
 import Header from 'components/Header/Header';
 
-import l from 'components/Content/Profile/EditProfile/EditProfile.module.scss';
+import s from 'components/Content/Profile/EditProfile/EditProfile.module.scss';
 
 import { useAppDispatch } from 'store/store';
 import { profileValidate } from 'utils/validators/validators';
@@ -20,6 +20,7 @@ import { changeMessageStatusAC } from "store/actions/profile";
 
 
 const DEBOUNCE_DELAY = 2000;
+const FIRST_INDEX = 0;
 
 export const EditProfile: FC = () => {
   const dispatch = useAppDispatch();
@@ -60,7 +61,7 @@ export const EditProfile: FC = () => {
 
 
   const getEmailName = profileName!.includes('@')
-    ? profileName!.split('@')[0]
+    ? profileName!.split('@')[FIRST_INDEX]
     : profileName;
 
   const formik = useFormik({
@@ -86,15 +87,15 @@ export const EditProfile: FC = () => {
     <>
       <Header/>
 
-      <div className={l.loginBox}>
+      <div className={s.loginBox}>
         <h2> Personal information</h2>
-        <div className={l.avatarBlock}>
+        <div className={s.avatarBlock}>
           <img
-            className={l.avatar}
+            className={s.avatar}
             src={avatar ? avatar : "https://i.pinimg.com/originals/ff/a0/9a/ffa09aec412db3f54deadf1b3781de2a.png"}
           />
           <img onClick={() => inRef && inRef.current && inRef.current.click()}
-               className={l.loadAvatar} alt="loadAvatarIcon" src={onLoadAvatarIcon}/>
+               className={s.loadAvatar} alt="loadAvatarIcon" src={onLoadAvatarIcon}/>
           <input ref={inRef} type={'file'} style={{display: 'none'}} onChange={upload}/>
         </div>
 
@@ -119,11 +120,11 @@ export const EditProfile: FC = () => {
             <div style={{height: '50px'}}>
               <h3 style={{color: 'green'}}>{changeMessageStatus}</h3>
             </div>
-            <div className={l.buttonBlock}>
-              <a onClick={onLogoutHandler} className={l.backToLoginLink}>
+            <div className={s.buttonBlock}>
+              <a onClick={onLogoutHandler} className={s.backToLoginLink}>
                 Log Out
               </a>
-              <button className={l.submitButton} type="submit">
+              <button className={s.submitButton} type="submit">
                 Save
               </button>
             </div>

@@ -16,9 +16,9 @@ import { forgotPasswordTC } from "store/middlewares/recoverPassword";
 const PasswordRecovery = (): ReactElement => {
   const dispatch = useAppDispatch();
 
-  const forgotError = useTypedSelector(state => state.forgotPassword.error);
-  const isLoadingStatus = useTypedSelector(state => state.forgotPassword.isLoading);
-  const isSendMessage = useTypedSelector(state => state.forgotPassword.isSendMessage);
+  const forgotError = useTypedSelector(state => state.recoverPassword.error);
+  const isLoadingStatus = useTypedSelector(state => state.recoverPassword.isLoading);
+  const isSendMessage = useTypedSelector(state => state.recoverPassword.isSendMessage);
 
   const formik = useFormik({
     initialValues: {

@@ -1,12 +1,9 @@
 import React, { ChangeEvent, FC, useState } from 'react';
 import style from "./TableContent.module.scss";
 import { Input, Pagination, Table } from "antd";
-import { PackColumns } from "components/Content/Packs/TableContent/TablePackData";
-import {
-  FormattedCardPackData
-
-} from "store/selectors/selectCardPacks";
-import AddPackModal from "components/Content/Packs/TableContent/TableModals/AddPackModal/AddPackModal";
+import { PackColumns } from "./TablePackData";
+import { FormattedCardPackData } from "store/selectors/selectCardPacks";
+import AddPackModal from "./TableModals/AddPackModal/AddPackModal";
 import { useTypedSelector } from "hooks/useTypedSelector";
 import { PAGE_SIZES_OPTIONS } from "components/Content/Packs/enums";
 import { cardPacksTotalCount, loadingPackStatus, selectCardPacks } from "store/selectors";

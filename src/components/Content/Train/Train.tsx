@@ -19,7 +19,7 @@ const Train = () => {
   const isLoggedIn = useTypedSelector(state => state.login.isLoggedIn)
 
   const currentCard = useTypedSelector(state =>
-    state.cardPacks.cardPacks.find(f => f._id === id && f),
+    state.packs.cardPacks.find(f => f._id === id && f),
   );
 
   const [randomResult, setRandomResult] = useState<ResponseCardContent | null>(null)

@@ -30,7 +30,7 @@ export const deletePackTC = (packId: string, category: string): AppThunk =>
     dispatch(setLoadingPackAC('loading'))
     try {
       await packs.deletePack(packId)
-      const {minCardsCount, maxCardsCount, page, pageCount} = getState().cardPacks
+      const {minCardsCount, maxCardsCount, page, pageCount} = getState().packs
       const profileId = getState().profile.id
       const fetchCategoryPacks = category === 'my' ? profileId : ''
       dispatch(fetchPacksTC(+minCardsCount, +maxCardsCount, page, pageCount, '', fetchCategoryPacks))
@@ -45,7 +45,7 @@ export const deletePackTC = (packId: string, category: string): AppThunk =>
 export const addNewPackTC = (packName: string, category:string): AppThunk =>
   async (dispatch, getState: () => AppRootStateType) => {
     dispatch(setLoadingPackAC('loading'))
-    const {minCardsCount, maxCardsCount, page, pageCount} = getState().cardPacks
+    const {minCardsCount, maxCardsCount, page, pageCount} = getState().packs
     const {id} = getState().profile
     const fetchCategoryPacks = category === 'my' ? id : ''
     try {
@@ -63,7 +63,7 @@ export const editPackNameTC = (id: string, name: string, category: string): AppT
     dispatch(setLoadingPackAC('loading'))
     try {
       await packs.editPackName(id, name)
-      const {minCardsCount, maxCardsCount, page, pageCount} = getState().cardPacks
+      const {minCardsCount, maxCardsCount, page, pageCount} = getState().packs
       const profileId = getState().profile.id
       const fetchCategoryPacks = category === 'my' ? profileId : ''
       dispatch(fetchPacksTC(+minCardsCount, +maxCardsCount, page, pageCount, '', fetchCategoryPacks))

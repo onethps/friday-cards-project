@@ -5,7 +5,7 @@ import {useTypedSelector} from "hooks/useTypedSelector";
 
 const SuccessMessage = () => {
 
-    const email =  useTypedSelector(state => state.forgotPassword.email)
+    const email =  useTypedSelector(state => state.recoverPassword.email)
 
 
     return (
