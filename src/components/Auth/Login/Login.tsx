@@ -24,8 +24,8 @@ export const Login = (): ReactElement => {
     initialValues: {
       // email: '',
       // password: '',
-      email: '',
-      password: '',
+      email: 'testing123@gmail.com',
+      password: '156894498',
       rememberMe: false,
     },
     validate: loginValidation,
